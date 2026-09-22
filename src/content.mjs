@@ -13,6 +13,14 @@ export const site = {
   // never advertises a domain that isn't live yet.
   origin: process.env.SITE_ORIGIN || 'https://www.appsbysass.com',
   developerUrl: 'https://apps.apple.com/us/developer/aziz-sassi/id1876570186',
+
+  // Every profile that links back here strengthens the entity Google builds
+  // for "Aziz Sassi" and, through it, for each app name. Add the Instagram and
+  // TikTok URLs as soon as those accounts point at this domain.
+  profiles: [
+    // 'https://www.instagram.com/<handle>/',
+    // 'https://www.tiktok.com/@<handle>',
+  ],
   author: 'Aziz Sassi',
 
   // Paste your IDs here and the tags appear on every page automatically.
@@ -25,6 +33,7 @@ export const site = {
 export const apps = [
   {
     slug: 'jupiter-walkies',
+    altNames: ['Jupiter Walkies app', 'Jupiter dog walking app', 'Jupiter Walkies: Dog Walks'],
     screen: 'walk',
     shots: ['jupiter-1.jpg', 'jupiter-2.jpg', 'jupiter-3.jpg'],
     steps: [
@@ -71,6 +80,7 @@ export const apps = [
 
   {
     slug: 'bo',
+    altNames: ['Bo app', 'Bo calorie tracker', 'Bo calorie counter', 'Calorie Tracker & Macros Bo'],
     screen: 'macro',
     shots: ['bo-1.jpg', 'bo-2.jpg', 'bo-3.jpg'],
     steps: [
@@ -117,6 +127,7 @@ export const apps = [
 
   {
     slug: 'bali-secret',
+    altNames: ['The Bali Secret app', 'Bali Secret', 'Bali Secret app'],
     screen: 'trip',
     shots: ['bali-1.jpg', 'bali-2.jpg', 'bali-3.jpg'],
     steps: [
@@ -163,6 +174,7 @@ export const apps = [
 
   {
     slug: 'hold',
+    altNames: ['HOLD app', 'HOLD quit smoking', 'HOLD quit smoking app', 'HOLD quit vaping'],
     screen: 'breathe',
     shots: ['hold-1.jpg', 'hold-2.jpg', 'hold-3.jpg'],
     steps: [

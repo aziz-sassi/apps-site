@@ -331,8 +331,29 @@ ${ringStage({
     accentInk: '#4338CA',
     body,
     jsonld: [
-      { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: abs('/') },
-      { '@context': 'https://schema.org', '@type': 'Person', name: site.author, url: abs('/'), sameAs: [site.developerUrl] },
+      { '@context': 'https://schema.org', '@type': 'WebSite', '@id': abs('/#website'),
+        name: site.name, url: abs('/'),
+        publisher: { '@id': abs('/#person') } },
+      { '@context': 'https://schema.org', '@type': 'Person', '@id': abs('/#person'),
+        name: site.author, url: abs('/'),
+        jobTitle: 'Independent iOS developer',
+        sameAs: [site.developerUrl, ...(site.profiles || [])] },
+      { '@context': 'https://schema.org', '@type': 'ItemList',
+        name: `Apps by ${site.name}`,
+        itemListElement: apps.map((a, i) => ({
+          '@type': 'ListItem', position: i + 1,
+          item: {
+            '@type': 'SoftwareApplication',
+            '@id': abs(`/${a.slug}/#app`),
+            name: a.name,
+            alternateName: a.altNames || [],
+            url: abs(`/${a.slug}/`),
+            sameAs: [a.storeUrl],
+            applicationCategory: 'MobileApplication',
+            operatingSystem: `iOS ${a.minOs}+`,
+            offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+          },
+        })) },
     ],
   });
 }
@@ -437,13 +458,26 @@ ${posts.length ? `<section id="guides">
     jsonld: [
       {
         '@context': 'https://schema.org', '@type': 'SoftwareApplication',
-        name: app.fullName, operatingSystem: `iOS ${app.minOs}+`,
+        '@id': abs(`/${app.slug}/#app`),
+        name: app.name,
+        alternateName: [...new Set([app.fullName, ...(app.altNames || [])])].filter((n) => n !== app.name),
+        // sameAs is what tells Google this page and the App Store listing are
+        // the same thing, which is how a branded search resolves to the site.
+        sameAs: [app.storeUrl],
+        operatingSystem: `iOS ${app.minOs}+`,
         applicationCategory: 'MobileApplication',
+        applicationSubCategory: app.category,
         description: app.description,
         url: abs(`/${app.slug}/`),
         downloadUrl: app.storeUrl,
-        author: { '@type': 'Person', name: site.author },
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        installUrl: app.storeUrl,
+        datePublished: app.released,
+        screenshot: app.shots.map((f) => abs(`/shots/${f}`)),
+        image: abs(`/og/${app.slug}.jpg`),
+        author: { '@type': 'Person', '@id': abs('/#person'), name: site.author },
+        publisher: { '@type': 'Person', '@id': abs('/#person'), name: site.author },
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD',
+                  availability: 'https://schema.org/InStock', url: app.storeUrl },
       },
       {
         '@context': 'https://schema.org', '@type': 'FAQPage',
