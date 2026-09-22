@@ -27,6 +27,12 @@ export const site = {
   // working contact method — change this if you want a different address.
   contactEmail: 'sassiaziz50@gmail.com',
 
+  // Ownership verification tags. Impact uses value= rather than content=,
+  // which is unusual but is what their checker looks for.
+  verification: {
+    impact: 'aa56d4f9-33a9-4b4e-91ab-67c9df56af5f',
+  },
+
   // Paste your IDs here and the tags appear on every page automatically.
   analytics: {
     ga4: '',           // e.g. 'G-XXXXXXXXXX' from Google Analytics 4
