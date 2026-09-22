@@ -1,7 +1,7 @@
 # Aziz Sassi — apps site
 
-A 25-page static site: a home index, one page per app at `/app-name/`, and
-five researched guides under each app. Generated from data — no framework,
+A 37-page static site: a home index, one page per app at `/app-name/`, and
+eight researched guides under each app. Generated from data — no framework,
 no dependencies, no build tooling beyond Node.
 
 ```
@@ -100,10 +100,10 @@ answer better than the listicle farms**, and converts the reader afterwards:
 
 | App | Guides target |
 |---|---|
-| HOLD | cravings length · withdrawal timeline · how to quit vaping · smoking recovery timeline · vaping and skin |
-| Jupiter Walkies | walk length by breed · puppy 5-minute rule · hot-weather walking · calories burned · leash pulling |
-| Bo | AI calorie accuracy · daily calorie needs · photographing food · deficit plateaus · tracking macros |
-| The Bali Secret | best time to visit · trip cost · tourist levy · 7-day itinerary · renting a scooter |
+| HOLD | cravings length · withdrawal timeline · how to quit vaping · smoking recovery timeline · vaping and skin · post-quit weight gain · withdrawal anxiety · nicotine pouches |
+| Jupiter Walkies | walk length by breed · puppy 5-minute rule · hot-weather walking · calories burned · leash pulling · refusing to walk · tiring a dog indoors · decompression walks |
+| Bo | AI calorie accuracy · daily calorie needs · photographing food · deficit plateaus · tracking macros · is 1,200 too low · daily protein · maintenance calories |
+| The Bali Secret | best time to visit · trip cost · tourist levy · 7-day itinerary · renting a scooter · where to stay · visa on arrival · is Bali safe |
 
 Each page carries:
 
