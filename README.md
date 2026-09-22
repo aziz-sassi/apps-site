@@ -116,6 +116,22 @@ Each page carries:
   credibility is why the page is worth linking to, and it's also Bo's actual
   differentiator.
 
+### Internal linking
+
+Every guide carries at least one **in-prose** contextual link (41 across 32
+articles). This matters more than the related-posts grid: Google weighs a link
+inside the prose with descriptive anchor text far more heavily than a card in a
+footer list.
+
+The rule when adding links: the anchor must be text that was already there and
+already meant what the target page answers. Do not append "read more about X"
+sentences — they read as SEO filler and Google treats them that way. Cross-app
+links are fine where the overlap is real (the calorie-deficit guide links to the
+AI-accuracy piece because underestimated intake is the same failure in both).
+
+In FLAT builds these are rewritten to flat filenames automatically by
+`fixLinks()` in `build.mjs`.
+
 ### Adding a guide
 
 Append to `src/articles.mjs` and rebuild. Routing, internal links, the sitemap,
