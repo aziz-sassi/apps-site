@@ -1,0 +1,7 @@
+node_modules/
+dist/
+dist-flat/
+artifact/
+.vercel/
+.og-tmp/
+.DS_Store

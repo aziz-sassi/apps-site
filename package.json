@@ -1,0 +1,13 @@
+{
+  "name": "apps-site",
+  "private": true,
+  "type": "module",
+  "description": "Aziz Sassi — iPhone apps site. Generated from src/ by build.mjs.",
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "node seo-check.mjs",
+    "audit": "node audit.mjs",
+    "og": "node tools/make-og.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

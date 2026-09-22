@@ -1,0 +1,802 @@
+// ---------------------------------------------------------------------------
+// Articles. Each one targets a real search query people type, and answers it
+// properly before mentioning the app. Blocks: h2 | p | ul | ol | callout |
+// table | note. Keep the answer in the first two paragraphs — that is what
+// gets pulled into a featured snippet.
+// ---------------------------------------------------------------------------
+
+export const articles = [
+  // ======================= HOLD =======================
+  {
+    slug: 'how-long-do-nicotine-cravings-last',
+    app: 'hold',
+    title: 'How Long Do Nicotine Cravings Last?',
+    description:
+      'A single nicotine craving passes in 10 to 15 minutes. Cravings peak around day 3 and fade over 3 to 4 weeks. Here is the full timeline and what actually helps.',
+    published: '2026-09-22',
+    updated: '2026-09-22',
+    answer:
+      'An individual nicotine craving lasts 10 to 15 minutes, whether or not you give in to it. Cravings are most frequent in the first 3 days and fade substantially over 3 to 4 weeks.',
+    blocks: [
+      ['p', 'If you are reading this with a craving right now, here is the number that matters: <strong>10 to 15 minutes</strong>. That is how long a single nicotine craving lasts before it passes on its own. It passes whether you smoke or not. Smoking does not end the craving faster — it just restarts the clock on the next one.'],
+      ['p', 'That is a genuinely useful fact, because 15 minutes is a survivable amount of time. It is one walk around the block, one shower, one phone call. The craving is not an endless state you have to endure indefinitely; it is a wave with a known length.'],
+      ['h2', 'The full craving timeline'],
+      ['p', 'Individual cravings are short. The <em>pattern</em> of cravings is what changes over weeks:'],
+      ['table', {
+        head: ['When', 'What cravings look like'],
+        rows: [
+          ['4–24 hours', 'First cravings begin. Often triggered by routine — coffee, the commute, stepping outside.'],
+          ['Day 2–3', 'Peak intensity and frequency. This is the hardest window for most people.'],
+          ['Day 4–7', 'Physical symptoms — headaches, restlessness — start to ease. Cravings still frequent.'],
+          ['Week 2–4', 'Frequency drops substantially. Mood swings and irritability may outlast the cravings.'],
+          ['Month 2+', 'Occasional cravings, usually triggered by a specific place, person or stress.'],
+        ],
+      }],
+      ['callout', 'Most withdrawal symptoms return to baseline within about 3 to 4 weeks. Research on vaping specifically suggests many symptoms settle within 10 days.'],
+      ['h2', 'Why cravings still show up months later'],
+      ['p', 'Long after the nicotine is out of your system, cravings can appear out of nowhere. This is not relapse and it is not failure. It is association: your brain spent years linking nicotine to specific cues — the first coffee, a particular street corner, a stressful call, a drink with friends.'],
+      ['p', 'Those cue-driven cravings are usually shorter and weaker than early withdrawal cravings, and they get rarer every month. Knowing they are coming is most of the defence. A craving at month four does not mean the quit is not working.'],
+      ['h2', 'What actually helps in those 15 minutes'],
+      ['ol', [
+        '<strong>Delay, do not fight.</strong> Tell yourself you will decide in 15 minutes. The craving usually resolves before the deadline.',
+        '<strong>Change your physical location.</strong> Cravings are heavily cue-driven. Leaving the room where it started often ends it.',
+        '<strong>Slow your breathing.</strong> Long exhales calm the stress response that makes a craving feel urgent. Four counts in, six or eight out.',
+        '<strong>Put something in your hands and mouth.</strong> Water, gum, a toothpick. A surprising amount of the habit is physical routine, not nicotine.',
+        '<strong>Do not negotiate about "just one".</strong> One cigarette restarts tolerance and makes the next craving stronger. There is no small dose.',
+      ]],
+      ['h2', 'Nicotine replacement is not cheating'],
+      ['p', 'Nicotine replacement therapy — patches, gum, lozenges — and prescription medication both meaningfully improve the odds of quitting for good. Combining behavioural support with one of them works better than either alone.'],
+      ['note', 'This article is general information, not medical advice. Talk to a doctor or pharmacist about which quit aids fit your situation, especially if you are pregnant, taking other medication, or have a heart condition.'],
+    ],
+    sources: [
+      ['Tips for Coping with Nicotine Withdrawal and Triggers', 'https://www.cancer.gov/about-cancer/causes-prevention/risk/tobacco/withdrawal-fact-sheet'],
+      ['Nicotine Withdrawal: Symptoms, Timeline, and How to Cope', 'https://www.goodrx.com/conditions/smoking-cessation/nicotine-withdrawal-symptoms-timeline'],
+    ],
+  },
+
+  {
+    slug: 'nicotine-withdrawal-timeline',
+    app: 'hold',
+    title: 'Nicotine Withdrawal Timeline: What to Expect, Hour by Hour',
+    description:
+      'Nicotine withdrawal starts within 4 to 24 hours, peaks around day 3, and mostly settles in 3 to 4 weeks. A realistic day-by-day timeline of symptoms.',
+    published: '2026-09-22',
+    updated: '2026-09-22',
+    answer:
+      'Nicotine withdrawal begins 4 to 24 hours after your last cigarette or vape, peaks around day 3, and most symptoms return to baseline within 3 to 4 weeks.',
+    blocks: [
+      ['p', 'Knowing the shape of withdrawal in advance makes it far easier to sit through. The worst of it is short, it arrives on a predictable schedule, and almost nobody is told that before they quit.'],
+      ['h2', 'The timeline'],
+      ['table', {
+        head: ['Time since quitting', 'What is happening'],
+        rows: [
+          ['4–24 hours', 'Withdrawal begins. Irritability, restlessness, and the first strong cravings.'],
+          ['Day 1–2', 'Cravings build. Headaches, difficulty concentrating, increased appetite.'],
+          ['Day 3', 'Usually the peak. Nicotine is effectively out of your system — which is exactly why this day is hardest.'],
+          ['Day 4–7', 'Headaches and physical restlessness begin to ease. Sleep may still be disrupted.'],
+          ['Week 2', 'Cravings notably less frequent. Mood and concentration start to normalise.'],
+          ['Week 3–4', 'Most symptoms at or near baseline. Appetite may stay elevated.'],
+          ['Month 2–3', 'Occasional cue-triggered cravings. Physical withdrawal is over.'],
+        ],
+      }],
+      ['callout', 'Day 3 being the hardest is not a coincidence or bad luck. It is the point at which nicotine has cleared your system, so it is the peak of the physiological adjustment.'],
+      ['h2', 'Symptoms people are not warned about'],
+      ['ul', [
+        '<strong>Mouth ulcers.</strong> Common in the first two weeks and harmless.',
+        '<strong>Coughing more, not less.</strong> Cilia in your airways start working again and clear built-up debris. It is recovery, not damage.',
+        '<strong>Genuine sadness.</strong> Low mood is a recognised withdrawal symptom, not a personality change.',
+        '<strong>Constipation.</strong> Nicotine is a gut stimulant. Digestion takes a few weeks to recalibrate.',
+        '<strong>Vivid dreams.</strong> Especially in the first week, and especially if you used patches overnight.',
+      ]],
+      ['h2', 'Does vaping withdrawal differ from cigarettes?'],
+      ['p', 'The dependence is on nicotine either way, so the timeline is broadly the same. Research on vaping suggests most symptoms return to baseline within about 10 days, though some people report several weeks.'],
+      ['p', 'One practical difference: vaping is often all-day grazing rather than discrete cigarettes, so some people find their cue-triggered cravings are more diffuse and harder to pin to a specific moment.'],
+      ['note', 'General information, not medical advice. If withdrawal is affecting your mental health significantly, speak to a doctor — this is common and treatable.'],
+    ],
+    sources: [
+      ['Nicotine Withdrawal Timeline', 'https://www.exprogram.com/about-quitting/what-to-know/nicotine-withdrawal-timeline/'],
+      ['Vaping Withdrawal Timeline', 'https://www.charliehealth.com/post/vaping-withdrawal-timeline'],
+    ],
+  },
+
+  {
+    slug: 'how-to-quit-vaping',
+    app: 'hold',
+    title: 'How to Quit Vaping: A Practical Plan That Survives Day 3',
+    description:
+      'Most quit-vaping advice covers the decision, not the craving. A practical plan built around the 10 to 15 minute craving window and the day-3 peak.',
+    published: '2026-09-22',
+    updated: '2026-09-22',
+    answer:
+      'Pick a quit date, remove the device and chargers, plan specific responses for your three most predictable craving triggers, and get through day 3 — the peak — with a concrete 15-minute routine.',
+    blocks: [
+      ['p', 'Nearly all quit-vaping advice is about deciding to quit. The decision is rarely the problem. The problem is 6pm on day three, when the reason you quit feels abstract and the craving feels extremely concrete.'],
+      ['p', 'So this plan is built backwards from that moment.'],
+      ['h2', '1. Map your triggers before you quit'],
+      ['p', 'For two days before your quit date, note the time and situation every time you vape. Do not change anything yet — just record. Most people find 3 or 4 situations account for the bulk of their use: the first hour awake, work breaks, driving, and after eating.'],
+      ['p', 'Those are the moments you need a plan for. A general intention to "resist" is not a plan.'],
+      ['h2', '2. Make the device genuinely inconvenient'],
+      ['p', 'Throw out the device, the pods and the chargers on day zero. Not in a drawer — out. Vaping is unusually easy to relapse into because the barrier is so low, and a device in a drawer at hour 60 is not a fair fight.'],
+      ['h2', '3. Write a 15-minute craving routine'],
+      ['p', 'A craving lasts 10 to 15 minutes. Decide now what you do for those minutes, so you are not making the decision while craving:'],
+      ['ul', [
+        'Leave the room you are in — cravings are strongly tied to location.',
+        'Four counts in, six to eight counts out, for two minutes. The long exhale is what matters.',
+        'Cold water, gum, or something to occupy your hands.',
+        'Message someone who knows you are quitting.',
+      ]],
+      ['callout', 'Write it down and keep it somewhere reachable one-handed. The point is to remove the need to think during the moment you are least able to.'],
+      ['h2', '4. Plan for day 3 specifically'],
+      ['p', 'Day 3 is the peak for most people. Treat it as a known event rather than a surprise: keep the day light, avoid your heaviest triggers where you can, and tell one person it is happening so you are not alone with it.'],
+      ['h2', '5. Consider nicotine replacement'],
+      ['p', 'Patches, gum and lozenges improve quit rates, and combining them with behavioural support works better than either alone. Using NRT is not a failure of willpower — it is separating the chemical dependence from the behavioural habit so you only fight one at a time.'],
+      ['h2', '6. A slip is not the end'],
+      ['p', 'One slip does not undo the quit. What undoes quits is deciding that a slip means the attempt failed and going back to full use. Note what triggered it, add it to your plan, and continue from the same quit date.'],
+      ['note', 'General information, not medical advice. A doctor or pharmacist can advise on NRT and prescription options suited to you.'],
+    ],
+    sources: [
+      ['Tips for Coping with Nicotine Withdrawal and Triggers', 'https://www.cancer.gov/about-cancer/causes-prevention/risk/tobacco/withdrawal-fact-sheet'],
+    ],
+  },
+
+  // ======================= JUPITER WALKIES =======================
+  {
+    slug: 'how-long-should-i-walk-my-dog',
+    app: 'jupiter-walkies',
+    title: 'How Long Should I Walk My Dog Each Day?',
+    description:
+      'Most healthy adult dogs need 30 to 60 minutes of walking a day, but it ranges from 20 minutes to 2 hours by breed, size and age. A breakdown by dog type.',
+    published: '2026-09-22',
+    updated: '2026-09-22',
+    answer:
+      'Most healthy adult dogs need 30 to 60 minutes of walking daily, typically split into two walks. Small and flat-faced breeds need 20 to 30 minutes; athletic breeds can need 2 hours or more.',
+    blocks: [
+      ['p', 'The short answer: <strong>30 to 60 minutes a day for most healthy adult dogs</strong>, usually split into two walks. The useful answer depends on which dog you have.'],
+      ['h2', 'By size and breed type'],
+      ['table', {
+        head: ['Dog type', 'Daily walking', 'Notes'],
+        rows: [
+          ['Small breeds', '~30 min', 'Two 15-minute walks suits most. Short legs cover less ground per step.'],
+          ['Flat-faced (pug, bulldog)', '20–30 min', 'Prone to breathing trouble and overheating. Keep it short and cool.'],
+          ['Medium breeds', '40–80 min', 'Usually two walks. Most dogs land in this band.'],
+          ['Large / athletic', '60–120 min+', 'Border collies, weimaraners and similar need mental work too, not just distance.'],
+          ['Senior dogs', '~20 min × 2', 'Shorter and more frequent beats one long walk.'],
+        ],
+      }],
+      ['callout', 'Brachycephalic breeds — pugs, French bulldogs, boxers — are the group most often over-walked. In warm weather they can overheat well before they look tired.'],
+      ['h2', 'Puppies: the 5-minute rule'],
+      ['p', 'The widely used guideline is <strong>5 minutes of structured walking per month of age, twice a day</strong>. A 4-month-old puppy gets about 20 minutes, twice daily. The logic is that growth plates are still developing and repetitive high-impact exercise too early can cause joint problems later.'],
+      ['p', 'This covers structured walking, not free play in the garden, which puppies self-regulate reasonably well.'],
+      ['h2', 'Signs you are walking too little — or too much'],
+      ['ul', [
+        '<strong>Too little:</strong> destructive behaviour, restlessness in the evening, weight gain, barking at everything.',
+        '<strong>Too much:</strong> lagging behind on walks, limping or stiffness afterwards, reluctance to go out, sleeping unusually heavily.',
+      ]],
+      ['h2', 'Distance matters less than you think'],
+      ['p', 'A 20-minute walk where the dog is allowed to sniff extensively is often more tiring than a brisk 40-minute march. Scent work is mentally demanding, and mental tiredness is what settles a dog at home. If your dog seems under-exercised despite long walks, try a shorter, slower, sniffier one.'],
+      ['note', 'General guidance. Your vet can advise for your specific dog, particularly with joint conditions, heart conditions, or a breed prone to breathing difficulty.'],
+    ],
+    sources: [
+      ['How Many Walks Does Your Dog Need Each Day?', 'https://www.akc.org/expert-advice/health/how-often-should-you-walk-your-dog/'],
+      ['How Often Should You Walk Your Dog?', 'https://www.petmd.com/dog/general-health/how-often-should-you-walk-your-dog'],
+    ],
+  },
+
+  {
+    slug: 'puppy-walk-length',
+    app: 'jupiter-walkies',
+    title: 'How Far Can a Puppy Walk? The 5-Minute Rule Explained',
+    description:
+      'The 5-minute rule: 5 minutes of walking per month of age, twice a day. What it means, why it exists, and when your puppy can start walking further.',
+    published: '2026-09-22',
+    updated: '2026-09-22',
+    answer:
+      'The 5-minute rule gives a puppy 5 minutes of structured walking per month of age, twice daily — so a 3-month-old walks 15 minutes twice a day.',
+    blocks: [
+      ['p', 'The standard guideline is the <strong>5-minute rule</strong>: five minutes of structured walking per month of age, twice a day.'],
+      ['table', {
+        head: ['Puppy age', 'Per walk', 'Daily total'],
+        rows: [
+          ['2 months', '10 minutes', '20 minutes'],
+          ['3 months', '15 minutes', '30 minutes'],
+          ['4 months', '20 minutes', '40 minutes'],
+          ['6 months', '30 minutes', '60 minutes'],
+          ['9 months', '45 minutes', '90 minutes'],
+        ],
+      }],
+      ['h2', 'Why the limit exists'],
+      ['p', 'Puppies have growth plates — soft areas at the ends of bones that have not yet hardened. Until they close, repetitive high-impact exercise can affect joint development. Large and giant breeds take longest, sometimes 18 to 24 months.'],
+      ['p', 'The risk is not a puppy walking a bit far once. It is sustained daily over-exercise during growth, and it shows up years later as joint problems.'],
+      ['h2', 'What the rule does not cover'],
+      ['ul', [
+        '<strong>Free play.</strong> Puppies self-regulate off-lead play reasonably well — they stop when tired.',
+        '<strong>Sniffing and pottering.</strong> A slow wander in the garden is not the same load as a structured walk.',
+        '<strong>Training and mental work.</strong> Ten minutes of scent games tires a puppy out with no joint load at all. Often the better tool.',
+      ]],
+      ['callout', 'If a puppy is being destructive, the answer is usually more mental stimulation, not more distance. Chewing, scent games and short training sessions tire puppies faster than walking does.'],
+      ['h2', 'When can they walk normally?'],
+      ['p', 'Small breeds are generally fine with adult-length walks around 12 months. Large and giant breeds should build up more slowly, often to 18 months or beyond. Your vet can tell you where your specific puppy is based on breed and growth.'],
+      ['note', 'General guidance. Ask your vet about your breed, especially for large and giant breeds where the window is longest.'],
+    ],
+    sources: [
+      ['How Long Should I Walk My Dog? By Age, Breed, and more', 'https://goldenpawps.com/how-long-should-i-walk-my-dog/'],
+    ],
+  },
+
+  {
+    slug: 'dog-walking-in-hot-weather',
+    app: 'jupiter-walkies',
+    title: 'Walking Your Dog in Hot Weather: The 7-Second Pavement Test',
+    description:
+      'How to tell if it is too hot to walk your dog, the 7-second pavement test, and which breeds overheat fastest. Practical hot-weather walking rules.',
+    published: '2026-09-22',
+    updated: '2026-09-22',
+    answer:
+      'Press the back of your hand to the pavement for 7 seconds. If you cannot hold it there comfortably, it is too hot for your dog’s paws. Walk early morning or late evening instead.',
+    blocks: [
+      ['p', 'Dogs do not sweat the way we do. They cool mainly by panting, which becomes far less effective as air temperature climbs — so a dog can be in trouble on a walk that feels merely warm to you.'],
+      ['h2', 'The 7-second pavement test'],
+      ['p', 'Press the back of your hand flat against the pavement and hold it for seven seconds. If you have to lift it, it is too hot for paws. Asphalt can reach well above air temperature in direct sun, and paw pad burns are common and genuinely painful.'],
+      ['callout', 'Grass is dramatically cooler than asphalt. If you must walk in heat, route along grass and shade, and skip the pavement entirely.'],
+      ['h2', 'Which dogs overheat fastest'],
+      ['ul', [
+        '<strong>Flat-faced breeds</strong> — pugs, French bulldogs, boxers, shih tzus. Their airways are less efficient at cooling, and they are by far the highest risk group.',
+        '<strong>Thick double coats</strong> — huskies, malamutes, German shepherds.',
+        '<strong>Overweight dogs</strong>, senior dogs and puppies.',
+        '<strong>Black or dark-coated dogs</strong>, which absorb noticeably more heat in sun.',
+      ]],
+      ['h2', 'Warning signs to stop immediately'],
+      ['ol', [
+        'Heavy, frantic panting that does not slow when you stop',
+        'Bright red or unusually pale gums',
+        'Thick, ropey drool',
+        'Stumbling, disorientation or reluctance to keep walking',
+        'Vomiting',
+      ]],
+      ['p', 'If you see these, get the dog into shade, offer small amounts of cool water, wet their paws, belly and ears with cool — not ice-cold — water, and call a vet. Heatstroke in dogs escalates quickly.'],
+      ['h2', 'Practical hot-weather rules'],
+      ['ul', [
+        'Walk before 8am or after 7pm in summer.',
+        'Carry water on any walk over 15 minutes.',
+        'Shorten the walk and add indoor scent games instead — mental work tires dogs without heat load.',
+        'Never leave a dog in a parked car, even briefly, even with windows cracked.',
+      ]],
+      ['note', 'General guidance. Suspected heatstroke is an emergency — contact a vet immediately rather than waiting to see if it improves.'],
+    ],
+    sources: [
+      ['How Often Should You Walk Your Dog?', 'https://www.rover.com/blog/how-often-should-i-walk-my-dog/'],
+    ],
+  },
+  // ======================= BO =======================
+  {
+    slug: 'are-ai-calorie-counting-apps-accurate',
+    app: 'bo',
+    title: 'Are AI Calorie Counting Apps Accurate? What the Testing Shows',
+    description:
+      'Testing found popular AI calorie apps underestimate meals by around a third. Here is where the error comes from, and the three habits that close most of the gap.',
+    published: '2026-09-22',
+    updated: '2026-09-22',
+    answer:
+      'AI calorie apps land within 10–15% on single recognisable foods, but 25–35% off on mixed meals, and one 2026 study found four popular apps underestimated calories and fat by roughly a third.',
+    blocks: [
+      ['p', 'Honest answer: <strong>less accurate than the marketing implies, and accurate enough to be useful anyway</strong> — provided you know where the error comes from.'],
+      ['p', 'Testing in 2026 found four popular AI food apps underestimated calories and fat by about one third against carefully prepared meals. Broader analysis puts them within 10–15% on single, clearly visible foods, and 25–35% off on complex mixed dishes.'],
+      ['h2', 'Where the error actually comes from'],
+      ['p', 'The failure is not really image recognition. Modern models identify food well. The problem is that <strong>the highest-calorie components of a meal are frequently invisible in a photo</strong>:'],
+      ['ul', [
+        '<strong>Cooking oil.</strong> A tablespoon is about 120 calories and leaves no visual trace once absorbed.',
+        '<strong>Dressing and sauce.</strong> Ranch versus vinaigrette can be a 300-calorie swing on an identical-looking salad.',
+        '<strong>Butter.</strong> Melted into vegetables or a steak, it simply is not visible.',
+        '<strong>Hidden sides.</strong> Rice or potatoes under a piece of chicken.',
+        '<strong>Portion depth.</strong> A photo is two-dimensional. Bowl depth is genuinely hard to infer.',
+      ]],
+      ['callout', 'This is why an app that guesses silently is worse than one that asks. The single question "was there dressing on that?" resolves more error than any model upgrade.'],
+      ['h2', 'Accuracy varies by cuisine'],
+      ['p', 'Training data is uneven. American, Italian and Asian dishes tend to land around 85–90% accuracy, while less-represented cuisines — Indian, Middle Eastern and many regional dishes — sit closer to 75–80%. High-fat ketogenic dishes appear to cause the most trouble; carbohydrates are estimated most consistently.'],
+      ['h2', 'Three habits that close most of the gap'],
+      ['ol', [
+        '<strong>Include a size reference.</strong> A hand, a fork, a standard plate. This alone improves estimates meaningfully because scale is the hardest thing to infer.',
+        '<strong>Separate components before photographing.</strong> Push the rice away from the curry. Overlapping food hides mass.',
+        '<strong>Correct the estimate when you know better.</strong> If you cooked it, you know how much oil went in. Editing the number takes five seconds and is the most accurate data the app will ever get.',
+      ]],
+      ['p', 'Applied together, these are reported to improve accuracy by roughly 10–15 percentage points — larger than the difference between most competing apps.'],
+      ['h2', 'Does the inaccuracy matter?'],
+      ['p', 'It depends what you are doing. For general awareness and building consistency, a 15% error is not a problem — the trend is still real and the habit of logging is doing most of the work.'],
+      ['p', 'For a precise cut or a medical protocol, photo estimates alone are not enough. Weighing food remains the accurate method. A reasonable middle path is to weigh for a week to calibrate your eye, then use photo logging for maintenance.'],
+      ['note', 'General information, not medical or dietary advice. Speak to a doctor or registered dietitian before starting a significant calorie deficit.'],
+    ],
+    sources: [
+      ['Your AI calorie-tracking app may be off by 345 calories', 'https://www.sciencedaily.com/releases/2026/07/260726015237.htm'],
+      ['AI Calorie Counter Accuracy 2026', 'https://www.intakenutrition.io/blog/ai-calorie-counter-accuracy-how-reliable-are-photo-food-tracking-apps-in-2026'],
+    ],
+  },
+
+  {
+    slug: 'how-many-calories-should-i-eat',
+    app: 'bo',
+    title: 'How Many Calories Should I Eat a Day?',
+    description:
+      'Most adults need 1,600 to 3,000 calories a day depending on age, size and activity. How to estimate your number, and the minimums you should not go below.',
+    published: '2026-09-22',
+    updated: '2026-09-22',
+    answer:
+      'Most adults need between 1,600 and 3,000 calories a day. Women average around 2,000 and men around 2,500, adjusted for age, size and activity level.',
+    blocks: [
+      ['p', 'Most adults need somewhere between <strong>1,600 and 3,000 calories a day</strong>. As a rough midpoint, women average around 2,000 and men around 2,500 — but the spread is wide, and the averages are not a target.'],
+      ['h2', 'What moves your number'],
+      ['ul', [
+        '<strong>Size.</strong> More body mass costs more energy to maintain, including muscle mass.',
+        '<strong>Activity.</strong> The single biggest variable between two similar people. A desk job and a physical job can differ by 500+ calories a day.',
+        '<strong>Age.</strong> Requirements decline gradually through adulthood.',
+        '<strong>Sex.</strong> Largely a proxy for average body size and composition.',
+        '<strong>Health status.</strong> Pregnancy, breastfeeding, thyroid conditions and some medications all shift the number.',
+      ]],
+      ['h2', 'If you want to lose weight'],
+      ['p', 'A deficit of roughly <strong>500 calories a day produces about 1 pound of weight loss per week</strong>. That is the standard, sustainable starting point.'],
+      ['p', 'Larger deficits are not proportionally better. They are harder to hold, tend to cost more muscle, and the fast early drop is substantially water weight, which returns.'],
+      ['callout', 'Do not go below 1,200 calories a day for women or 1,500 for men without medical supervision. Below those, hitting basic nutrient requirements becomes genuinely difficult.'],
+      ['h2', 'Why your number is not fixed'],
+      ['p', 'Calorie needs fluctuate. They shift with weight — a lighter body burns less — and with activity, sleep and even ambient temperature. A number that worked at the start of a cut will not be right ten pounds later.'],
+      ['p', 'This is why tracking the trend over weeks beats obsessing over a single day. One high day is noise; three flat weeks is information.'],
+      ['h2', 'A practical approach'],
+      ['ol', [
+        'Estimate a starting number from a calculator, or start by simply logging what you currently eat for a week.',
+        'Hold it for two to three weeks and track weight as a weekly average, not daily.',
+        'Adjust by 200–300 calories based on what actually happened, not what should have happened.',
+        'Repeat. This beats any formula because it is measured on you.',
+      ]],
+      ['note', 'General information, not medical or dietary advice. Talk to a doctor or registered dietitian before a significant deficit, particularly with a history of disordered eating, diabetes, or if pregnant or breastfeeding.'],
+    ],
+    sources: [
+      ['How Many Calories a Day Should I Eat?', 'https://health.clevelandclinic.org/how-many-calories-a-day-should-i-eat'],
+      ['Calorie counting made easy', 'https://www.health.harvard.edu/staying-healthy/calorie-counting-made-easy'],
+    ],
+  },
+
+  {
+    slug: 'how-to-photograph-food-for-calorie-tracking',
+    app: 'bo',
+    title: 'How to Photograph Food for Accurate Calorie Tracking',
+    description:
+      'Five habits that improve AI calorie estimates by 10 to 15 points: size references, separating components, shooting at an angle, and correcting what you know.',
+    published: '2026-09-22',
+    updated: '2026-09-22',
+    answer:
+      'Include a size reference, shoot at a 45-degree angle rather than overhead, separate overlapping foods, photograph before eating, and correct the estimate when you know what went into the cooking.',
+    blocks: [
+      ['p', 'Photo calorie logging is only as good as the photo. These habits reportedly improve accuracy by 10 to 15 percentage points — a bigger gain than switching apps.'],
+      ['h2', '1. Give it something to measure against'],
+      ['p', 'Scale is the hardest thing to infer from an image. Include a known object: your hand, a fork, a standard dinner plate, a can. Without a reference, the model is guessing portion size from context alone, and that is where the largest errors start.'],
+      ['h2', '2. Shoot at an angle, not straight down'],
+      ['p', 'Overhead photos flatten everything and hide depth. A bowl of pasta shot from directly above looks identical whether it is two inches or five inches deep. A roughly 45-degree angle shows both the surface area and the height.'],
+      ['h2', '3. Separate overlapping food'],
+      ['p', 'Push components apart before shooting. Rice hidden under curry, or chicken sitting on potatoes, simply does not register. Ten seconds of rearranging is worth more than any model improvement.'],
+      ['callout', 'The biggest single error source is not what the photo shows — it is what it cannot show. Oil, butter and dressing are invisible and calorie-dense. If the app asks about them, answer honestly; if it does not ask, add them yourself.'],
+      ['h2', '4. Photograph before you eat'],
+      ['p', 'Obvious, easy to forget. A half-eaten plate is hard to estimate from, and reconstructing it later is guesswork. If you forget, log it by description instead — voice logging is usually more accurate than photographing leftovers.'],
+      ['h2', '5. Correct what you actually know'],
+      ['p', 'If you cooked the meal, you know things the camera cannot: the two tablespoons of olive oil, the butter in the sauce. Editing the estimate takes seconds and is the highest-quality data the app will ever receive.'],
+      ['h2', 'When not to bother with a photo'],
+      ['p', 'Some foods photograph badly and are faster to describe: drinks, soups, handfuls of nuts, anything mixed into a uniform mass. For those, voice or text logging is both quicker and more accurate.'],
+      ['note', 'General information, not medical or dietary advice.'],
+    ],
+    sources: [
+      ['Apps That Calculate Calories From Photos: Are They Accurate?', 'https://fitia.app/learn/article/ai-calorie-photo-apps-accuracy-2026/'],
+    ],
+  },
+
+  // ======================= THE BALI SECRET =======================
+  {
+    slug: 'best-time-to-visit-bali',
+    app: 'bali-secret',
+    title: 'Best Time to Visit Bali: A Month-by-Month Guide',
+    description:
+      'Bali’s dry season runs April to October. May, June and September offer the best mix of weather, crowds and price. February is cheapest. Month-by-month breakdown.',
+    published: '2026-09-22',
+    updated: '2026-09-22',
+    answer:
+      'The best time to visit Bali is the dry season, April to October. May, June and September give the best balance of good weather, manageable crowds and lower prices. July and August have the best weather but peak prices.',
+    blocks: [
+      ['p', 'Bali has two seasons: <strong>dry (April to October)</strong> and <strong>wet (November to March)</strong>. Most people should aim for the dry season, but the best month depends on whether you are optimising for weather, crowds or cost.'],
+      ['h2', 'The short version'],
+      ['table', {
+        head: ['If you want…', 'Go in', 'Trade-off'],
+        rows: [
+          ['Best overall balance', 'May, June, September', 'Genuinely few downsides. The sweet spot.'],
+          ['Best weather', 'July–August', 'Peak prices and peak crowds.'],
+          ['Lowest prices', 'February', 'Rainy-season afternoons.'],
+          ['Fewer crowds, good weather', 'April, October', 'Slightly higher rain risk at the edges.'],
+        ],
+      }],
+      ['h2', 'Month by month'],
+      ['ul', [
+        '<strong>January–February.</strong> Wettest months. Rain usually arrives as heavy afternoon downpours rather than all-day grey. Cheapest flights and villas, quietest beaches.',
+        '<strong>March.</strong> Rain easing. Good value, and the landscape is at its greenest.',
+        '<strong>April.</strong> Start of dry season. Excellent conditions before prices climb.',
+        '<strong>May–June.</strong> Arguably the best months — dry, warm, and 20–30% cheaper villas than peak.',
+        '<strong>July–August.</strong> Peak season. Best weather, highest prices, busiest beaches and restaurants.',
+        '<strong>September.</strong> Still dry, crowds thinning, prices dropping. A strong pick.',
+        '<strong>October.</strong> Shoulder season. Occasional rain returning, good value.',
+        '<strong>November–December.</strong> Wet season begins. December spikes in price for the holidays despite the weather.',
+      ]],
+      ['callout', 'Shoulder season — April to June and September to October — typically means 20–30% cheaper accommodation than July and August, with weather most visitors find indistinguishable.'],
+      ['h2', 'A note on the rainy season'],
+      ['p', 'Wet season in Bali is often misunderstood. It usually means a heavy downpour for an hour or two in the afternoon, not days of continuous rain. Mornings are frequently clear. If you are travelling on a budget and can work around afternoon rain, January and February are dramatically cheaper.'],
+      ['p', 'The real trade-offs are rougher seas for diving and snorkelling, and more mosquitoes.'],
+      ['h2', 'Before you book'],
+      ['p', 'Every foreign visitor pays a one-time tourist levy of IDR 150,000 (about $9.30) per person. Pay it online before flying to skip a queue on arrival.'],
+    ],
+    sources: [
+      ['Best Time to Visit Bali in 2026: Months, Weather & Crowds', 'https://www.baliholidaysecrets.com/best-time-to-visit-bali/'],
+      ['Best Time to Visit Bali 2026', 'https://www.viceroybali.com/en/blog/bali-holiday/best-time-to-visit-bali/'],
+    ],
+  },
+
+  {
+    slug: 'bali-trip-cost',
+    app: 'bali-secret',
+    title: 'How Much Does a Trip to Bali Cost? 2026 Budget Breakdown',
+    description:
+      'A week in Bali costs roughly $350–$550 budget, $700–$1,400 mid-range, and $2,500+ luxury, excluding flights. Daily spend and category-by-category breakdown.',
+    published: '2026-09-22',
+    updated: '2026-09-22',
+    answer:
+      'Excluding international flights, a week in Bali costs roughly $350–$550 per person for budget travel, $700–$1,400 mid-range, and $2,500–$6,000+ for luxury.',
+    blocks: [
+      ['p', 'Bali spans an unusually wide price range — you can genuinely do it on $30 a day or $500 a day in the same week, on the same island.'],
+      ['h2', 'Daily spend by tier'],
+      ['table', {
+        head: ['Tier', 'Per person per day', 'Per week (7 days)'],
+        rows: [
+          ['Budget / backpacker', '$25–$40', '$350–$550'],
+          ['Mid-range', '$70–$130', '$700–$1,400'],
+          ['Luxury', '$300+', '$2,500–$6,000+'],
+        ],
+      }],
+      ['p', 'These figures exclude international flights, which are usually the single largest line item and vary enormously by origin.'],
+      ['h2', 'Where the money goes'],
+      ['ul', [
+        '<strong>Accommodation.</strong> The widest range by far. Hostels from a few dollars; private-pool villas from around $60–$100 that would cost many times that elsewhere.',
+        '<strong>Food.</strong> The biggest lever on your budget. A local warung meal runs a couple of dollars; a Canggu brunch cafe can cost ten times that. Alternating is how most people keep costs sane.',
+        '<strong>Transport.</strong> Scooter hire is cheap per day. Private drivers are the common choice for day trips and split well between people.',
+        '<strong>Activities.</strong> Temple entries are modest. Diving, surf lessons and organised day trips are where costs accumulate.',
+        '<strong>Tourist levy.</strong> A one-time IDR 150,000 (about $9.30) per person.',
+      ]],
+      ['callout', 'The single biggest budget variable is not accommodation — it is how often you eat at Western cafes versus local warungs. It routinely doubles a daily food budget.'],
+      ['h2', 'Timing changes the price'],
+      ['p', 'Shoulder season (April–June, September–October) typically runs 20–30% cheaper on villas than July and August, with weather most visitors cannot tell apart. February is the cheapest month overall, at the cost of rainy afternoons.'],
+      ['h2', 'Costs people forget to budget for'],
+      ['ol', [
+        'Visa on arrival, if your nationality requires it',
+        'The IDR 150,000 tourist levy, per person',
+        'Scooter fuel and any rental insurance',
+        'ATM withdrawal fees, which add up over a trip',
+        'Airport transfers at both ends',
+        'Travel insurance — worth it given scooter accidents are the most common claim',
+      ]],
+      ['p', 'Tracking spending in rupiah while thinking in your home currency is the part most first-timers find hardest. The exchange rate puts you in the millions quickly, and it is easy to lose the thread.'],
+    ],
+    sources: [
+      ['Bali Trip Cost 2026: Budget Breakdown by Tier', 'https://dmcquote.com/blog/post/bali-trip-cost-2026'],
+      ['2026 Bali Travel Guide with Sample Itinerary & Budget', 'https://www.thepoortraveler.net/bali-travel-guide/'],
+    ],
+  },
+
+  {
+    slug: 'bali-tourist-levy',
+    app: 'bali-secret',
+    title: 'The Bali Tourist Levy: What It Is and How to Pay It',
+    description:
+      'Every visitor to Bali pays a one-time IDR 150,000 levy (about $9.30). How to pay it online via the Love Bali portal before you fly.',
+    published: '2026-09-22',
+    updated: '2026-09-22',
+    answer:
+      'Every foreign visitor to Bali pays a one-time tourist levy of IDR 150,000 (about $9.30) per person, introduced in 2024. Pay online via the official Love Bali portal before you fly, or at a counter on arrival.',
+    blocks: [
+      ['p', 'Since 2024, every foreign visitor to Bali pays a <strong>one-time tourist levy of IDR 150,000</strong> — roughly $9.30 — per person. It is separate from any visa fee, and it catches a lot of travellers by surprise at the airport.'],
+      ['h2', 'Key facts'],
+      ['ul', [
+        '<strong>Amount:</strong> IDR 150,000 per person, about $9.30.',
+        '<strong>Frequency:</strong> One-time per entry to Bali, not per night.',
+        '<strong>Who pays:</strong> Foreign visitors. It applies per person, including children.',
+        '<strong>Separate from your visa.</strong> Paying for a visa on arrival does not cover it.',
+      ]],
+      ['h2', 'How to pay'],
+      ['p', 'Pay online through the official <strong>Love Bali</strong> portal before you travel. You receive a QR code — save it offline and screenshot it, because airport wifi is not something to depend on after a long flight.'],
+      ['p', 'You can also pay at a counter on arrival, but this means queueing at the point you least want to. Paying ahead takes a few minutes at home.'],
+      ['callout', 'Pay only through the official Love Bali portal. Third-party sites charge a markup for the same payment. If a site asks for more than IDR 150,000 per person, it is not the official one.'],
+      ['h2', 'What the money funds'],
+      ['p', 'The levy funds cultural preservation and environmental programmes — waste management, heritage site upkeep and conservation. It was introduced in response to the pressure tourism volume places on the island’s infrastructure and environment.'],
+      ['h2', 'What if you do not pay?'],
+      ['p', 'You will be directed to pay on arrival before proceeding. It is not optional, and enforcement has tightened since introduction. Spot checks occur at some tourist sites, so keep the QR code accessible during your trip rather than deleting it after landing.'],
+      ['note', 'Fees and procedures change. Confirm the current amount and process on the official Love Bali portal close to your travel date.'],
+    ],
+    sources: [
+      ['2026 Bali Travel Guide with Sample Itinerary & Budget', 'https://www.thepoortraveler.net/bali-travel-guide/'],
+    ],
+  },
+  {
+    slug: 'what-happens-when-you-quit-smoking-timeline',
+    app: 'hold',
+    title: 'What Happens When You Quit Smoking: The Recovery Timeline',
+    description:
+      'Heart rate drops in 20 minutes, carbon monoxide clears in 12 hours, heart disease risk halves at one year. The full recovery timeline, hour by hour.',
+    published: '2026-09-22', updated: '2026-09-22',
+    answer:
+      'Your heart rate drops within 20 minutes, carbon monoxide clears within 12 hours, circulation and lung function improve over 2–12 weeks, and by one year your coronary heart disease risk is roughly half that of a smoker.',
+    blocks: [
+      ['p', 'Recovery starts faster than most people expect — measurably, within the first hour. Knowing what is happening underneath is genuinely useful on day three, when nothing feels like it is improving.'],
+      ['h2', 'The timeline'],
+      ['table', { head: ['Time since last cigarette', 'What changes'], rows: [
+        ['20 minutes', 'Heart rate drops toward normal. Blood pressure begins to fall.'],
+        ['12 hours', 'Carbon monoxide clears your blood, so oxygen levels return to normal.'],
+        ['24–48 hours', 'Nerve endings begin regrowing. Smell and taste start to sharpen.'],
+        ['2–12 weeks', 'Circulation improves and lung function increases. Walking and stairs get noticeably easier.'],
+        ['1–9 months', 'Coughing and shortness of breath decrease. The smoker’s cough is usually gone or nearly gone by month two.'],
+        ['1 year', 'Coronary heart disease risk drops to roughly half that of a smoker.'],
+        ['5–15 years', 'Stroke risk approaches that of a non-smoker.'],
+      ]}],
+      ['callout', 'The cough getting worse before it gets better is normal and a good sign. Cilia in your airways start working again and begin clearing built-up debris.'],
+      ['h2', 'What the timeline does not show'],
+      ['p', 'The physical recovery curve is smooth. The psychological one is not. Cravings peak around day 3 and fade over 3 to 4 weeks, while your lungs are still improving months later. The two do not move at the same pace, which is why week two can feel worse than the benefits chart suggests it should.'],
+      ['p', 'Seeing the visible changes — skin, breath, stamina — is what carries most people through that gap.'],
+      ['h2', 'Does it apply to vaping?'],
+      ['p', 'Partly. The nicotine dependence and its withdrawal curve are the same. The combustion-related items — carbon monoxide, tar, the cough — apply to smoking specifically, since vaping does not involve burning. The cardiovascular and dependence benefits still apply.'],
+      ['note', 'General information, not medical advice. Talk to a doctor or pharmacist about quit aids suited to your situation.'],
+    ],
+    sources: [
+      ['Timeline after quitting smoking', 'https://www.medicalnewstoday.com/articles/317956'],
+      ['A Timeline of What Happens After You Quit Smoking', 'https://www.solutionhealth.org/2024/11/01/a-timeline-of-what-happens-after-you-quit-smoking/'],
+    ],
+  },
+  {
+    slug: 'does-vaping-affect-your-skin',
+    app: 'hold',
+    title: 'Does Vaping Affect Your Skin? What Actually Changes',
+    description:
+      'Nicotine narrows blood vessels, which reduces the oxygen reaching your skin. What that does to healing, tone and lines — and what improves after you quit.',
+    published: '2026-09-22', updated: '2026-09-22',
+    answer:
+      'Nicotine constricts blood vessels, cutting oxygen and nutrient delivery to the skin. That shows up as duller tone, slower healing and, over years, more lines. Circulation begins improving within weeks of quitting.',
+    blocks: [
+      ['p', 'The mechanism is circulation. Nicotine is a vasoconstrictor — it narrows blood vessels, including the small ones feeding your skin. Less blood means less oxygen and fewer nutrients reaching the tissue, and skin is unusually sensitive to that because it is constantly repairing itself.'],
+      ['h2', 'What people actually notice'],
+      ['ul', [
+        '<strong>Duller tone.</strong> Reduced blood flow costs skin the flush that reads as healthy colour.',
+        '<strong>Slower healing.</strong> Spots and small cuts hang around longer than they used to.',
+        '<strong>Dryness.</strong> Often reported, partly from reduced circulation and partly from dehydration.',
+        '<strong>Lines around the mouth.</strong> Driven by the repeated pursing motion as much as the chemistry.',
+      ]],
+      ['callout', 'Vaping is not identical to smoking here — there is no smoke or tar — but nicotine is the vasoconstrictor, and vaping delivers nicotine. The circulation effect does not depend on combustion.'],
+      ['h2', 'What improves, and when'],
+      ['p', 'Circulation starts recovering within 2 to 12 weeks of quitting, which is when most people first notice tone and healing improving. Texture changes are slower because skin turnover takes roughly a month per cycle, so give it two or three cycles before judging.'],
+      ['p', 'Lines that are already set will not disappear. What stops is the ongoing contribution.'],
+      ['h2', 'Why this motivates people more than lung statistics'],
+      ['p', 'Heart and lung risk is real but invisible and decades away. Skin is in the mirror every morning. For a lot of people that is a far more effective reason to keep going through week two, which is why HOLD tracks it alongside the clinical milestones.'],
+      ['note', 'General information, not medical advice. See a doctor or dermatologist about specific skin concerns.'],
+    ],
+    sources: [
+      ['Timeline after quitting smoking', 'https://www.medicalnewstoday.com/articles/317956'],
+    ],
+  },
+  {
+    slug: 'how-many-calories-does-walking-the-dog-burn',
+    app: 'jupiter-walkies',
+    title: 'How Many Calories Does Walking the Dog Burn?',
+    description:
+      'A 30-minute dog walk burns roughly 90 to 200 calories depending on your weight and pace. How the number is calculated and why stop-start walks still count.',
+    published: '2026-09-22', updated: '2026-09-22',
+    answer:
+      'A 30-minute dog walk burns roughly 90–200 calories for most adults, depending on body weight and pace. Heavier walkers and brisker paces sit at the top of that range.',
+    blocks: [
+      ['p', 'Roughly <strong>90 to 200 calories per 30 minutes</strong>. The spread is wide because two things dominate: how much you weigh, and how fast you are actually moving.'],
+      ['h2', 'Rough numbers by weight and pace'],
+      ['table', { head: ['Body weight', 'Strolling (2 mph)', 'Brisk (3.5 mph)'], rows: [
+        ['130 lb / 59 kg', '~75 cal', '~120 cal'],
+        ['160 lb / 73 kg', '~90 cal', '~150 cal'],
+        ['190 lb / 86 kg', '~110 cal', '~180 cal'],
+        ['220 lb / 100 kg', '~125 cal', '~205 cal'],
+      ]}],
+      ['p', 'These are 30-minute figures. Hills, soft ground and carrying things push them higher.'],
+      ['callout', 'Dog walks are stop-start by nature — sniffing, greeting other dogs, waiting. That lowers average pace, which is why a GPS-tracked figure is usually lower than a generic calculator suggests. The tracked number is the honest one.'],
+      ['h2', 'Why the stop-start pattern still counts'],
+      ['p', 'Two 30-minute dog walks a day is around an hour of daily movement that would otherwise not happen. Consistency beats intensity for that kind of baseline activity, and dog owners tend to hit it every single day regardless of motivation, which is the part almost no exercise programme manages.'],
+      ['h2', 'Getting a more accurate number'],
+      ['ul', [
+        'Track the walk with GPS rather than estimating minutes — actual distance and moving pace matter more than elapsed time.',
+        'Log your weight, since it is the largest single variable.',
+        'Do not add your dog’s activity to yours. They are having a very different workout.',
+      ]],
+      ['note', 'Calorie estimates from any app are approximations, not measurements.'],
+    ],
+    sources: [
+      ['How Often Should You Walk Your Dog?', 'https://www.petmd.com/dog/general-health/how-often-should-you-walk-your-dog'],
+    ],
+  },
+  {
+    slug: 'why-does-my-dog-pull-on-the-leash',
+    app: 'jupiter-walkies',
+    title: 'Why Does My Dog Pull on the Leash? And How to Stop It',
+    description:
+      'Dogs pull because it works — pulling moves them forward. The fix is making it stop working, consistently. A practical method that takes about two weeks.',
+    published: '2026-09-22', updated: '2026-09-22',
+    answer:
+      'Dogs pull because pulling gets them where they want to go, so it is continually rewarded. The fix is to stop moving forward whenever the leash goes tight, applied consistently on every walk.',
+    blocks: [
+      ['p', 'It is not dominance and it is not stubbornness. <strong>Your dog pulls because pulling works.</strong> Every time the leash goes tight and you keep walking, you have just paid for pulling.'],
+      ['p', 'Dogs also simply walk faster than we do. Their natural pace is quicker, and the world smells interesting in a direction that is usually ahead.'],
+      ['h2', 'The method'],
+      ['ol', [
+        '<strong>Stop the instant the leash tightens.</strong> Not a correction, not a word. Just stop.',
+        '<strong>Wait.</strong> Your dog will eventually ease the tension or look back at you.',
+        '<strong>Walk on the moment the leash slackens.</strong> Moving forward is the reward, and it now only follows a loose leash.',
+        '<strong>Repeat.</strong> Your first few walks will be extremely slow. That is the method working, not failing.',
+      ]],
+      ['callout', 'The failure mode is inconsistency. If pulling works even one walk in five, you have taught your dog that persistence pays — which is harder to undo than the original habit.'],
+      ['h2', 'Equipment that helps'],
+      ['ul', [
+        '<strong>Front-clip harness.</strong> Redirects forward momentum sideways. The single most useful piece of kit for a strong puller.',
+        '<strong>A fixed-length lead, 4–6 ft.</strong> Retractable leads teach that tension extends the leash, which is exactly the opposite lesson.',
+        '<strong>Avoid choke and prong collars.</strong> They suppress the behaviour through discomfort without addressing why it is being rewarded.',
+      ]],
+      ['h2', 'Give them a sniffing walk too'],
+      ['p', 'A lot of pulling is frustration at never being allowed to investigate anything. Designate part of the walk as their time — loose lead, they choose the direction, sniffing encouraged. A dog that gets that is markedly easier during the structured part, and scent work tires them out faster than distance does.'],
+      ['note', 'For reactivity or aggression on the lead, work with a qualified force-free trainer rather than a general guide.'],
+    ],
+    sources: [
+      ['How Often Should You Walk Your Dog?', 'https://www.rover.com/blog/how-often-should-i-walk-my-dog/'],
+    ],
+  },
+  {
+    slug: 'why-am-i-not-losing-weight-in-a-calorie-deficit',
+    app: 'bo',
+    title: 'Why Am I Not Losing Weight in a Calorie Deficit?',
+    description:
+      'Usually the deficit is smaller than you think — intake is underestimated by 12–40% on average. Plus water retention and metabolic adaptation. How to tell which.',
+    published: '2026-09-22', updated: '2026-09-22',
+    answer:
+      'Most often the deficit is smaller than believed — people underestimate intake by 12–40%. The other common causes are water retention masking real fat loss, and metabolic adaptation reducing daily energy expenditure.',
+    blocks: [
+      ['p', 'Three explanations cover almost every case. They are not equally likely, so work through them in order.'],
+      ['h2', '1. The deficit is smaller than you think (most common)'],
+      ['p', 'Research consistently finds people <strong>underestimate their intake by 12 to 40%</strong>. Not through dishonesty — through the things that are genuinely hard to see:'],
+      ['ul', [
+        'Cooking oil. A tablespoon is ~120 calories and leaves no visual trace.',
+        'Not weighing portions, so a "100g" serving is routinely 140g.',
+        'Inaccurate database entries in tracking apps.',
+        'Bites while cooking, the last of the kids’ plates, drinks.',
+        'Weekends. Five tracked days plus two untracked can erase the whole week’s deficit.',
+      ]],
+      ['callout', 'This is the same error that makes photo calorie apps underestimate meals by around a third — the calories are in what you cannot see. See <a href="/bo/are-ai-calorie-counting-apps-accurate/">our breakdown of AI calorie accuracy</a>.'],
+      ['h2', '2. Water retention is hiding real fat loss'],
+      ['p', 'When fat cells release stored triglycerides they temporarily fill with water, so the scale does not move even though fat has gone. Add sodium changes, new training, hormonal cycles and stress — cortisol from aggressive restriction increases fluid retention — and the scale can sit flat for two or three weeks while you are genuinely losing fat.'],
+      ['p', 'Tell-tale sign: the scale is flat but clothes fit differently, or you drop several pounds overnight after a rest day.'],
+      ['h2', '3. Metabolic adaptation'],
+      ['p', 'Prolonged restriction lowers total daily energy expenditure — not just resting metabolism, but NEAT, the energy spent on everyday movement like fidgeting and walking. You unconsciously move less. It is real, though usually smaller than people assume, and it does not stop weight loss; it slows it.'],
+      ['h2', 'How to diagnose it'],
+      ['ol', [
+        'Weigh everything for one week, cooking oil included. No estimating. This alone resolves most cases.',
+        'Track weight as a 7-day average, not day to day. Daily numbers are mostly water.',
+        'Give it three full weeks before concluding anything.',
+        'If the average is genuinely flat over three weeks with accurate logging, reduce by 200–300 calories or add daily steps.',
+      ]],
+      ['note', 'General information, not medical or dietary advice. A persistent stall with accurate tracking is worth discussing with a doctor — thyroid and some medications affect this.'],
+    ],
+    sources: [
+      ['Not losing weight in a calorie deficit: Reasons and strategies', 'https://www.medicalnewstoday.com/articles/why-am-i-not-losing-weight-in-a-calorie-deficit'],
+      ['Metabolic and Behavioral Compensations in Response to Caloric Restriction', 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2634841/'],
+    ],
+  },
+  {
+    slug: 'how-to-track-macros',
+    app: 'bo',
+    title: 'How to Track Macros: A Beginner’s Guide',
+    description:
+      'Macros are protein, carbohydrate and fat. How to set your targets, why protein is the one worth hitting, and how to track without it taking over your day.',
+    published: '2026-09-22', updated: '2026-09-22',
+    answer:
+      'Set protein first at roughly 0.7–1g per pound of target body weight, set fat at about 25–35% of calories, and fill the remainder with carbohydrate. Protein is the target worth hitting precisely.',
+    blocks: [
+      ['p', 'Macros are the three things that carry calories: <strong>protein</strong> (4 cal/g), <strong>carbohydrate</strong> (4 cal/g) and <strong>fat</strong> (9 cal/g). Calories tell you how much energy; macros tell you what it is made of, and that changes body composition, hunger and training.'],
+      ['h2', 'Setting your targets'],
+      ['ol', [
+        '<strong>Start from calories.</strong> Macros have to add up to your calorie target, so set that first.',
+        '<strong>Protein first.</strong> Roughly 0.7–1g per pound of target body weight. This is the one that protects muscle in a deficit and keeps you full.',
+        '<strong>Fat next.</strong> About 25–35% of total calories. Going much lower is unpleasant and unnecessary.',
+        '<strong>Carbs get the rest.</strong> They are the flexible one — fuel for training and, for most people, the easiest lever to move.',
+      ]],
+      ['callout', 'If you only hit one target, hit protein. In a deficit it is the difference between losing fat and losing fat plus muscle, and it does more for hunger than the other two combined.'],
+      ['h2', 'Tracking without it eating your life'],
+      ['ul', [
+        '<strong>Log before you eat, not after.</strong> Easier to adjust a meal than regret it.',
+        '<strong>Build a rotation.</strong> Most people eat the same 20 or so meals. Log them once and reuse.',
+        '<strong>Weigh the calorie-dense things.</strong> Oil, nut butter, cheese, nuts. Vegetables can be eyeballed; olive oil cannot.',
+        '<strong>Aim for close, not exact.</strong> Within 5–10g on protein and calories is plenty. Precision beyond that buys nothing.',
+      ]],
+      ['h2', 'How long should you track?'],
+      ['p', 'Long enough to calibrate your eye — usually four to eight weeks. Most people find that after a couple of months they can estimate well without logging every meal, and only return to tracking when they want to change something.'],
+      ['p', 'Tracking is a measuring tool, not a permanent lifestyle. If it starts feeling compulsive rather than useful, that is a good reason to stop and talk to someone.'],
+      ['note', 'General information, not medical or dietary advice. If you have a history of disordered eating, calorie and macro tracking can be harmful — speak to a professional first.'],
+    ],
+    sources: [
+      ['How Many Calories a Day Should I Eat?', 'https://health.clevelandclinic.org/how-many-calories-a-day-should-i-eat'],
+    ],
+  },
+  {
+    slug: 'bali-itinerary-7-days',
+    app: 'bali-secret',
+    title: 'Bali Itinerary: 7 Days, Done Properly',
+    description:
+      'A 7-day Bali itinerary that does not waste two days in traffic: three nights Ubud, three in the south, with travel times and costs that are actually realistic.',
+    published: '2026-09-22', updated: '2026-09-22',
+    answer:
+      'Base yourself in two places, not five: three nights in Ubud for culture and rice terraces, three in the south (Canggu or Uluwatu) for beaches and food. Bali traffic makes day-tripping across the island a poor use of a week.',
+    blocks: [
+      ['p', 'The mistake nearly every first 7-day Bali itinerary makes is treating the island as small. It is not small in <em>time</em> — traffic means 40 km can take two hours. Move base twice, not five times.'],
+      ['h2', 'The shape of the week'],
+      ['table', { head: ['Days', 'Base', 'What it is for'], rows: [
+        ['1–3', 'Ubud', 'Rice terraces, temples, waterfalls, the inland green.'],
+        ['4–7', 'Canggu or Uluwatu', 'Beaches, surf, sunsets, the food and cafe scene.'],
+      ]}],
+      ['h2', 'Days 1–3: Ubud'],
+      ['ul', [
+        '<strong>Day 1.</strong> Arrive, transfer to Ubud (1.5–2 hrs from the airport). Do nothing ambitious. Walk the Campuhan Ridge at sunset.',
+        '<strong>Day 2.</strong> Tegallalang rice terraces at sunrise to beat the crowds and the heat, then a waterfall — Tibumana or Kanto Lampo are quieter than Tegenungan.',
+        '<strong>Day 3.</strong> Temples and the market, or a day trip north to Mount Batur. If you want the Batur sunrise trek, it starts around 2am, so plan the day around it.',
+      ]],
+      ['h2', 'Days 4–7: the south'],
+      ['ul', [
+        '<strong>Day 4.</strong> Transfer south (1.5–2 hrs). Canggu for cafes and surf; Uluwatu for cliffs and quieter beaches.',
+        '<strong>Day 5.</strong> Beach and surf lesson. Uluwatu temple at sunset for the kecak dance.',
+        '<strong>Day 6.</strong> Nusa Penida day trip, or a slow day. Penida is a long day — early boat, rough roads — and worth it, but it is not restful.',
+        '<strong>Day 7.</strong> Last beach morning, then the airport. Leave 2 hours for the transfer even though the map says 45 minutes.',
+      ]],
+      ['callout', 'Two hours is a realistic Ubud–south transfer, not the 70 minutes a map will quote. Build the week around that and it stops being frustrating.'],
+      ['h2', 'What it costs'],
+      ['p', 'Excluding international flights, roughly $350–$550 per person budget, $700–$1,400 mid-range. Add the one-time IDR 150,000 (~$9.30) tourist levy per person, payable online before you fly.'],
+      ['h2', 'What to cut if you only have five days'],
+      ['p', 'Drop Nusa Penida and one Ubud day. Do not drop the two-base structure to squeeze in a third region — you will spend the saved time in a car.'],
+    ],
+    sources: [
+      ['2026 Bali Travel Guide with Sample Itinerary & Budget', 'https://www.thepoortraveler.net/bali-travel-guide/'],
+      ['Bali Trip Cost 2026: Budget Breakdown by Tier', 'https://dmcquote.com/blog/post/bali-trip-cost-2026'],
+    ],
+  },
+  {
+    slug: 'renting-a-scooter-in-bali',
+    app: 'bali-secret',
+    title: 'Renting a Scooter in Bali: What to Know First',
+    description:
+      'Scooter accidents are the most common travel insurance claim in Bali. Licence requirements, what your insurance actually covers, and the rules that matter.',
+    published: '2026-09-22', updated: '2026-09-22',
+    answer:
+      'You legally need an International Driving Permit endorsed for motorcycles. Without one, most travel insurance will not pay out for an accident — which is the single most common claim in Bali.',
+    blocks: [
+      ['p', 'Scooters are how Bali moves, and renting one is cheap and easy. The part that is not obvious: <strong>the paperwork determines whether your insurance pays if something goes wrong</strong>, and something goes wrong often enough that it is the most common claim on the island.'],
+      ['h2', 'The licence question'],
+      ['p', 'To ride legally you need an International Driving Permit with the <strong>motorcycle category endorsed</strong>, which in turn requires a motorcycle licence at home. A car licence alone does not cover you.'],
+      ['p', 'Rental shops will hand you a scooter without checking. That is not permission — it just moves the risk to you. Police checks happen, and more importantly, an insurer will ask for the licence when you claim.'],
+      ['callout', 'If you ride without the correct licence and crash, expect your travel insurance to decline the medical bill. Bali medical evacuation runs into tens of thousands of dollars. This is the single most expensive mistake travellers make here.'],
+      ['h2', 'Before you ride off'],
+      ['ol', [
+        '<strong>Photograph the scooter from every angle</strong> before leaving, including existing scratches. Damage disputes on return are routine.',
+        '<strong>Check the brakes and tyres yourself.</strong> Fleet maintenance varies enormously.',
+        '<strong>Wear the helmet properly.</strong> It is legally required, and head injuries are what turn an accident into a catastrophe.',
+        '<strong>Do not leave your passport as a deposit.</strong> Offer a copy or a cash deposit instead.',
+      ]],
+      ['h2', 'Riding there'],
+      ['ul', [
+        'Traffic is left-hand drive and flows more than it follows rules. Be predictable and go slowly.',
+        'Roads are worse after dark, and many have no lighting or edge markings.',
+        'Wet season afternoons make roads genuinely slick — the first rain after a dry spell is the worst.',
+        'Fuel from roadside stalls in bottles is normal and fine.',
+      ]],
+      ['h2', 'When not to bother'],
+      ['p', 'If you have never ridden a scooter, Bali is not the place to learn, whatever the internet says. A private driver for day trips costs little when split between two people and removes the entire risk. Plenty of people do a whole trip that way and miss nothing.'],
+      ['note', 'Check your own policy wording and the current licence requirements before you travel — both change.'],
+    ],
+    sources: [
+      ['2026 Bali Travel Guide with Sample Itinerary & Budget', 'https://www.thepoortraveler.net/bali-travel-guide/'],
+    ],
+  },
+];
