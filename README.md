@@ -26,23 +26,30 @@ node build.mjs && node seo-check.mjs
 description or canonical, more than one `<h1>`, invalid JSON-LD, a broken
 internal link, or a title/description outside the length Google will render.
 
-## Before you deploy — change one line
+## Live
 
-`src/content.mjs` → `site.origin`. It is currently `https://azizsassi.com`.
-Canonical URLs, Open Graph tags and `sitemap.xml` all derive from it, so a
-wrong value silently breaks your SEO.
+**https://www.appsbysass.com** — Vercel, auto-deploying from `main`.
 
-## Deploy
-
-Static host, no build step on their side:
+Push to deploy:
 
 ```bash
-npx vercel --prod dist
+git add -A && git commit -m "..." && git push
 ```
 
-Netlify: drag `dist/` onto https://app.netlify.com/drop
+`site.origin` in `src/content.mjs` is `https://www.appsbysass.com`, matching
+Vercel's primary domain. The apex 308-redirects to `www`, so canonicals point
+at `www` — if you ever make the apex primary in the Vercel dashboard, change
+`site.origin` in the same commit or you advertise a URL that redirects.
 
-Then submit `https://yourdomain.com/sitemap.xml` in Google Search Console.
+### Staging a change without indexing it
+
+```bash
+NOINDEX=1 SITE_ORIGIN=https://example.vercel.app npm run build
+```
+
+`NOINDEX=1` adds `robots: noindex,nofollow` to every page and flips robots.txt
+to `Disallow: /`. Use it for any preview that should not compete with the live
+domain in search results.
 
 ---
 
