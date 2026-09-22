@@ -23,6 +23,10 @@ export const site = {
   ],
   author: 'Aziz Sassi',
 
+  // Shown publicly on /contact/. Affiliate networks and ad platforms require a
+  // working contact method — change this if you want a different address.
+  contactEmail: 'sassiaziz50@gmail.com',
+
   // Paste your IDs here and the tags appear on every page automatically.
   analytics: {
     ga4: '',           // e.g. 'G-XXXXXXXXXX' from Google Analytics 4

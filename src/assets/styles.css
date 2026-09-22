@@ -890,3 +890,7 @@ footer a:hover{color:var(--sun)}
 }
 .mid-cta .btn{padding:12px 20px;font-size:12px}
 @media (max-width:460px){.mid-cta .btn{width:100%;justify-content:center}}
+
+.prose .mailto{font-size:19px;font-weight:700}
+.prose .mailto a{color:var(--accent-ink);text-underline-offset:4px}
+.prose code{background:var(--tint);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.9em}

@@ -8,6 +8,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { site, apps, appBySlug } from './src/content.mjs';
 import { articles } from './src/articles.mjs';
+import { pages } from './src/pages.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 // FLAT=1 emits one directory of relative-linked .html files, for hosts that
@@ -181,6 +182,10 @@ ${body}
         <ul>${articles.slice(0, 6).map((a) => `<li><a href="${hArticle(a.app, a.slug)}">${esc(a.title.length > 34 ? a.title.slice(0, 34) + '…' : a.title)}</a></li>`).join('')}</ul>
       </div>
       <div>
+        <p class="foot-h">Site</p>
+        <ul>${pages.map((pg) => `<li><a href="${FLAT ? pg.slug + '.html' : '/' + pg.slug + '/'}">${esc(pg.title)}</a></li>`).join('')}</ul>
+      </div>
+      <div>
         <p class="foot-h">Elsewhere</p>
         <ul><li><a href="${esc(site.developerUrl)}">App Store profile</a></li></ul>
       </div>
@@ -235,6 +240,7 @@ function renderBlocks(blocks, app) {
       case 'ol':      return `<ol>${val.map((li) => `<li>${li}</li>`).join('')}</ol>`;
       case 'callout': return `<div class="callout">${val}</div>`;
       case 'note':    return `<div class="note">${val}</div>`;
+      case 'contact': return `<p class="mailto"><a href="mailto:${esc(site.contactEmail)}">${esc(site.contactEmail)}</a></p>`;
       case 'table':   return `<div class="tbl-wrap"><table><thead><tr>${
         val.head.map((h) => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${
         val.rows.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join('')}</tr>`).join('')
@@ -580,6 +586,42 @@ ${related.length ? `<section>
   });
 }
 
+function staticPage(pg) {
+  const body = `
+<header class="band">
+  ${SKY}
+  <div class="wrap">
+    <p class="crumb"><a href="${hHome()}">Home</a> <span>/</span> ${esc(pg.title)}</p>
+    <h1 class="d">${esc(pg.title)}</h1>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <article class="prose">${renderBlocks(pg.blocks)}</article>
+  </div>
+</section>
+`;
+  return layout({
+    title: `${pg.title} | ${site.name}`,
+    description: pg.description,
+    path: `/${pg.slug}/`,
+    accent: '#5B46F0', accentSoft: '#EEEBFF', accentInk: '#4338CA',
+    body,
+    jsonld: [
+      { '@context': 'https://schema.org', '@type': 'WebPage',
+        name: pg.title, description: pg.description, url: abs(`/${pg.slug}/`),
+        isPartOf: { '@id': abs('/#website') },
+        publisher: { '@id': abs('/#person') } },
+      { '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: abs('/') },
+          { '@type': 'ListItem', position: 2, name: pg.title, item: abs(`/${pg.slug}/`) },
+        ] },
+    ],
+  });
+}
+
 // ---------------------------------------------------------------------------
 // Build
 // ---------------------------------------------------------------------------
@@ -600,6 +642,7 @@ const written = [];
 written.push(await emit('/', homePage()));
 for (const app of apps) written.push(await emit(`/${app.slug}`, appPage(app)));
 for (const a of articles) written.push(await emit(`/${a.app}/${a.slug}`, articlePage(a)));
+for (const pg of pages) written.push(await emit(`/${pg.slug}`, staticPage(pg)));
 
 // assets
 // One stylesheet: @font-face rules first, then the design system. The
