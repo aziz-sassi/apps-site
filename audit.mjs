@@ -9,9 +9,13 @@ const pages=new Map(), inbound=new Map();
 for (const f of files) {
   const html=await readFile(f,'utf8');
   const route='/'+relative(DIST,f).replace(/index\.html$/,'');
-  const text=html.replace(/<script[\s\S]*?<\/script>/g,'').replace(/<style[\s\S]*?<\/style>/g,'')
-                 .replace(/<[^>]+>/g,' ').replace(/&[a-z]+;/g,' ');
-  const words=text.split(/\s+/).filter(w=>w.length>1).length;
+  // Count the ARTICLE BODY only. Counting the whole page includes nav, hero,
+  // FAQ, footer and CTAs, which inflates the number by roughly 400 words and
+  // hides thin content.
+  const prose=(html.match(/<article class="prose">([\s\S]*?)<\/article>/)||[])[1]
+    || html.replace(/<script[\s\S]*?<\/script>/g,'').replace(/<style[\s\S]*?<\/style>/g,'');
+  const words=prose.replace(/<[^>]+>/g,' ').replace(/&[a-z]+;/g,' ')
+                   .split(/\s+/).filter(w=>w.length>1).length;
   const links=[...html.matchAll(/href="(\/[^"#?]*)"/g)].map(m=>m[1]).filter(l=>l.endsWith('/'));
   const stores=(html.match(/data-store=/g)||[]).length;
   const hasOg=/property="og:image"/.test(html);
@@ -25,7 +29,7 @@ const app=[...pages].filter(([r])=>r.split('/').filter(Boolean).length===1);
 console.log('=== CONTENT DEPTH ===');
 const w=art.map(([,v])=>v.words).sort((a,b)=>a-b);
 console.log(`  articles: ${art.length} | words min ${w[0]} / median ${w[(w.length/2)|0]} / max ${w[w.length-1]}`);
-console.log(`  thin (<600 words): ${art.filter(([,v])=>v.words<600).length}`);
+console.log(`  thin (<700 body words): ${art.filter(([,v])=>v.words<700).length}`);
 console.log(`  app pages: ${app.length} | median words ${app.map(([,v])=>v.words).sort((a,b)=>a-b)[(app.length/2)|0]}`);
 
 console.log('\n=== INTERNAL LINKING ===');
