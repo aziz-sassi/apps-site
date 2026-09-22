@@ -11,7 +11,7 @@ export const site = {
   // all of which need absolute URLs. Must match the live domain exactly.
   // Canonical origin. SITE_ORIGIN overrides it for staging so a test deploy
   // never advertises a domain that isn't live yet.
-  origin: process.env.SITE_ORIGIN || 'https://appsbysass.com',
+  origin: process.env.SITE_ORIGIN || 'https://www.appsbysass.com',
   developerUrl: 'https://apps.apple.com/us/developer/aziz-sassi/id1876570186',
   author: 'Aziz Sassi',
 
