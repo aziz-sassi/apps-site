@@ -33,6 +33,20 @@ answer ("how long does X last", "is X safe", "how much X per day").
 Verify every factual claim across **at least two independent sources** and keep
 their URLs — you will cite them.
 
+## 2b. Decide: new guide, or deepen an existing one?
+
+Adding a page is not always the best move. Run `node audit.mjs` and look at
+**CONTENT DEPTH** — it reports body-word counts for the article prose only.
+
+- If several guides are under ~450 body words **and** you found a strong query
+  that one of them half-answers, **deepen that guide instead of writing a new
+  one.** Add a section with real substance: a data table, worked figures, a
+  formula, specific costs, named exceptions. Update its `updated` date.
+- Only write a brand-new guide when the query genuinely has no home.
+
+Depth on a page that already has internal links and some crawl history beats a
+new thin page almost every time. Either path counts as a successful run.
+
 ## 3. Quality gate — this matters more than shipping
 
 If you cannot find a query that is *all three* of: genuinely searched, not
@@ -81,7 +95,9 @@ existing style exactly:
 
 - Put the direct answer in the **first two paragraphs**. That is what earns a
   featured snippet. Never bury it under preamble.
-- Aim for 700–900 words of substance. Quality over length.
+- Aim for **700–900 body words** — that is words inside the `blocks` array,
+  which is what `node audit.mjs` measures. Do not count nav, FAQ or footer.
+  Quality over length: never pad to reach it.
 - Add **at least one in-prose contextual link** to another guide, e.g.
   `<a href="/hold/nicotine-withdrawal-timeline/">...</a>`. The anchor must be
   text that already means what the target answers. Never append "read more"
@@ -124,6 +140,7 @@ git push origin main
 
 ## 7. Report
 
-Say which query you targeted and why, which app it serves, the sources you
-verified against, and confirm `seo-check.mjs` passed. If you skipped, say what
+Say which query you targeted and why, which app it serves, whether you wrote a
+new guide or deepened an existing one, the sources you verified against, and
+confirm `seo-check.mjs` passed. If you skipped, say what
 you searched for and why nothing cleared the bar.
