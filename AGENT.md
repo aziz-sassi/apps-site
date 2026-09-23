@@ -124,23 +124,33 @@ build.**
 
 Optionally run `node audit.mjs` to see content depth and internal linking.
 
-## 6. Commit and push
+## 6. Commit — but do NOT push
 
-**Critical:** the commit email must be `sassiaziz50@gmail.com`. Vercel silently
-blocks deploys when the commit email has no matching GitHub account, so a wrong
-email means your work never goes live.
+**Aziz pushes. You do not.** Commit your work locally and stop there, so he can
+review the diff before anything reaches the live site.
+
+The commit email must still be `sassiaziz50@gmail.com` — Vercel silently blocks
+deploys when the commit email has no matching GitHub account, so getting this
+wrong now means his push later fails for reasons he cannot see.
 
 ```bash
 git config user.name "Aziz Sassi"
 git config user.email "sassiaziz50@gmail.com"
 git add -A
 git commit -m "Add guide: <title>"
-git push origin main
 ```
+
+Then stop. No `git push`. If unpushed commits from previous runs are already
+sitting there, that is expected — leave them alone and add yours on top.
 
 ## 7. Report
 
 Say which query you targeted and why, which app it serves, whether you wrote a
 new guide or deepened an existing one, the sources you verified against, and
-confirm `seo-check.mjs` passed. If you skipped, say what
+confirm `seo-check.mjs` passed. End with the exact command Aziz needs to publish
+it, and how many commits are waiting:
+
+```bash
+cd ~/Desktop/apps-site && git push origin main
+``` If you skipped, say what
 you searched for and why nothing cleared the bar.
