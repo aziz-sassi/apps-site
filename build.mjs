@@ -28,6 +28,11 @@ const words = (a) => a.blocks.reduce((n, [t, v]) =>
 const readMins = (a) => Math.max(2, Math.round(words(a) / 220));
 const articlesFor = (slug) => articles.filter((a) => a.app === slug);
 
+// Health and nutrition are \"Your Money or Your Life\" topics. Google's quality
+// guidelines expect a clear, visible disclaimer rather than one buried at the
+// bottom, so these two apps get it directly under the short answer.
+const YMYL = new Set(['hold', 'bo']);
+
 const niceDate = (iso) => new Date(iso + 'T00:00:00Z').toLocaleDateString('en-GB', {
   day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC',
 });
@@ -322,14 +327,22 @@ ${ringStage({
       <h2 class="d">Guides &amp; answers</h2>
       <p>Straight answers to the questions people actually ask &mdash; researched, sourced, and free of the fluff most of these articles are padded with.</p>
     </div>
-    <div class="grid three">
-      ${articles.map((a, i) => `
-      <a class="post reveal d${(i % 4) + 1}" href="${hArticle(a.app, a.slug)}" style="--accent:${appBySlug[a.app].accent}">
-        <h3>${esc(a.title)}</h3>
-        <p>${esc(a.description)}</p>
-        <p class="rd">${esc(appBySlug[a.app].name)} &middot; ${readMins(a)} min read</p>
-      </a>`).join('')}
-    </div>
+    ${apps.map((app) => `
+    <div class="guide-group" style="--accent:${app.accent};--accent-ink:${app.accentInk}">
+      <h3 class="group-head">
+        <span class="ico"><img src="${hAsset(`icons/${app.icon}`)}" alt="" width="72" height="72" loading="lazy"></span>
+        <a href="${hApp(app.slug)}">${esc(app.name)}</a>
+        <span class="count">${articlesFor(app.slug).length} guides</span>
+      </h3>
+      <div class="grid three">
+        ${articlesFor(app.slug).map((a, i) => `
+        <a class="post reveal d${(i % 4) + 1}" href="${hArticle(a.app, a.slug)}">
+          <h3>${esc(a.title)}</h3>
+          <p>${esc(a.description)}</p>
+          <p class="rd">${readMins(a)} min read</p>
+        </a>`).join('')}
+      </div>
+    </div>`).join('')}
   </div>
 </section>
 `;
@@ -535,6 +548,7 @@ function articlePage(a) {
         <p class="lbl">Short answer</p>
         <p>${esc(a.answer)}</p>
       </div>
+      ${YMYL.has(a.app) ? `<p class="ymyl"><strong>General information, not medical advice.</strong> Written from published sources, which are listed at the end. It is not a substitute for a doctor, pharmacist or registered dietitian who knows your situation.</p>` : ''}
       ${renderBlocks(a.blocks, app)}
     </article>
 
