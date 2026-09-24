@@ -86,12 +86,25 @@
   /* Report the one conversion that matters. No-ops when GA4 is not configured. */
   document.addEventListener('click', function (e) {
     var a = e.target.closest ? e.target.closest('a[data-store]') : null;
-    if (!a || typeof window.gtag !== 'function') return;
-    window.gtag('event', 'app_store_click', {
-      app_store_url: a.getAttribute('data-store'),
-      page_path: location.pathname,
-      in_app_browser: inApp ? (isInsta ? 'instagram' : isThreads ? 'threads' : isFB ? 'facebook' : 'other') : 'none',
-    });
+    if (!a) return;
+    var where = inApp
+      ? (isInsta ? 'instagram' : isThreads ? 'threads' : isFB ? 'facebook'
+         : /TikTok|musical_ly|BytedanceWebview/i.test(ua) ? 'tiktok' : 'other')
+      : 'browser';
+    /* Vercel Web Analytics */
+    if (typeof window.va === 'function') {
+      window.va('event', { name: 'app_store_click', data: {
+        url: a.getAttribute('data-store'), page: location.pathname, from: where,
+      }});
+    }
+    /* GA4, if a measurement id is ever configured */
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'app_store_click', {
+        app_store_url: a.getAttribute('data-store'),
+        page_path: location.pathname,
+        in_app_browser: where,
+      });
+    }
   }, true);
 
   var x = document.getElementById('sheet-x');

@@ -155,6 +155,7 @@ ${NOINDEX ? '<meta name="robots" content="noindex,nofollow">' : ''}
 <link rel="stylesheet" href="${hAsset('styles.css')}">
 ${site.analytics?.searchConsole ? `<meta name="google-site-verification" content="${esc(site.analytics.searchConsole)}">` : ''}
 ${site.verification?.impact ? `<meta name="impact-site-verification" value="${esc(site.verification.impact)}">` : ''}
+${site.analytics?.vercel ? `<script defer src="/_vercel/insights/script.js"></script>` : ''}
 ${site.analytics?.ga4 ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(site.analytics.ga4)}"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${esc(site.analytics.ga4)}');</script>` : ''}
 ${accent ? `<style>:root{--accent:${accent};--accent-soft:${accentSoft};--accent-ink:${accentInk || accent}}</style>` : ''}

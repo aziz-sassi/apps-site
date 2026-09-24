@@ -61,13 +61,15 @@ export const pages = [
       ['h2', 'What is collected'],
       ['ul', [
         '<strong>Server logs.</strong> The site is hosted on Vercel, which records standard request data — IP address, browser, page requested — as any web server does. This is operational and is handled under Vercel’s own privacy policy.',
-        '<strong>Analytics.</strong> When enabled, Google Analytics 4 records page views and which App Store links are tapped, so I can see which guides are useful. It sets cookies and is covered by Google’s privacy policy. Analytics is <em>not</em> enabled unless a measurement ID is configured, and no analytics tag is served when it is not.',
+        '<strong>Analytics.</strong> Vercel Web Analytics records page views and which App&nbsp;Store links are tapped, so I can tell which guides are actually useful. It is <strong>cookieless</strong> — it stores nothing on your device, does not follow you between sites, and does not build a profile of you. That is also why this site shows no cookie banner: there is nothing to consent to.',
       ]],
+      ['p', 'If Google Analytics or anything cookie-based is ever added, this page will say so <em>before</em> it is switched on, not after.'],
       ['h2', 'What is not collected'],
       ['ul', [
         'No account or profile data — there are no accounts.',
         'No email addresses, unless you choose to email me, in which case I have your email because you sent it.',
         'No advertising or cross-site tracking networks.',
+        'No cookies. The site sets none at all.',
         'Nothing is sold, rented, or shared with data brokers.',
       ]],
       ['h2', 'Links to other sites'],

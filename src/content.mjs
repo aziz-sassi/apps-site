@@ -35,6 +35,9 @@ export const site = {
 
   // Paste your IDs here and the tags appear on every page automatically.
   analytics: {
+    // Vercel Web Analytics — cookieless, no consent banner needed, no account
+    // to configure. Served from /_vercel/insights/ by the host itself.
+    vercel: true,
     ga4: '',           // e.g. 'G-XXXXXXXXXX' from Google Analytics 4
     searchConsole: '', // the content value of Google Search Console's HTML-tag verification
   },
