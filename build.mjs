@@ -28,6 +28,10 @@ const words = (a) => a.blocks.reduce((n, [t, v]) =>
 const readMins = (a) => Math.max(2, Math.round(words(a) / 220));
 const articlesFor = (slug) => articles.filter((a) => a.app === slug);
 
+const niceDate = (iso) => new Date(iso + 'T00:00:00Z').toLocaleDateString('en-GB', {
+  day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC',
+});
+
 const hHome    = ()       => (FLAT ? 'index.html' : '/');
 const hApp     = (s2)     => (FLAT ? `${s2}.html` : `/${s2}/`);
 const hArticle = (ap, s2) => (FLAT ? `${ap}--${s2}.html` : `/${ap}/${s2}/`);
@@ -514,6 +518,13 @@ function articlePage(a) {
     <p class="crumb"><a href="${hHome()}">Home</a> <span>/</span> <a href="${hApp(app.slug)}">${esc(app.name)}</a> <span>/</span> Guide</p>
     <h1 class="d">${esc(a.title)}</h1>
     <p class="lede">${esc(a.description)}</p>
+    <p class="byline">
+      <span>By <a href="${FLAT ? 'about.html' : '/about/'}">${esc(site.author)}</a></span>
+      <span>${a.updated && a.updated !== a.published
+        ? `Updated <time datetime="${a.updated}">${niceDate(a.updated)}</time>`
+        : `<time datetime="${a.published}">${niceDate(a.published)}</time>`}</span>
+      <span>${readMins(a)} min read</span>
+    </p>
   </div>
 </header>
 
@@ -583,6 +594,14 @@ ${related.length ? `<section>
           { '@type': 'ListItem', position: 3, name: a.title, item: abs(`/${a.app}/${a.slug}/`) },
         ],
       },
+      ...(a.title.includes('?') ? [{
+        '@context': 'https://schema.org', '@type': 'FAQPage',
+        mainEntity: [{
+          '@type': 'Question',
+          name: a.title.split('?')[0] + '?',
+          acceptedAnswer: { '@type': 'Answer', text: a.answer },
+        }],
+      }] : []),
     ],
   });
 }
@@ -623,6 +642,55 @@ function staticPage(pg) {
   });
 }
 
+// A dead end should still offer somewhere to go. Vercel serves this for any
+// unmatched path when 404.html sits at the output root.
+function notFoundPage() {
+  const body = `
+<header class="band">
+  ${SKY}
+  <div class="wrap">
+    <p class="eyebrow on-brand">404</p>
+    <h1 class="d">That page<br>moved or never <span class="sticker">existed</span>.</h1>
+    <p class="lede">No harm done. Everything on this site is one of two things \u2014 an app, or a guide about the subject behind it.</p>
+    <div class="cta-row"><a class="btn light" href="${hHome()}">Back to the start ${ARROW}</a></div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><h2 class="d">The apps</h2></div>
+    <div class="grid two">
+      ${apps.map((a) => `
+      <a class="app-card" href="${hApp(a.slug)}" style="--accent:${a.accent}">
+        <span class="ico"><img src="${hAsset(`icons/${a.icon}`)}" alt="" width="136" height="136"></span>
+        <span class="body">
+          <span class="nm">${esc(a.name)}</span>
+          <span class="tg">${esc(a.tagline)}</span>
+        </span>
+        <span class="go">${ARROW}</span>
+      </a>`).join('')}
+    </div>
+  </div>
+</section>
+
+<section class="tinted">
+  <div class="wrap">
+    <div class="sec-head"><h2 class="d">Most read guides</h2></div>
+    <div class="grid three">
+      ${articles.slice(0, 6).map((a) => `<a class="post" href="${hArticle(a.app, a.slug)}" style="--accent:${appBySlug[a.app].accent}"><h3>${esc(a.title)}</h3><p>${esc(a.description)}</p></a>`).join('')}
+    </div>
+  </div>
+</section>
+`;
+  return layout({
+    title: `Page not found | ${site.name}`,
+    description: 'That page moved or never existed. Here are the apps and the most read guides instead.',
+    path: '/404',
+    accent: '#5B46F0', accentSoft: '#EEEBFF', accentInk: '#4338CA',
+    body,
+  });
+}
+
 // ---------------------------------------------------------------------------
 // Build
 // ---------------------------------------------------------------------------
@@ -644,6 +712,8 @@ written.push(await emit('/', homePage()));
 for (const app of apps) written.push(await emit(`/${app.slug}`, appPage(app)));
 for (const a of articles) written.push(await emit(`/${a.app}/${a.slug}`, articlePage(a)));
 for (const pg of pages) written.push(await emit(`/${pg.slug}`, staticPage(pg)));
+// Not pushed to `written`: a 404 must never appear in the sitemap.
+await writeFile(join(DIST, FLAT ? '404.html' : '404.html'), notFoundPage());
 
 // assets
 // One stylesheet: @font-face rules first, then the design system. The
