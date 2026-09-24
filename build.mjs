@@ -577,7 +577,7 @@ ${related.length ? `<section>
   <div class="wrap">
     <div class="sec-head"><h2 class="d">Keep reading</h2></div>
     <div class="grid three">
-      ${related.map((r, i) => `<a class="post reveal d${(i % 4) + 1}" href="${hArticle(r.app, r.slug)}"><h3>${esc(r.title)}</h3><p>${esc(r.description)}</p><p class="rd">${readMins(r)} min read</p></a>`).join('')}
+      ${related.map((r, i) => `<a class="post compact reveal d${(i % 4) + 1}" href="${hArticle(r.app, r.slug)}"><h3>${esc(r.title)}</h3><p class="rd">${readMins(r)} min read</p></a>`).join('')}
     </div>
   </div>
 </section>` : ''}
