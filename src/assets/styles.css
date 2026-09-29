@@ -1132,3 +1132,60 @@ footer a:hover{color:var(--sun)}
   .js .mask-up{-webkit-mask-image:none;mask-image:none;opacity:1}
   .hero-device .device,.device::after{animation:none}
 }
+
+/* ===========================================================================
+   FILM SECTION
+   A sticky stage whose phrases cycle with scroll position — arkcontrol's
+   BREATH / FOCUS / PERFORMANCE device, rebuilt light and scrubbed rather than
+   played, so scrolling back rewinds it.
+   =========================================================================== */
+.film{position:relative;height:340vh;background:var(--ink)}
+.film-stage{
+  position:sticky;top:0;height:100vh;overflow:hidden;
+  display:grid;place-items:center;
+  background:
+    radial-gradient(60% 50% at 50% 45%, #241f4d 0%, transparent 70%),
+    linear-gradient(180deg,#14122b 0%,#0c0a1c 100%);
+}
+.film-glow{
+  position:absolute;width:min(760px,90vw);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle, rgba(91,70,240,.5), transparent 62%);
+  filter:blur(28px);
+  transform:scale(calc(.72 + var(--p,0) * .5));
+  opacity:calc(.45 + var(--p,0) * .35);
+}
+.film-words{position:relative;z-index:2;width:100%;display:grid;place-items:center;padding-inline:24px}
+.fw{
+  grid-area:1/1;text-align:center;max-width:22ch;
+  /* each phrase owns a slice of the scroll; fully visible only inside it */
+  --start:calc(var(--i) / var(--n));
+  --end:calc((var(--i) + 1) / var(--n));
+  --t:clamp(0, calc((var(--p,0) - var(--start)) * var(--n)), 1);
+  --o:clamp(0, calc(var(--t) * 4), 1);
+  --fade:clamp(0, calc((1 - var(--t)) * 4), 1);
+  opacity:calc(var(--o) * var(--fade));
+  transform:translateY(calc((1 - var(--t)) * 26px)) scale(calc(.97 + var(--t) * .03));
+}
+.fw-big{
+  color:#fff;margin:0 0 14px;
+  font-size:clamp(40px,8vw,96px);line-height:.96;letter-spacing:-.04em;
+  text-wrap:balance;
+}
+.fw-small{
+  margin:0;color:rgba(255,255,255,.72);
+  font-size:clamp(15px,2vw,19px);line-height:1.5;font-weight:600;
+}
+.film-rail{
+  position:absolute;left:50%;bottom:34px;transform:translateX(-50%);z-index:3;
+  width:min(200px,44vw);height:3px;border-radius:2px;background:rgba(255,255,255,.2);overflow:hidden;
+}
+.film-rail i{display:block;height:100%;background:#fff;border-radius:2px;
+  transform:scaleX(var(--p,0));transform-origin:0 50%}
+
+@media (prefers-reduced-motion:reduce){
+  .film{height:auto}
+  .film-stage{position:static;height:auto;padding-block:70px}
+  .film-words{gap:40px;display:grid}
+  .fw{grid-area:auto;opacity:1!important;transform:none!important}
+  .film-rail{display:none}
+}

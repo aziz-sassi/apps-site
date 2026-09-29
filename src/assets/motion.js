@@ -43,7 +43,9 @@
       }),
     };
   });
-  var stages = [].slice.call(document.querySelectorAll('.stage'));
+  // .film uses the same scrub as .stage: progress through a tall section
+  // drives which phrase is visible.
+  var stages = [].slice.call(document.querySelectorAll('.stage, .film'));
 
   function frame() {
     var vh = window.innerHeight;

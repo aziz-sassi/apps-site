@@ -93,6 +93,30 @@ const SCREENS = {
 // A single hero device running the app's live screen. BaliWise's hero reads as
 // a video but is HTML/CSS doing exactly this — it sells the product far better
 // than an icon does, and it weighs nothing.
+// A sticky film stage with short phrases that cycle on scroll — the move that
+// makes retail.arkcontrol.app feel cinematic (BREATH / FOCUS / PERFORMANCE).
+// Ours states the actual differentiator rather than mood words.
+function filmSection() {
+  const words = [
+    ['No team.',     'One person builds all of it.'],
+    ['No ads.',      'Not one, in any app.'],
+    ['No paywall.',  'Free means free.'],
+    ['Just the app.','Built because I wanted it to exist.'],
+  ];
+  return `<section class="film">
+  <div class="film-stage">
+    <div class="film-glow" aria-hidden="true"></div>
+    <div class="film-words">
+      ${words.map(([big, small], i) => `<div class="fw" style="--i:${i};--n:${words.length}">
+        <p class="fw-big d">${esc(big)}</p>
+        <p class="fw-small">${esc(small)}</p>
+      </div>`).join('')}
+    </div>
+    <div class="film-rail"><i></i></div>
+  </div>
+</section>`;
+}
+
 function heroFan(list) {
   return `<div class="hero-device fan" aria-hidden="true">
     ${list.map((a, i) => `<div class="device d${i}" style="--accent:${a.accent}"><span class="notch"></span>${SCREENS[a.screen] || ''}</div>`).join('')}
@@ -350,6 +374,8 @@ ${ringStage({
   heading: 'Everything I\u2019ve shipped',
   sub: 'Keep scrolling to spin through them. Scroll back and it winds the other way.',
 })}
+
+${filmSection()}
 
 <section class="tinted seam" id="guides">
   <div class="wrap">
