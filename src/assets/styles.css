@@ -962,3 +962,101 @@ footer a:hover{color:var(--sun)}
 .art-faq .faq{gap:11px}
 .art-faq details.q summary{font-size:15.5px;padding:16px 18px}
 .art-faq details.q .a{padding:0 18px 17px;font-size:15px}
+
+/* ===========================================================================
+   HERO DEVICE + STATLINE
+   A live app screen in the hero does what BaliWise's hero does — reads as a
+   product demo rather than a logo — except it is HTML/CSS, so it costs nothing
+   and stays sharp at any density.
+   =========================================================================== */
+.hero-split{
+  display:grid;gap:clamp(28px,5vw,64px);align-items:center;
+  grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+}
+@media (max-width:900px){
+  .hero-split{grid-template-columns:1fr}
+  .hero-device{justify-self:center}
+}
+.hero-copy{min-width:0}
+.hero-copy .app-hero{margin-bottom:6px}
+.hero-copy .lede{margin-top:14px}
+
+.hero-device{display:flex;justify-content:center;perspective:1400px}
+.device{
+  position:relative;
+  width:clamp(208px,24vw,268px);
+  aspect-ratio:1/2.03;
+  border-radius:clamp(30px,3.6vw,40px);
+  border:3px solid var(--ink);
+  background:#0b0a16;
+  overflow:hidden;
+  box-shadow:
+    0 40px 80px rgba(10,9,22,.45),
+    0 0 0 1px rgba(255,255,255,.1) inset,
+    var(--shadow-lg);
+  transform:rotate(-2deg);
+  transition:transform .5s cubic-bezier(.2,.8,.25,1);
+}
+.hero-device:hover .device{transform:rotate(0deg) translateY(-6px)}
+.device .scr{font-size:1.06rem}
+.device .notch{
+  top:10px;width:36%;height:16px;border-radius:12px;
+}
+@media (prefers-reduced-motion:reduce){.device{transition:none;transform:none}}
+
+/* stat row under the hero copy */
+.statline{
+  list-style:none;margin:28px 0 0;
+  display:flex;flex-wrap:wrap;gap:14px 0;
+  padding:16px 20px;
+  background:rgba(10,9,22,.38);
+  border-radius:16px;
+  backdrop-filter:blur(3px);
+}
+.statline li{
+  display:flex;flex-direction:column;gap:2px;
+  padding-right:22px;margin-right:22px;
+  border-right:1px solid rgba(255,255,255,.26);
+}
+.statline li:last-child{border-right:none;margin-right:0;padding-right:0}
+.statline b{
+  font-family:'Bricolage Grotesque','Manrope',sans-serif;
+  font-weight:800;font-size:19px;letter-spacing:-.02em;color:#fff;line-height:1.1;
+}
+.statline span{
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.88);
+}
+@media (max-width:520px){
+  .statline li{padding-right:16px;margin-right:16px}
+  .statline b{font-size:16px}
+  .statline span{font-size:10px;letter-spacing:.07em}
+}
+
+/* ghost button on a colour band */
+.btn.ghost{
+  background:transparent;color:#fff;border-color:rgba(255,255,255,.85);
+  box-shadow:4px 4px 0 rgba(0,0,0,.28);
+}
+.btn.ghost:hover{background:rgba(255,255,255,.12)}
+
+/* Home hero: a small fan of devices — says "several apps" before a word is read */
+.hero-device.fan{position:relative;min-height:clamp(300px,42vw,430px)}
+.hero-device.fan .device{
+  position:absolute;top:50%;left:50%;
+  width:clamp(150px,17vw,196px);
+  transform-origin:50% 60%;
+}
+.hero-device.fan .device.d0{transform:translate(-50%,-50%) rotate(-11deg) translateX(-56%) scale(.92);z-index:1}
+.hero-device.fan .device.d1{transform:translate(-50%,-50%) rotate(0deg);z-index:3}
+.hero-device.fan .device.d2{transform:translate(-50%,-50%) rotate(11deg) translateX(56%) scale(.92);z-index:2}
+.hero-device.fan:hover .device.d0{transform:translate(-50%,-50%) rotate(-14deg) translateX(-64%) scale(.94)}
+.hero-device.fan:hover .device.d2{transform:translate(-50%,-50%) rotate(14deg) translateX(64%) scale(.94)}
+.hero-device.fan:hover .device.d1{transform:translate(-50%,-52%) rotate(0deg) scale(1.03)}
+@media (max-width:520px){
+  .hero-device.fan{min-height:270px}
+  .hero-device.fan .device{width:126px}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-device.fan:hover .device{transform:translate(-50%,-50%)}
+}

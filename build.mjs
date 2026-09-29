@@ -90,6 +90,24 @@ const SCREENS = {
     + `<span class="ft"><span>7 days</span><span>Rp 8.4M</span></span></div>`,
 };
 
+// A single hero device running the app's live screen. BaliWise's hero reads as
+// a video but is HTML/CSS doing exactly this — it sells the product far better
+// than an icon does, and it weighs nothing.
+function heroFan(list) {
+  return `<div class="hero-device fan" aria-hidden="true">
+    ${list.map((a, i) => `<div class="device d${i}" style="--accent:${a.accent}"><span class="notch"></span>${SCREENS[a.screen] || ''}</div>`).join('')}
+  </div>`;
+}
+
+function heroDevice(app) {
+  return `<div class="hero-device" aria-hidden="true">
+    <div class="device">
+      <span class="notch"></span>
+      ${SCREENS[app.screen] || ''}
+    </div>
+  </div>`;
+}
+
 // Scroll stage: a ring of phones whose rotation is bound to scroll position.
 // motion.js writes --rot (0..1 -> one full turn) and --p (progress) each frame.
 function ringStage({ shots, count, heading, sub, screens = [], every = 3 }) {
@@ -276,10 +294,21 @@ function homePage() {
   ${SKY_FULL}
   <div class="wrap">
     <p class="eyebrow on-brand">iOS &middot; Independent</p>
-    <h1 class="d">iPhone apps,<br>made <span class="sticker">properly</span>.</h1>
-    <p class="lede">I build small, focused apps &mdash; a dog-walk tracker, an honest calorie counter, a Bali trip planner, a quit-smoking coach, and more on the way. All free. Tap any one to open it in the App&nbsp;Store.</p>
-    <div class="cta-row">
-      <a class="btn light" href="#apps">See the apps ${ARROW}</a>
+    <div class="hero-split">
+      <div class="hero-copy">
+        <h1 class="d">iPhone apps,<br>made <span class="sticker">properly</span>.</h1>
+        <p class="lede">I build small, focused apps &mdash; a dog-walk tracker, an honest calorie counter, a Bali trip planner, a quit-smoking coach, and more on the way. All free.</p>
+        <div class="cta-row">
+          <a class="btn light" href="#apps">See the apps ${ARROW}</a>
+          <a class="btn ghost" href="#guides">Read the guides ${ARROW}</a>
+        </div>
+        <ul class="statline">
+          <li><b>${articles.length}</b><span>researched guides</span></li>
+          <li><b>Free</b><span>every app</span></li>
+          <li><b>Independent</b><span>built solo</span></li>
+        </ul>
+      </div>
+      ${heroFan(apps.slice(0, 3))}
     </div>
   </div>
   <span class="scroll-cue" aria-hidden="true"><b></b>Scroll</span>
@@ -322,7 +351,7 @@ ${ringStage({
   sub: 'Keep scrolling to spin through them. Scroll back and it winds the other way.',
 })}
 
-<section class="tinted">
+<section class="tinted" id="guides">
   <div class="wrap">
     <div class="sec-head">
       <h2 class="d">Guides &amp; answers</h2>
@@ -390,16 +419,27 @@ function appPage(app) {
   ${SKY}
   <div class="wrap">
     <p class="crumb"><a href="${hHome()}">Home</a> <span>/</span> ${esc(app.name)}</p>
-    <div class="app-hero">
-      <span class="ico"><img src="${hAsset(`icons/${app.icon}`)}" alt="${esc(app.name)} app icon" width="208" height="208"></span>
-      <div style="flex:1;min-width:260px">
-        <h1 class="d">${esc(app.name)}</h1>
+    <div class="hero-split">
+      <div class="hero-copy">
+        <div class="app-hero">
+          <span class="ico"><img src="${hAsset(`icons/${app.icon}`)}" alt="${esc(app.name)} app icon" width="208" height="208"></span>
+          <div style="flex:1;min-width:220px">
+            <h1 class="d">${esc(app.name)}</h1>
+          </div>
+        </div>
         <p class="lede">${app.hero}</p>
+        <div class="cta-row">
+          ${storeLink(app, 'Get it free')}
+          ${posts.length ? `<a class="btn ghost" href="#guides">Read the guides ${ARROW}</a>` : ''}
+        </div>
+        <ul class="statline">
+          <li><b>${esc(app.price)}</b><span>on the App&nbsp;Store</span></li>
+          <li><b>${esc(app.category)}</b><span>category</span></li>
+          <li><b>iOS ${esc(app.minOs)}+</b><span>required</span></li>
+          ${posts.length ? `<li><b>${posts.length}</b><span>researched guides</span></li>` : ''}
+        </ul>
       </div>
-    </div>
-    <div class="cta-row">
-      ${storeLink(app, 'Get it free')}
-      ${posts.length ? `<a class="btn" style="background:transparent;color:#fff;border-color:#fff;box-shadow:4px 4px 0 rgba(0,0,0,.25)" href="#guides">Read the guides ${ARROW}</a>` : ''}
+      ${heroDevice(app)}
     </div>
   </div>
 </header>
