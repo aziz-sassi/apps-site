@@ -9,6 +9,12 @@ export const articles = [
   // ======================= HOLD =======================
   {
     slug: 'how-long-do-nicotine-cravings-last',
+    faqs: [
+      ['Do cravings ever stop completely?', 'For most people the frequent, physical cravings are gone within 3 to 4 weeks. Occasional cue-driven cravings — triggered by a place, a drink, a stressful moment — can surface for months or years, but they are brief and get weaker every time you do not act on them.'],
+      ['Why do I still get cravings after a year?', 'That is a cue firing, not withdrawal. Your brain associated certain situations with nicotine, and those associations fade slowly. It is not a sign the quit is failing or that you are still dependent.'],
+      ['Are vaping cravings different from cigarette cravings?', 'The mechanism is identical because the drug is identical. Vaping cravings can feel more constant, because vaping is usually all-day grazing rather than discrete cigarettes, so there are more cues attached to more moments.'],
+      ['Does the craving get worse if I ignore it?', 'No. A craving rises, peaks and falls in 10 to 15 minutes whether or not you act on it. Smoking during one feels like it ended it, but it was ending anyway.'],
+    ],
     app: 'hold',
     title: 'How Long Do Nicotine Cravings Last?',
     description:
@@ -67,6 +73,11 @@ export const articles = [
 
   {
     slug: 'nicotine-withdrawal-timeline',
+    faqs: [
+      ['How long does nicotine stay in your system?', 'Nicotine itself clears within 1 to 3 days. Cotinine, its main metabolite and what most tests look for, can be detectable for up to around 10 days. Withdrawal symptoms outlast both, because they come from the brain readjusting rather than from nicotine still circulating.'],
+      ['Which withdrawal symptom lasts longest?', 'Cravings and difficulty concentrating tend to outlast the physical symptoms. Irritability and sleep disruption usually settle within two weeks; cravings taper across three to four.'],
+      ['Is cold turkey harder than tapering?', 'Cold turkey gives a sharper peak but a shorter total; tapering flattens the peak but extends it. Success rates are broadly similar, so the better choice is whichever you will actually stick to.'],
+    ],
     app: 'hold',
     title: 'Nicotine Withdrawal Timeline: What to Expect, Hour by Hour',
     description:
@@ -120,6 +131,11 @@ export const articles = [
 
   {
     slug: 'how-to-quit-vaping',
+    faqs: [
+      ['Is quitting vaping easier than quitting smoking?', 'Usually harder, not easier. A vape has no natural stopping point, salt-based liquids deliver nicotine more efficiently than most cigarettes, and there is no ritual boundary, so the cue list is longer.'],
+      ['Should I switch to cigarettes to quit vaping?', 'No. That trades a nicotine problem for a nicotine-plus-combustion problem. Combustion is what causes the great majority of smoking harm.'],
+      ['Does tapering nicotine strength work?', 'It can, and it suits people who find cold turkey intolerable. The risk is compensating by vaping more often at the lower strength, which keeps total intake flat — so track puffs, not just mg.'],
+    ],
     app: 'hold',
     title: 'How to Quit Vaping: A Practical Plan That Survives Day 3',
     description:
@@ -169,6 +185,11 @@ export const articles = [
   // ======================= JUPITER WALKIES =======================
   {
     slug: 'how-long-should-i-walk-my-dog',
+    faqs: [
+      ['Is one long walk better than two short ones?', 'Two is usually better. It spreads toilet breaks, mental stimulation and joint load across the day, and most dogs settle better with a predictable rhythm than with one big outing.'],
+      ['Can I skip a walk if my dog has a garden?', 'A garden covers toileting, not stimulation. Dogs need new smells and a change of environment, which is the part a familiar garden cannot provide however large it is.'],
+      ['What if my dog still has energy after a walk?', 'Add mental work rather than distance. Ten to fifteen minutes of scent work or training tires most dogs more than an extra half hour of walking, and it does not add joint load.'],
+    ],
     app: 'jupiter-walkies',
     title: 'How Long Should I Walk My Dog Each Day?',
     description:
@@ -221,6 +242,11 @@ export const articles = [
 
   {
     slug: 'puppy-walk-length',
+    faqs: [
+      ['What happens if I over-exercise a puppy?', 'The concern is the growth plates, which stay soft until the skeleton matures. Repetitive high-impact exercise before then is associated with joint problems later, particularly in large and giant breeds.'],
+      ['Does play in the garden count towards the limit?', 'Free play at their own pace is different from structured lead walking, and puppies self-regulate reasonably well when left to it. The 5-minute rule is about forced, sustained exercise.'],
+      ['When can my puppy go on normal walks?', 'Roughly when growth plates close — about 12 months for small breeds, 18 to 24 for large and giant ones. Ask your vet about your specific breed rather than going by age alone.'],
+    ],
     app: 'jupiter-walkies',
     title: 'How Far Can a Puppy Walk? The 5-Minute Rule Explained',
     description:
@@ -271,6 +297,11 @@ export const articles = [
 
   {
     slug: 'dog-walking-in-hot-weather',
+    faqs: [
+      ['What temperature is too hot to walk a dog?', 'There is no single number, because humidity and breed matter as much as air temperature. Use the pavement test, and treat anything above roughly 20°C as needing care for flat-faced, elderly, overweight or thick-coated dogs.'],
+      ['Can I walk my dog on grass when it is hot?', 'Grass is far cooler than tarmac and a good alternative, but it does not remove the heat-stress risk — a dog can overheat on grass in still, humid air.'],
+      ['Should I shave my dog in summer?', 'No, not double-coated breeds. The coat insulates against heat as well as cold and protects from sunburn. Shaving often makes overheating worse.'],
+    ],
     app: 'jupiter-walkies',
     title: 'Walking Your Dog in Hot Weather: The 7-Second Pavement Test',
     description:
@@ -326,6 +357,10 @@ export const articles = [
   // ======================= BO =======================
   {
     slug: 'are-ai-calorie-counting-apps-accurate',
+    faqs: [
+      ['Should I still use one if it is off by a third?', 'For general awareness and building the habit, yes — the trend is real and consistent logging does most of the work. For a precise cut or a medical protocol, weigh your food.'],
+      ['Which foods are estimated worst?', 'High-fat dishes and anything with hidden oil or dressing. Carbohydrates are estimated most consistently; cuisines under-represented in training data fare worse across the board.'],
+    ],
     app: 'bo',
     title: 'Are AI Calorie Counting Apps Accurate? What the Testing Shows',
     description:
@@ -378,6 +413,12 @@ export const articles = [
 
   {
     slug: 'how-many-calories-should-i-eat',
+    faqs: [
+      ['Should I eat back the calories I burn exercising?', 'Generally no, or only a portion. Fitness trackers and gym machines overestimate calorie burn substantially, and most calculators already include an activity multiplier — so eating exercise calories back often double-counts them.'],
+      ['Why do calorie calculators give me different numbers?', 'They use different equations and different activity brackets. A spread of 200 to 400 calories between calculators is normal. Treat any of them as a starting hypothesis and let two to three weeks of measured weight change give you the real number.'],
+      ['Do I need to eat less as I lose weight?', 'Yes, gradually. A lighter body costs less energy to run, so the deficit that worked at the start shrinks as you go. Recheck your maintenance after every 5 to 10 kg.'],
+      ['Is it bad to eat the same calories every day?', 'No. Consistency makes the trend easier to read. Some people prefer varying intake across the week — that works too, as long as the weekly total is right, which is what actually matters.'],
+    ],
     app: 'bo',
     title: 'How Many Calories Should I Eat a Day?',
     description:
@@ -445,6 +486,10 @@ export const articles = [
 
   {
     slug: 'how-to-photograph-food-for-calorie-tracking',
+    faqs: [
+      ['Why does the app get my meal wrong?', 'Almost always because the highest-calorie parts are invisible in a photo — oil, butter, dressing, and food hidden under other food. The model identifies what it can see; it cannot see those.'],
+      ['Is it better to photograph or describe food?', 'Describe anything mixed, liquid or uniform — soups, drinks, nuts, sauces. Photograph plated food where the components are distinguishable.'],
+    ],
     app: 'bo',
     title: 'How to Photograph Food for Accurate Calorie Tracking',
     description:
@@ -489,6 +534,11 @@ export const articles = [
   // ======================= THE BALI SECRET =======================
   {
     slug: 'best-time-to-visit-bali',
+    faqs: [
+      ['What is the cheapest month to visit Bali?', 'February. It sits in the wettest part of the year, so flights and villas are at their lowest, and rain usually arrives as heavy afternoon downpours rather than all-day grey.'],
+      ['Is the rainy season actually bad?', 'Less than people expect. Mornings are frequently clear and the island is at its greenest. The real trade-offs are rougher seas for diving and snorkelling, and more mosquitoes.'],
+      ['When is Bali least crowded?', 'January and February, then the shoulder months of October and November. Avoid July, August, and the run-up to New Year.'],
+    ],
     app: 'bali-secret',
     title: 'Best Time to Visit Bali: A Month-by-Month Guide',
     description:
@@ -557,6 +607,10 @@ export const articles = [
 
   {
     slug: 'bali-trip-cost',
+    faqs: [
+      ['How much cash should I bring to Bali?', 'Enough for the first day or two; ATMs are widely available. Withdraw larger amounts less often, since per-withdrawal fees add up quickly over a trip.'],
+      ['Is Bali still cheap in 2026?', 'Relative to most destinations, yes — but the range is enormous. The same week can cost $350 or $3,000 depending mostly on where you eat and where you sleep.'],
+    ],
     app: 'bali-secret',
     title: 'How Much Does a Trip to Bali Cost? 2026 Budget Breakdown',
     description:
@@ -621,6 +675,10 @@ export const articles = [
 
   {
     slug: 'bali-tourist-levy',
+    faqs: [
+      ['Do children have to pay the Bali levy?', 'Yes. It is per person, including children and infants, which is the part that surprises families most.'],
+      ['What happens if I do not pay before arriving?', 'You are directed to a counter to pay before continuing. It is not optional, and enforcement has tightened since it was introduced.'],
+    ],
     app: 'bali-secret',
     title: 'The Bali Tourist Levy: What It Is and How to Pay It',
     description:
@@ -669,6 +727,11 @@ export const articles = [
   },
   {
     slug: 'what-happens-when-you-quit-smoking-timeline',
+    faqs: [
+      ['When will I stop feeling breathless?', 'Lung function measurably improves between 2 and 12 weeks, and most people notice stairs and walking first. Coughing and breathlessness continue improving out to around nine months.'],
+      ['Does the damage fully reverse?', 'Much of it does. Coronary heart disease risk halves at about a year and stroke risk approaches non-smoker levels over 5 to 15 years. Some structural lung damage is permanent, which is why stopping sooner matters more than stopping perfectly.'],
+      ['Why am I coughing more since quitting?', 'Cilia in your airways start working again and begin clearing built-up debris. It is a recovery sign, not a setback, and it settles within a few weeks.'],
+    ],
     app: 'hold',
     title: 'What Happens When You Quit Smoking: The Recovery Timeline',
     description:
@@ -711,6 +774,10 @@ export const articles = [
   },
   {
     slug: 'does-vaping-affect-your-skin',
+    faqs: [
+      ['How long until my skin improves after quitting?', 'Circulation starts recovering within 2 to 12 weeks, which is when tone and healing usually change first. Texture takes longer, since skin renews on roughly a month-long cycle — judge it at eight weeks.'],
+      ['Is vaping worse for skin than smoking?', 'Generally less bad, because there is no smoke or tar. But nicotine is the vasoconstrictor, and vaping delivers nicotine, so the circulation effect still applies.'],
+    ],
     app: 'hold',
     title: 'Does Vaping Affect Your Skin? What Actually Changes',
     description:
@@ -748,6 +815,10 @@ export const articles = [
   },
   {
     slug: 'how-many-calories-does-walking-the-dog-burn',
+    faqs: [
+      ['Does walking count as real exercise?', 'Yes. It is moderate-intensity activity and, unlike most exercise, dog owners do it every day regardless of motivation — which is what makes it effective over months.'],
+      ['Why does my tracker show fewer calories than a calculator?', 'Because it measures your actual moving pace, and dog walks are stop-start. The tracked figure is the honest one.'],
+    ],
     app: 'jupiter-walkies',
     title: 'How Many Calories Does Walking the Dog Burn?',
     description:
@@ -791,6 +862,10 @@ export const articles = [
   },
   {
     slug: 'why-does-my-dog-pull-on-the-leash',
+    faqs: [
+      ['How long does it take to stop a dog pulling?', 'With genuine consistency, most dogs improve noticeably within two weeks. The variable is not the dog — it is whether pulling ever works, even occasionally.'],
+      ['Do anti-pull harnesses actually work?', 'Front-clip harnesses do help, by redirecting forward momentum sideways. They are a management tool, not training: they make the method easier to apply, not unnecessary.'],
+    ],
     app: 'jupiter-walkies',
     title: 'Why Does My Dog Pull on the Leash? And How to Stop It',
     description:
@@ -834,6 +909,11 @@ export const articles = [
   },
   {
     slug: 'why-am-i-not-losing-weight-in-a-calorie-deficit',
+    faqs: [
+      ['How long should I wait before changing anything?', 'Three full weeks, tracked as a weekly average. Two weeks is not enough to separate fat loss from water, and day-to-day readings are almost entirely water.'],
+      ['Can I be in a deficit and genuinely not lose fat?', 'No — but you can be in a deficit and not see it on the scale, because fat cells temporarily fill with water as they empty. The fat is going; the scale is lagging.'],
+      ['Does metabolic adaptation mean my metabolism is broken?', 'No. It slows energy expenditure somewhat, mostly through reduced everyday movement, but it does not stop fat loss. It is a smaller effect than the internet suggests, and it reverses when you eat at maintenance for a while.'],
+    ],
     app: 'bo',
     title: 'Why Am I Not Losing Weight in a Calorie Deficit?',
     description:
@@ -874,6 +954,10 @@ export const articles = [
   },
   {
     slug: 'how-to-track-macros',
+    faqs: [
+      ['Do I have to hit macros exactly?', 'No. Within 5 to 10 g on protein and calories is plenty. Precision beyond that buys nothing and makes the habit harder to keep.'],
+      ['Which macro matters most?', 'Protein. In a deficit it is the difference between losing fat and losing fat plus muscle, and it does more for hunger than the other two combined.'],
+    ],
     app: 'bo',
     title: 'How to Track Macros: A Beginner’s Guide',
     description:
@@ -921,6 +1005,12 @@ export const articles = [
   },
   {
     slug: 'bali-itinerary-7-days',
+    faqs: [
+      ['Is 7 days enough for Bali?', 'Yes, for one region plus a base in the south. It is not enough to see the whole island properly, and trying to is the commonest way a first trip disappoints — traffic turns short distances into half-days.'],
+      ['Should I book accommodation in advance?', 'For July, August and December, yes — those are peak and the good villas go early. For shoulder season you can book a few days ahead and often get better rates, though booking ahead removes a decision you do not need on holiday.'],
+      ['Do I need a scooter for this itinerary?', 'No. Two private driver days cover the inland sights comfortably, and the southern areas are walkable within each base. A scooter adds flexibility but also the single biggest risk on the island.'],
+      ['What is the one thing people wish they had known?', 'That Ubud to the south is realistically two hours, not the hour a map shows. Plan around that and the week stops feeling rushed.'],
+    ],
     app: 'bali-secret',
     title: 'Bali Itinerary: 7 Days, Done Properly',
     description:
@@ -975,6 +1065,10 @@ export const articles = [
   },
   {
     slug: 'renting-a-scooter-in-bali',
+    faqs: [
+      ['Do I really need an international driving permit?', 'To ride legally, and to have any chance of an insurance payout after an accident, yes — with the motorcycle category endorsed. A car licence alone does not cover you.'],
+      ['What if I have never ridden a scooter?', 'Bali is not the place to learn. A private driver costs little split between two people and removes the single largest risk on the island.'],
+    ],
     app: 'bali-secret',
     title: 'Renting a Scooter in Bali: What to Know First',
     description:
@@ -1012,6 +1106,11 @@ export const articles = [
   },
   {
     slug: 'weight-gain-after-quitting-smoking',
+    faqs: [
+      ['Will I definitely gain weight?', 'No. The 3 to 5 kg figure is an average, not a certainty, and a meaningful share of people gain nothing. Appetite and habit are the two biggest contributors and both are addressable.'],
+      ['Should I diet while quitting?', 'Not in the first month. Fighting cravings and hunger at once is how quits fail. Deal with the nicotine first and the weight second.'],
+      ['Does the weight come off afterwards?', 'Usually, yes — appetite normalises over a few months and the weight is far easier to address once you are not also managing withdrawal.'],
+    ],
     app: 'hold',
     title: 'Weight Gain After Quitting Smoking: What to Expect',
     description:
@@ -1051,6 +1150,11 @@ export const articles = [
   },
   {
     slug: 'quit-smoking-anxiety',
+    faqs: [
+      ['Is anxiety after quitting normal?', 'Yes. It is a recognised nicotine withdrawal symptom, it peaks 24 to 48 hours after your last dose, and it typically eases over about four weeks.'],
+      ['Why did smoking feel like it calmed me down?', 'It relieved the withdrawal anxiety that built between cigarettes, not your baseline anxiety. The relief was real but it was relief from a problem the nicotine created.'],
+      ['When should I see a doctor about it?', 'If it is not clearly improving by week three or four, if low mood is deepening rather than lifting, or if you have a history of anxiety or depression. Quitting can unmask an underlying condition, which is common and treatable.'],
+    ],
     app: 'hold',
     title: 'Anxiety After Quitting Smoking: Why It Happens',
     description:
@@ -1086,6 +1190,10 @@ export const articles = [
   },
   {
     slug: 'are-nicotine-pouches-safer',
+    faqs: [
+      ['Are pouches safer than cigarettes?', 'For the combustion-related harms, substantially — there is no smoke or tar. But they still deliver nicotine and sustain dependence, and they are not designed to taper you off it.'],
+      ['Can I use pouches to quit vaping?', 'You can, but you are switching products rather than quitting nicotine. Licensed nicotine replacement therapy has stepped doses and decades of trial evidence behind it; pouches have neither.'],
+    ],
     app: 'hold',
     title: 'Are Nicotine Pouches a Safer Way to Quit?',
     description:
@@ -1124,6 +1232,11 @@ export const articles = [
   },
   {
     slug: 'why-does-my-dog-stop-walking',
+    faqs: [
+      ['Should I pull my dog when it refuses to move?', 'No. Tension escalates a dog that has already dug in, and dragging past something frightening confirms it was dangerous, making the next walk worse.'],
+      ['Why does my dog stop at the same spot every time?', 'That usually means a specific cue — something it saw or heard there, or the point where you normally turn for home. A consistent stopping distance can also indicate pain or stamina limits.'],
+      ['Is refusing to walk a sign of illness?', 'It can be, especially if it is new behaviour in a dog that previously walked happily. Check paw pads and watch for stiffness, and see a vet before treating it as a training problem.'],
+    ],
     app: 'jupiter-walkies',
     title: 'Why Does My Dog Stop Walking and Refuse to Move?',
     description:
@@ -1163,6 +1276,10 @@ export const articles = [
   },
   {
     slug: 'how-to-tire-out-a-dog-without-walking',
+    faqs: [
+      ['Is mental exercise really as tiring as physical?', 'Per minute, usually more so. Ten to fifteen minutes of scent work settles most dogs more thoroughly than an extra half hour of walking.'],
+      ['What can I do if my dog is on crate rest?', "Scent games at floor level, food puzzles and low-key training can all be done within most vets' restrictions — but confirm the specifics with your vet first."],
+    ],
     app: 'jupiter-walkies',
     title: 'How to Tire Out a Dog Without a Walk',
     description:
@@ -1200,6 +1317,10 @@ export const articles = [
   },
   {
     slug: 'decompression-walks',
+    faqs: [
+      ['How often should I do decompression walks?', 'Two or three a week alongside your normal routine is enough for most owners to notice the dog settling faster at home.'],
+      ['Is a long lead safe?', 'On a harness, in open space, yes. Never on a collar — a dog hitting the end of a long lead at speed can injure its neck.'],
+    ],
     app: 'jupiter-walkies',
     title: 'Decompression Walks: Why a Slow, Sniffy Walk Beats a Fast One',
     description:
@@ -1248,6 +1369,11 @@ export const articles = [
   },
   {
     slug: 'is-1200-calories-too-low',
+    faqs: [
+      ['Who is 1,200 calories actually appropriate for?', 'A small, sedentary adult with a maintenance around 1,400 to 1,500 — for example someone about 150 cm and 45 kg with a desk job. For them it is a moderate 200 to 300 calorie deficit rather than a severe one.'],
+      ['What happens if I eat too little for too long?', 'Weight loss slows as the body reduces energy expenditure, more of what you lose comes from muscle, and hitting protein and micronutrient requirements becomes genuinely difficult. It is also much harder to sustain, which is why very low intakes so often end in a rebound.'],
+      ['Will I lose weight faster on 1,200 than 1,600?', 'Initially yes, but not proportionally, and much of the early difference is water. The larger deficit is harder to hold and costs more muscle, so the faster line on the scale rarely survives contact with month two.'],
+    ],
     app: 'bo',
     title: 'Is 1,200 Calories Too Low?',
     description:
@@ -1286,6 +1412,11 @@ export const articles = [
   },
   {
     slug: 'how-much-protein-per-day',
+    faqs: [
+      ['Can too much protein damage your kidneys?', 'In people with normal kidney function, intakes in this range are well tolerated and the long-standing concern has not held up. Existing kidney disease changes that — speak to a doctor.'],
+      ['Do I need protein powder?', 'No. It is convenient, not necessary. Whole foods hit these targets comfortably; powder just makes it easier when a meal is rushed.'],
+      ['Should I use current or goal body weight?', 'Goal weight, if you are carrying significant excess. Using current weight produces an impractically large number without added benefit.'],
+    ],
     app: 'bo',
     title: 'How Much Protein Per Day Do You Actually Need?',
     description:
@@ -1328,6 +1459,10 @@ export const articles = [
   },
   {
     slug: 'maintenance-calories',
+    faqs: [
+      ['How do I know when I have found my maintenance?', 'When your weekly average weight is stable across two to three weeks at a consistent intake. Single days tell you nothing.'],
+      ['Should I eat at maintenance between diets?', 'It is underrated. A few weeks at maintenance lets hunger signalling and everyday movement recover, which makes the next deficit more effective rather than less.'],
+    ],
     app: 'bo',
     title: 'What Are Maintenance Calories, and How Do You Find Yours?',
     description:
@@ -1367,6 +1502,10 @@ export const articles = [
   },
   {
     slug: 'where-to-stay-in-bali',
+    faqs: [
+      ['Where should a first-timer stay in Bali?', 'Ubud plus one southern base — Canggu, Seminyak or Uluwatu. That covers the inland and the coast without spending days in a car.'],
+      ['Is Ubud worth it if I want beaches?', 'Ubud has no beach and is roughly two hours from the south. Go for the culture, terraces and waterfalls, and base elsewhere for the coast.'],
+    ],
     app: 'bali-secret',
     title: 'Where to Stay in Bali: Ubud vs Canggu vs Seminyak vs Uluwatu',
     description:
@@ -1420,6 +1559,10 @@ export const articles = [
   },
   {
     slug: 'bali-visa-on-arrival',
+    faqs: [
+      ['How long can I stay in Bali on a visa on arrival?', '30 days, extendable once for a further 30, giving 60 in total. Start the extension well before expiry — it is not same-day.'],
+      ['Is the tourist levy the same as the visa?', 'No. They are separate payments through separate systems, and paying one does not cover the other.'],
+    ],
     app: 'bali-secret',
     title: 'Bali Visa on Arrival: What You Need Before You Fly',
     description:
@@ -1455,6 +1598,10 @@ export const articles = [
   },
   {
     slug: 'is-bali-safe',
+    faqs: [
+      ['Is Bali safe for solo female travellers?', 'Generally yes, and many travel solo without incident. Standard precautions apply, and the genuine risks remain scooters and the sea rather than violent crime.'],
+      ['Can you drink the tap water in Bali?', 'No. Use bottled or filtered water. Ice in established restaurants and cafes is commercially produced and generally fine.'],
+    ],
     app: 'bali-secret',
     title: 'Is Bali Safe? The Risks That Are Actually Worth Planning For',
     description:

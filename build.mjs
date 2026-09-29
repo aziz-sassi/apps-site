@@ -553,6 +553,13 @@ function articlePage(a) {
       ${renderBlocks(a.blocks, app)}
     </article>
 
+    ${a.faqs?.length ? `<section class="art-faq">
+      <h2>Common questions</h2>
+      <div class="faq">
+        ${a.faqs.map(([q, ans], i) => `<details class="q"${i === 0 ? ' open' : ''}><summary>${esc(q)}</summary><div class="a"><p>${ans}</p></div></details>`).join('')}
+      </div>
+    </section>` : ''}
+
     ${a.sources?.length ? `<div class="sources">
       <h2>Sources</h2>
       <ul>${a.sources.map(([t, u]) => `<li><a href="${esc(u)}" rel="nofollow noopener" target="_blank">${esc(t)}</a></li>`).join('')}</ul>
@@ -609,13 +616,20 @@ ${related.length ? `<section>
           { '@type': 'ListItem', position: 3, name: a.title, item: abs(`/${a.app}/${a.slug}/`) },
         ],
       },
-      ...(a.title.includes('?') ? [{
+      ...((a.title.includes('?') || a.faqs?.length) ? [{
         '@context': 'https://schema.org', '@type': 'FAQPage',
-        mainEntity: [{
-          '@type': 'Question',
-          name: a.title.split('?')[0] + '?',
-          acceptedAnswer: { '@type': 'Answer', text: a.answer },
-        }],
+        mainEntity: [
+          ...(a.title.includes('?') ? [{
+            '@type': 'Question',
+            name: a.title.split('?')[0] + '?',
+            acceptedAnswer: { '@type': 'Answer', text: a.answer },
+          }] : []),
+          ...(a.faqs || []).map(([q, ans]) => ({
+            '@type': 'Question',
+            name: q,
+            acceptedAnswer: { '@type': 'Answer', text: ans.replace(/<[^>]+>/g, '') },
+          })),
+        ],
       }] : []),
     ],
   });
