@@ -318,7 +318,7 @@ ${TICKER}
 
 <section id="apps">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head reveal mask-up">
       <h2 class="d">The apps</h2>
       <p>Each one started as something I wanted to exist. All free on the App&nbsp;Store.</p>
     </div>
@@ -351,9 +351,9 @@ ${ringStage({
   sub: 'Keep scrolling to spin through them. Scroll back and it winds the other way.',
 })}
 
-<section class="tinted" id="guides">
+<section class="tinted seam" id="guides">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head reveal mask-up">
       <h2 class="d">Guides &amp; answers</h2>
       <p>Straight answers to the questions people actually ask &mdash; researched, sourced, and free of the fluff most of these articles are padded with.</p>
     </div>
@@ -446,16 +446,16 @@ function appPage(app) {
 
 <section>
   <div class="wrap">
-    <div class="sec-head"><h2 class="d">What it does</h2></div>
+    <div class="sec-head reveal mask-up"><h2 class="d">What it does</h2></div>
     <div class="grid two">
       ${app.features.map(([h, p], i) => `<div class="card reveal d${(i % 4) + 1}"><h3 class="d">${esc(h)}</h3><p>${esc(p)}</p></div>`).join('')}
     </div>
   </div>
 </section>
 
-<section class="tinted">
+<section class="tinted seam">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head reveal mask-up">
       <h2 class="d">How it works</h2>
       <p>Three steps, no account needed to try it.</p>
     </div>
@@ -476,7 +476,7 @@ ${ringStage({
 
 <section class="soft">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head reveal mask-up">
       <h2 class="d">Questions</h2>
       <p>The things people ask most often before downloading.</p>
     </div>
@@ -488,7 +488,7 @@ ${ringStage({
 
 ${posts.length ? `<section id="guides">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head reveal mask-up">
       <h2 class="d">Guides</h2>
       <p>Researched answers to what people search in this space. No download required to read them.</p>
     </div>
@@ -498,7 +498,7 @@ ${posts.length ? `<section id="guides">
   </div>
 </section>` : ''}
 
-<section class="tinted">
+<section class="tinted seam">
   <div class="wrap">
     <div class="get-app">
       <span class="ico"><img src="${hAsset(`icons/${app.icon}`)}" alt="" width="152" height="152"></span>
@@ -607,7 +607,7 @@ function articlePage(a) {
   </div>
 </section>
 
-<section class="tinted">
+<section class="tinted seam">
   <div class="wrap">
     <div class="get-app">
       <span class="ico"><img src="${hAsset(`icons/${app.icon}`)}" alt="" width="152" height="152"></span>
@@ -622,7 +622,7 @@ function articlePage(a) {
 
 ${related.length ? `<section>
   <div class="wrap">
-    <div class="sec-head"><h2 class="d">Keep reading</h2></div>
+    <div class="sec-head reveal mask-up"><h2 class="d">Keep reading</h2></div>
     <div class="grid three">
       ${related.map((r, i) => `<a class="post compact reveal d${(i % 4) + 1}" href="${hArticle(r.app, r.slug)}"><h3>${esc(r.title)}</h3><p class="rd">${readMins(r)} min read</p></a>`).join('')}
     </div>
@@ -727,7 +727,7 @@ function notFoundPage() {
 
 <section>
   <div class="wrap">
-    <div class="sec-head"><h2 class="d">The apps</h2></div>
+    <div class="sec-head reveal mask-up"><h2 class="d">The apps</h2></div>
     <div class="grid two">
       ${apps.map((a) => `
       <a class="app-card" href="${hApp(a.slug)}" style="--accent:${a.accent}">
@@ -742,9 +742,9 @@ function notFoundPage() {
   </div>
 </section>
 
-<section class="tinted">
+<section class="tinted seam">
   <div class="wrap">
-    <div class="sec-head"><h2 class="d">Most read guides</h2></div>
+    <div class="sec-head reveal mask-up"><h2 class="d">Most read guides</h2></div>
     <div class="grid three">
       ${articles.slice(0, 6).map((a) => `<a class="post" href="${hArticle(a.app, a.slug)}" style="--accent:${appBySlug[a.app].accent}"><h3>${esc(a.title)}</h3><p>${esc(a.description)}</p></a>`).join('')}
     </div>

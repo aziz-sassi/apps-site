@@ -1060,3 +1060,75 @@ footer a:hover{color:var(--sun)}
 @media (prefers-reduced-motion:reduce){
   .hero-device.fan:hover .device{transform:translate(-50%,-50%)}
 }
+
+/* ===========================================================================
+   CINEMATIC LAYER
+   Techniques lifted from retail.arkcontrol.app — mask-driven reveals, ambient
+   drift, and a light-sweep — rebuilt in this site's light palette rather than
+   its dark one. All CSS: no Rive, no Three.js, no smooth-scroll library.
+   =========================================================================== */
+
+/* --- mask reveal: content wipes in behind a soft gradient edge -------------
+   arkcontrol uses mask-image 14 times; it is the single most transferable
+   thing about that site. Content is masked out, then the mask slides away. */
+.js .mask-up{
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 50%,transparent 85%);
+  mask-image:linear-gradient(to bottom,#000 0 50%,transparent 85%);
+  -webkit-mask-size:100% 220%;
+  mask-size:100% 220%;
+  -webkit-mask-position:0 100%;
+  mask-position:0 100%;
+  opacity:.001;
+}
+.js .mask-up.in{
+  -webkit-mask-position:0 0;
+  mask-position:0 0;
+  opacity:1;
+  transition:mask-position 1.05s cubic-bezier(.22,.75,.24,1),
+             -webkit-mask-position 1.05s cubic-bezier(.22,.75,.24,1),
+             opacity .5s ease;
+}
+
+/* --- ambient drift: nothing sits perfectly still --------------------------- */
+@keyframes ambient-float{
+  0%,100%{transform:translate3d(0,0,0) rotate(-2deg)}
+  50%    {transform:translate3d(0,-14px,0) rotate(-1.2deg)}
+}
+@keyframes ambient-float-b{
+  0%,100%{transform:translate(-50%,-50%) rotate(-11deg) translateX(-56%) scale(.92)}
+  50%    {transform:translate(-50%,-53%) rotate(-12deg) translateX(-57%) scale(.925)}
+}
+@keyframes ambient-float-c{
+  0%,100%{transform:translate(-50%,-50%) rotate(11deg) translateX(56%) scale(.92)}
+  50%    {transform:translate(-50%,-47%) rotate(12deg) translateX(57%) scale(.925)}
+}
+.hero-device:not(.fan) .device{animation:ambient-float 7s ease-in-out infinite}
+.hero-device.fan .device.d0{animation:ambient-float-b 9s ease-in-out infinite}
+.hero-device.fan .device.d2{animation:ambient-float-c 9s ease-in-out infinite -4.5s}
+.hero-device.fan:hover .device,
+.hero-device:hover .device{animation-play-state:paused}
+
+/* --- light sweep across a device, like a screen catching the light -------- */
+.device::after{
+  content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
+  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.16) 45%,transparent 60%);
+  background-size:260% 100%;
+  animation:light-sweep 7s ease-in-out infinite;
+}
+@keyframes light-sweep{
+  0%,62%,100%{background-position:180% 0}
+  80%        {background-position:-60% 0}
+}
+
+/* --- section edge: a soft seam instead of a hard cut ---------------------- */
+.seam{position:relative}
+.seam::before{
+  content:"";position:absolute;left:0;right:0;top:-1px;height:64px;
+  background:linear-gradient(to bottom,rgba(20,18,43,.07),transparent);
+  pointer-events:none;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .js .mask-up{-webkit-mask-image:none;mask-image:none;opacity:1}
+  .hero-device .device,.device::after{animation:none}
+}
