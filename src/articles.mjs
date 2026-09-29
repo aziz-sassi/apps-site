@@ -1640,4 +1640,56 @@ export const articles = [
       ['Tips for traveling to Bali: a complete guide for your first visit', 'https://karang.travel/en_us/tips-traveling-bali/'],
     ],
   },
+  {
+    slug: 'nicotine-detox-timeline',
+    app: 'hold',
+    faqs: [
+      ['Can you speed up nicotine detox?', 'Not meaningfully. Water, exercise and sleep support normal liver function but do not materially shorten clearance — that is set by enzyme activity, not effort. Products sold as nicotine detox kits have no good evidence behind them.'],
+      ['Why do tests measure cotinine instead of nicotine?', 'Because cotinine is far more stable and lasts much longer. Nicotine has a half-life of around 2 hours; cotinine around 20. Testing nicotine directly would miss almost everyone who last used it yesterday.'],
+      ['Does vaping show up the same as smoking?', 'Yes. A cotinine test detects nicotine exposure, not how it was delivered. Vaping, pouches, patches and gum all register.'],
+      ['Will nicotine replacement therapy fail a test?', 'Yes — patches, gum and lozenges all contain nicotine and produce cotinine. If you are being tested for insurance or a medical procedure, say you are using NRT rather than assuming it does not count.'],
+    ],
+    title: 'Nicotine Detox Timeline: How Long It Stays in Your System',
+    description:
+      'Nicotine clears the blood in 1–3 days, but cotinine — what tests actually measure — can last up to 3 weeks in heavy users. Full detection times by test type.',
+    published: '2026-09-29', updated: '2026-09-29',
+    answer:
+      'Nicotine itself clears within 1–3 days. Cotinine, the metabolite tests actually measure, is typically gone from urine in 3–4 days for occasional users but can persist up to 3 weeks in heavy daily users.',
+    blocks: [
+      ['p', 'Two different substances get confused here, and the difference is the whole answer. <strong>Nicotine</strong> leaves fast. <strong>Cotinine</strong> — what your body turns nicotine into, and what virtually every test measures — lasts far longer.'],
+      ['h2', 'The two half-lives'],
+      ['table', { head: ['', 'Half-life', 'What that means'], rows: [
+        ['Nicotine', '~2 hours', 'Half is gone within a couple of hours; effectively cleared in 1–3 days.'],
+        ['Cotinine', '~20 hours', 'Ten times more persistent. This is why tests look for it.'],
+      ]}],
+      ['p', 'A half-life is the time to clear half of what is present, so full clearance takes roughly five of them. For nicotine that is around ten hours; for cotinine, closer to four days — longer still if you were using heavily, because you started from a higher level.'],
+      ['h2', 'Detection times by test'],
+      ['table', { head: ['Test', 'Occasional use', 'Heavy daily use'], rows: [
+        ['Blood', '1–3 days', 'Up to 10 days'],
+        ['Urine', '3–4 days', 'Up to 3 weeks'],
+        ['Saliva', '1–4 days', 'Up to 7 days'],
+        ['Hair', '1–3 months', 'Up to 12 months'],
+      ]}],
+      ['callout', 'Urine is the common test for insurance and pre-surgical screening, and the heavy-user range is the one that surprises people: three weeks, not three days. If you are being tested, count from your genuinely last exposure, not from when you decided to quit.'],
+      ['h2', 'What changes your number'],
+      ['ul', [
+        '<strong>How much and how long.</strong> Years of heavy use leave more cotinine to clear than a fortnight of occasional vaping.',
+        '<strong>Genetics.</strong> The liver enzyme that processes nicotine varies a lot between people, and it is the single largest individual difference.',
+        '<strong>Age.</strong> Clearance slows somewhat with age.',
+        '<strong>Kidney and liver function.</strong> Both affect how quickly it leaves.',
+        '<strong>Menthol.</strong> There is evidence it slows nicotine metabolism modestly.',
+      ]],
+      ['h2', 'Detox is not the same as recovery'],
+      ['p', 'This is the part worth being clear about. Nicotine being gone from your blood does not mean withdrawal is over. The chemical clears in days; <a href="/hold/nicotine-withdrawal-timeline/">the adjustment takes weeks</a>, because withdrawal comes from your brain readjusting rather than from nicotine still circulating.'],
+      ['p', 'So being "clean" on a test at day four while still feeling terrible is completely normal, and is not a sign anything has gone wrong. <a href="/hold/how-long-do-nicotine-cravings-last/">Cravings peak around day 3</a> and fade over three to four weeks — well after the last trace of nicotine has gone.'],
+      ['h2', 'Can you speed it up?'],
+      ['p', 'Not in any way that matters. Staying hydrated, sleeping and exercising support normal function, but clearance is governed by liver enzyme activity, which you cannot meaningfully hurry. Products marketed as nicotine detox kits have no good evidence behind them and are not worth the money.'],
+      ['p', 'The only variable you control is the date of your last exposure.'],
+      ['note', 'General information, not medical advice. If you are being tested for insurance, employment or surgery, ask the testing body which test they use and what threshold they apply — those vary, and this article cannot tell you whether you will pass.'],
+    ],
+    sources: [
+      ['How long does nicotine stay in your system? Detection times and testing', 'https://www.drugs.com/medical-answers/long-nicotine-stay-system-3572733/'],
+      ['Cotinine — pharmacokinetics', 'https://en.wikipedia.org/wiki/Cotinine'],
+    ],
+  },
 ];
