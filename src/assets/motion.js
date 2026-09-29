@@ -77,13 +77,50 @@
     }
   }
 
+  /* --- ambient video: attach a source only when the section is close ------
+     preload="none" plus no src means zero bytes on load. We add the source
+     one viewport ahead, then fade in once it can actually play, so the poster
+     never cuts to a blank frame. */
+  var pending = [].slice.call(document.querySelectorAll('video.ambient'));
+  var live = [];
+  function syncVideos() {
+    var ih = window.innerHeight, i, r;
+    for (i = pending.length - 1; i >= 0; i--) {
+      var v = pending[i];
+      r = v.parentNode.getBoundingClientRect();
+      if (r.top > ih * 1.5 || r.bottom < -ih * 0.5) continue;
+
+      var canWebm = v.canPlayType && v.canPlayType('video/webm; codecs="vp9"');
+      v.src = canWebm ? v.getAttribute('data-webm') : v.getAttribute('data-mp4');
+      v.addEventListener('canplay', function () { this.classList.add('ready'); }, { once: true });
+      pending.splice(i, 1);
+      live.push(v);
+    }
+    /* Only what is actually on screen decodes. An off-screen loop burns battery
+       for nothing, and a backgrounded tab refuses play() outright -- so this also
+       doubles as the retry that starts them once the tab comes back. */
+    for (i = 0; i < live.length; i++) {
+      var w = live[i];
+      r = w.parentNode.getBoundingClientRect();
+      var visible = !document.hidden && r.top < ih && r.bottom > 0;
+      if (visible && w.paused) {
+        var play = w.play();
+        if (play && play.catch) play.catch(function () { /* autoplay refused: poster stays */ });
+      } else if (!visible && !w.paused) {
+        w.pause();
+      }
+    }
+  }
+
   var ticking = false;
   function onScroll() {
     if (ticking) return;
     ticking = true;
-    requestAnimationFrame(function () { frame(); ticking = false; });
+    requestAnimationFrame(function () { frame(); syncVideos(); ticking = false; });
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
+  document.addEventListener('visibilitychange', syncVideos);
   frame();
+  syncVideos();
 })();

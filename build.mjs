@@ -61,34 +61,6 @@ const SKY_FULL = sky([7, 1, 4, 2, 5, 3, 6]);  // full-screen home hero
 const tickItems = apps.map((a) => `<span>${esc(a.name)}</span>`).join('') + '<span>More coming</span>';
 const TICKER = `<div class="ticker" aria-hidden="true"><div class="ticker-track">${tickItems}</div><div class="ticker-track">${tickItems}</div></div>`;
 
-// Live app screens — CSS/SVG UI that plays off the same --p as the ring, so
-// it scrubs forward and backward with the scroll instead of looping on a timer.
-const SCREENS = {
-  walk: `<div class="scr scr-walk"><span class="map"></span>`
-    + `<svg viewBox="0 0 100 150" preserveAspectRatio="none" aria-hidden="true">`
-    + `<path class="route" d="M18,128 C34,104 22,84 44,72 C66,60 60,40 80,28"/></svg>`
-    + `<span class="hd">Distance</span><span class="big">2.4<i>km</i></span>`
-    + `<span class="ft"><span>24:10</span><span>186 cal</span></span></div>`,
-
-  macro: `<div class="scr scr-macro"><span class="hd">Today</span>`
-    + `<span class="dial"><svg viewBox="0 0 80 80" aria-hidden="true">`
-    + `<circle class="trk" cx="40" cy="40" r="36"/><circle class="arc" cx="40" cy="40" r="36"/></svg>`
-    + `<span class="mid">1840</span></span>`
-    + `<span class="bars"><i></i><i></i><i></i></span>`
-    + `<span class="ft"><span>P 128g</span><span>C 190g</span></span></div>`,
-
-  breathe: `<div class="scr scr-breathe"><span class="hd">Craving</span>`
-    + `<span class="orb"></span><span class="lbl">Breathe out</span>`
-    + `<span class="big">4:12</span>`
-    + `<span class="ft"><span>Day 12</span><span>$84 saved</span></span></div>`,
-
-  trip: `<div class="scr scr-trip"><span class="sun"></span><span class="hd">Itinerary</span>`
-    + `<span class="day"><b>1</b>Ubud &middot; rice terraces</span>`
-    + `<span class="day"><b>2</b>Tibumana waterfall</span>`
-    + `<span class="day"><b>3</b>Canggu &middot; surf</span>`
-    + `<span class="day"><b>4</b>Uluwatu sunset</span>`
-    + `<span class="ft"><span>7 days</span><span>Rp 8.4M</span></span></div>`,
-};
 
 // A single hero device running the app's live screen. BaliWise's hero reads as
 // a video but is HTML/CSS doing exactly this — it sells the product far better
@@ -96,15 +68,29 @@ const SCREENS = {
 // A sticky film stage with short phrases that cycle on scroll — the move that
 // makes retail.arkcontrol.app feel cinematic (BREATH / FOCUS / PERFORMANCE).
 // Ours states the actual differentiator rather than mood words.
+// Ambient background video. data-src rather than src: motion.js only attaches
+// the source when the section is near the viewport, so nothing downloads on load
+// and reduced-motion users never fetch it at all. The poster carries the look
+// until then, and remains the whole experience if the video never loads.
+function ambientVideo(name) {
+  // No poster: .ambient sits at opacity 0 until the video can play, so a poster
+  // would download on every page load and never be shown.
+  return `<video class="ambient" muted loop playsinline preload="none"
+    data-webm="${hAsset(`video/${name}.webm`)}"
+    data-mp4="${hAsset(`video/${name}.mp4`)}" aria-hidden="true"></video>`;
+}
+
 function filmSection() {
   const words = [
     ['No team.',     'One person builds all of it.'],
     ['No ads.',      'Not one, in any app.'],
-    ['No paywall.',  'Free means free.'],
+    ['No meetings.',  'The whole roadmap fits in one head.'],
     ['Just the app.','Built because I wanted it to exist.'],
   ];
   return `<section class="film">
   <div class="film-stage">
+    ${ambientVideo('film')}
+    <div class="film-scrim" aria-hidden="true"></div>
     <div class="film-glow" aria-hidden="true"></div>
     <div class="film-words">
       ${words.map(([big, small], i) => `<div class="fw" style="--i:${i};--n:${words.length}">
@@ -117,40 +103,61 @@ function filmSection() {
 </section>`;
 }
 
+// eager=true only for the hero, which is above the fold on every page; the
+// strip and deck are several screens down and must not compete with it.
+function shotCard(app, shot, i, badge = true, eager = false) {
+  const load = eager
+    ? 'loading="eager" fetchpriority="high"'
+    : 'loading="lazy" fetchpriority="low"';
+  return `<figure class="shot-card" style="--i:${i};--accent:${app.accent}">
+      <img class="shot" src="${hAsset('shots/' + shot)}" alt="" width="240" height="518" ${load} decoding="async">${badge ? `
+      <img class="badge" src="${hAsset('icons/' + app.icon)}" alt="" width="56" height="56" loading="${eager ? 'eager' : 'lazy'}" decoding="async">` : ''}
+    </figure>`;
+}
+
 function heroFan(list) {
-  return `<div class="hero-device fan" aria-hidden="true">
-    ${list.map((a, i) => `<div class="device d${i}" style="--accent:${a.accent}"><span class="notch"></span>${SCREENS[a.screen] || ''}</div>`).join('')}
+  return `<div class="hero-shots" aria-hidden="true">
+    ${list.map((a, i) => shotCard(a, a.shots[0], i, true, true)).join('')}
   </div>`;
 }
 
 function heroDevice(app) {
-  return `<div class="hero-device" aria-hidden="true">
-    <div class="device">
-      <span class="notch"></span>
-      ${SCREENS[app.screen] || ''}
-    </div>
+  return `<div class="hero-shots one" aria-hidden="true">
+    ${shotCard(app, app.shots[0], 1, true, true)}
   </div>`;
 }
 
-// Scroll stage: a ring of phones whose rotation is bound to scroll position.
-// motion.js writes --rot (0..1 -> one full turn) and --p (progress) each frame.
-function ringStage({ shots, count, heading, sub, screens = [], every = 3 }) {
-  let shotIdx = 0, screenIdx = 0;
-  const phones = Array.from({ length: count }, (_, i) => {
-    const live = screens.length && i % every === 0;
-    const inner = live
-      ? SCREENS[screens[screenIdx++ % screens.length]]
-      : `<img src="${hAsset('shots/' + shots[shotIdx++ % shots.length])}" alt="" width="240" height="487" loading="lazy" decoding="async" fetchpriority="low">`;
-    return `<div class="phone" style="--i:${i}"><span class="notch"></span>${inner}</div>`;
-  }).join('');
-  return `<section class="stage">
+// Scroll stage, take two. The old version span a ring of phones in 3D, which
+// buried half of them backwards and clipped the rest. Both replacements keep
+// every screenshot flat-on and legible; only their arrangement is scrubbed.
+
+// Home: a long strip of real screenshots that tracks sideways as you scroll.
+function stripStage({ cards, heading, sub }) {
+  return `<section class="stage strip-stage">
   <div class="stage-in">
-    <div class="ring-wrap"><div class="ring" style="--n:${count}">${phones}</div></div>
     <div class="stage-copy">
       <h2>${esc(heading)}</h2>
       <p>${esc(sub)}</p>
       <span class="cue"><i></i>Scroll<i></i></span>
     </div>
+    <div class="strip-wrap">
+      <div class="strip">${cards.map((c, i) => shotCard(c.app, c.shot, i, c.lead)).join('')}</div>
+    </div>
+    <div class="stage-rail"><i></i></div>
+  </div>
+</section>`;
+}
+
+// App page: three shots stacked like a dealt hand, fanning open on scroll.
+function deckStage({ app, heading, sub }) {
+  return `<section class="stage deck-stage">
+  <div class="stage-in">
+    <div class="stage-copy">
+      <h2>${esc(heading)}</h2>
+      <p>${esc(sub)}</p>
+      <span class="cue"><i></i>Scroll<i></i></span>
+    </div>
+    <div class="deck">${app.shots.map((f, i) => shotCard(app, f, i, false)).join('')}</div>
     <div class="stage-rail"><i></i></div>
   </div>
 </section>`;
@@ -280,7 +287,7 @@ function inlineCta(app) {
   return `<aside class="mid-cta">
     <span class="ic"><img src="${hAsset('icons/' + app.icon)}" alt="" width="104" height="104" loading="lazy"></span>
     <span class="tx"><b>${esc(app.name)}</b>${esc(app.tagline)}</span>
-    <a class="btn accent" href="${esc(app.storeUrl)}" data-store="${esc(app.storeUrl)}">Get it free ${OUT}</a>
+    <a class="btn accent" href="${esc(app.storeUrl)}" data-store="${esc(app.storeUrl)}">Get it on the App&nbsp;Store ${OUT}</a>
   </aside>`;
 }
 
@@ -321,14 +328,13 @@ function homePage() {
     <div class="hero-split">
       <div class="hero-copy">
         <h1 class="d">iPhone apps,<br>made <span class="sticker">properly</span>.</h1>
-        <p class="lede">I build small, focused apps &mdash; a dog-walk tracker, an honest calorie counter, a Bali trip planner, a quit-smoking coach, and more on the way. All free.</p>
+        <p class="lede">I build small, focused apps &mdash; a dog-walk tracker, an honest calorie counter, a Bali trip planner, a quit-smoking coach, and more on the way.</p>
         <div class="cta-row">
           <a class="btn light" href="#apps">See the apps ${ARROW}</a>
           <a class="btn ghost" href="#guides">Read the guides ${ARROW}</a>
         </div>
         <ul class="statline">
           <li><b>${articles.length}</b><span>researched guides</span></li>
-          <li><b>Free</b><span>every app</span></li>
           <li><b>Independent</b><span>built solo</span></li>
         </ul>
       </div>
@@ -344,7 +350,7 @@ ${TICKER}
   <div class="wrap">
     <div class="sec-head reveal mask-up">
       <h2 class="d">The apps</h2>
-      <p>Each one started as something I wanted to exist. All free on the App&nbsp;Store.</p>
+      <p>Each one started as something I wanted to exist, then got built until it did.</p>
     </div>
     <div class="grid two">
       ${apps.map((a, i) => `
@@ -353,7 +359,7 @@ ${TICKER}
         <span class="body">
           <span class="nm">${esc(a.name)}</span>
           <span class="tg">${esc(a.tagline)}</span>
-          <span class="mt"><span class="chip">${esc(a.category)}</span><span class="chip free">${esc(a.price)}</span></span>
+          <span class="mt"><span class="chip">${esc(a.category)}</span><span class="chip os">iOS ${esc(a.minOs)}+</span></span>
         </span>
         <span class="go">${ARROW}</span>
       </a>`).join('')}
@@ -366,13 +372,10 @@ ${TICKER}
   </div>
 </section>
 
-${ringStage({
-  shots: apps.flatMap((a) => a.shots),
-  screens: apps.map((a) => a.screen),
-  count: apps.length * 3,
-  every: 3,
+${stripStage({
+  cards: apps.flatMap((a) => a.shots.map((shot, i) => ({ app: a, shot, lead: i === 0 }))),
   heading: 'Everything I\u2019ve shipped',
-  sub: 'Keep scrolling to spin through them. Scroll back and it winds the other way.',
+  sub: 'Keep scrolling \u2014 the strip tracks with you, and rewinds when you scroll back.',
 })}
 
 ${filmSection()}
@@ -404,7 +407,7 @@ ${filmSection()}
 `;
   return layout({
     title: `${site.name} — Independent iPhone Apps`,
-    description: `Free iPhone apps by ${site.name} \u2014 ${apps.slice(0, 3).map((a) => a.name).join(', ')} and more \u2014 plus researched guides answering what people actually search.`,
+    description: `iPhone apps by ${site.name} \u2014 ${apps.slice(0, 3).map((a) => a.name).join(', ')} and more \u2014 plus researched guides answering what people actually search.`,
     path: '/',
     accent: '#5B46F0',
     accentSoft: '#EEEBFF',
@@ -431,7 +434,6 @@ ${filmSection()}
             sameAs: [a.storeUrl],
             applicationCategory: 'MobileApplication',
             operatingSystem: `iOS ${a.minOs}+`,
-            offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
           },
         })) },
     ],
@@ -441,8 +443,8 @@ ${filmSection()}
 function appPage(app) {
   const posts = articlesFor(app.slug);
   const body = `
-<header class="band">
-  ${SKY}
+<header class="band${app.video ? ' has-video' : ''}">
+  ${app.video ? ambientVideo(app.video) + '<div class="band-scrim" aria-hidden="true"></div>' : SKY}
   <div class="wrap">
     <p class="crumb"><a href="${hHome()}">Home</a> <span>/</span> ${esc(app.name)}</p>
     <div class="hero-split">
@@ -455,11 +457,10 @@ function appPage(app) {
         </div>
         <p class="lede">${app.hero}</p>
         <div class="cta-row">
-          ${storeLink(app, 'Get it free')}
+          ${storeLink(app, 'Get the app')}
           ${posts.length ? `<a class="btn ghost" href="#guides">Read the guides ${ARROW}</a>` : ''}
         </div>
         <ul class="statline">
-          <li><b>${esc(app.price)}</b><span>on the App&nbsp;Store</span></li>
           <li><b>${esc(app.category)}</b><span>category</span></li>
           <li><b>iOS ${esc(app.minOs)}+</b><span>required</span></li>
           ${posts.length ? `<li><b>${posts.length}</b><span>researched guides</span></li>` : ''}
@@ -491,14 +492,7 @@ function appPage(app) {
   </div>
 </section>
 
-${ringStage({
-  shots: app.shots,
-  screens: [app.screen],
-  every: 4,
-  count: 8,
-  heading: app.name,
-  sub: app.tagline,
-})}
+${deckStage({ app, heading: app.name, sub: app.tagline })}
 
 <section class="soft">
   <div class="wrap">
@@ -530,9 +524,9 @@ ${posts.length ? `<section id="guides">
       <span class="ico"><img src="${hAsset(`icons/${app.icon}`)}" alt="" width="152" height="152"></span>
       <div class="txt">
         <h2>${esc(app.fullName)}</h2>
-        <p>${esc(app.category)} &middot; ${esc(app.price)} &middot; Requires iOS ${esc(app.minOs)}</p>
+        <p>${esc(app.category)} &middot; Requires iOS ${esc(app.minOs)}</p>
       </div>
-      ${storeLink(app, 'Get it free')}
+      ${storeLink(app, 'Get the app')}
     </div>
   </div>
 </section>
@@ -567,8 +561,6 @@ ${posts.length ? `<section id="guides">
         image: abs(`/og/${app.slug}.jpg`),
         author: { '@type': 'Person', '@id': abs('/#person'), name: site.author },
         publisher: { '@type': 'Person', '@id': abs('/#person'), name: site.author },
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD',
-                  availability: 'https://schema.org/InStock', url: app.storeUrl },
       },
       {
         '@context': 'https://schema.org', '@type': 'FAQPage',
@@ -639,9 +631,9 @@ function articlePage(a) {
       <span class="ico"><img src="${hAsset(`icons/${app.icon}`)}" alt="" width="152" height="152"></span>
       <div class="txt">
         <h2>${esc(app.name)}</h2>
-        <p>${esc(app.tagline)} ${esc(app.price)} on the App&nbsp;Store.</p>
+        <p>${esc(app.tagline)} On the App&nbsp;Store.</p>
       </div>
-      ${storeLink(app, 'Get it free')}
+      ${storeLink(app, 'Get the app')}
     </div>
   </div>
 </section>
@@ -822,6 +814,7 @@ await cp(join(ROOT, 'src/assets/motion.js'), join(DIST, 'motion.js'));
 await cp(join(ROOT, 'icons'), join(DIST, 'icons'), { recursive: true });
 await cp(join(ROOT, 'src/assets/shots'), join(DIST, 'shots'), { recursive: true });
 await cp(join(ROOT, 'src/assets/og'), join(DIST, 'og'), { recursive: true });
+await cp(join(ROOT, 'src/assets/video'), join(DIST, 'video'), { recursive: true });
 
 // sitemap + robots: real build only (a flat preview has no canonical host)
 if (!FLAT) {

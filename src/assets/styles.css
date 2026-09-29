@@ -240,7 +240,7 @@ section.soft{background:var(--accent-soft)}
   font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
   padding:4px 9px;border-radius:999px;border:2px solid var(--ink);background:var(--tint);
 }
-.chip.free{background:var(--mint);color:var(--ink)}
+.chip.os{background:var(--mint);color:var(--ink)}
 .app-card .go{
   flex:none;width:42px;height:42px;border-radius:999px;
   border:2.5px solid var(--ink);background:var(--accent);
@@ -609,7 +609,7 @@ footer a:hover{color:var(--sun)}
    =========================================================================== */
 .stage{
   position:relative;
-  height:300vh;                       /* the scroll distance the ring consumes */
+  height:300vh;                       /* the scroll distance the stage consumes */
   background:var(--ink);
   border-block:3px solid var(--ink);
 }
@@ -623,55 +623,75 @@ footer a:hover{color:var(--sun)}
     radial-gradient(70% 55% at 50% 42%,var(--accent) 0%,transparent 68%),
     linear-gradient(180deg,#1b1838 0%,var(--ink) 60%);
 }
-.stage-in::after{                     /* vignette so the ring edges fall away */
+.stage-in::after{                     /* vignette so the strip edges fall away */
   content:"";position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(58% 50% at 50% 50%,transparent 55%,rgba(10,9,22,.86) 100%);
 }
 
-.ring-wrap{
-  perspective:1150px;
+/* ---- one card = one real screenshot, framed like a sticker ------------- */
+.shot-card{
+  --cw:168px;
+  position:relative;margin:0;flex:none;
+  width:var(--cw);
+  padding:6px 6px 8px;
+  border-radius:calc(var(--cw) * .175);
+  background:#fff;
+  box-shadow:0 18px 40px rgba(0,0,0,.42),0 2px 6px rgba(0,0,0,.26);
+  transform:rotate(var(--tilt,0deg)) translateY(var(--lift,0px));
+}
+.shot-card .shot{
+  display:block;width:100%;height:auto;aspect-ratio:240/518;
+  object-fit:cover;
+  border-radius:calc(var(--cw) * .13);
+  background:var(--accent,#ddd);
+}
+.shot-card .badge{
+  position:absolute;right:-13px;bottom:-11px;
+  width:44px;height:44px;border-radius:13px;
+  border:3px solid #fff;
+  box-shadow:0 8px 18px rgba(0,0,0,.38);
+}
+
+/* ---- home: a strip that tracks sideways with the scroll ----------------- */
+.strip-wrap{
+  position:relative;z-index:1;
+  width:100%;flex:1;min-height:0;
+  display:flex;align-items:center;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+}
+.strip{
+  display:flex;align-items:center;
+  gap:clamp(14px,2.2vw,28px);
+  padding-inline:7vw;
+  will-change:transform;
+  /* 100% is the strip's own width, so this ends with its tail at 86vw */
+  transform:translate3d(calc(var(--p,0) * (86vw - 100%)),0,0);
+}
+.strip .shot-card{--cw:clamp(132px,15vw,178px)}
+.strip .shot-card:nth-child(odd){--tilt:-2.4deg}
+.strip .shot-card:nth-child(even){--tilt:2deg;--lift:16px}
+.strip .shot-card:nth-child(3n){--tilt:1.1deg;--lift:-14px}
+
+/* ---- app page: three shots dealt as a hand, fanning open on scroll ------ */
+.deck{
+  position:relative;z-index:1;
   width:100%;flex:1;min-height:0;
   display:grid;place-items:center;
 }
-.ring{
-  position:relative;width:0;height:0;
-  transform-style:preserve-3d;
-  transform:
-    rotateX(calc(-13deg + (1 - var(--a,1)) * -7deg))
-    rotateY(calc(var(--rot,0) * 360deg))
-    scale(calc(.93 + var(--a,1) * .07));
-  --pw:132px;                          /* phone width  */
-  --rad:300px;                         /* ring radius  */
-}
-.phone{
+.deck .shot-card{
   position:absolute;
-  width:var(--pw);
-  height:calc(var(--pw) * 2.03);
-  margin-left:calc(var(--pw) / -2);
-  margin-top:calc(var(--pw) * -1.015);
+  --cw:clamp(144px,19vw,196px);
   transform:
-    rotateY(calc(var(--i) * (360deg / var(--n))))
-    translateZ(var(--rad))
-    translateY(calc((1 - var(--a,1)) * 90px));
-  opacity:var(--a,1);
-  backface-visibility:hidden;          /* far half drops out — keeps it legible */
-  border-radius:calc(var(--pw) * .17);
-  border:3px solid #0b0a16;
-  background:#0b0a16;
-  overflow:hidden;
-  box-shadow:0 22px 44px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.09) inset;
+    translateX(calc((var(--i) - 1) * var(--p,0) * 118%))
+    translateY(calc(var(--p,0) * -10px))
+    rotate(calc((var(--i) - 1) * (3.5deg + var(--p,0) * 7deg)));
 }
-.phone img{width:100%;height:100%;object-fit:cover;display:block}
-.phone::after{                          /* screen glare */
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(115deg,rgba(255,255,255,.2) 0%,transparent 42%);
-}
-.notch{
-  position:absolute;top:6px;left:50%;transform:translateX(-50%);
-  width:38%;height:11px;border-radius:9px;background:#0b0a16;z-index:2;
-}
+.deck .shot-card:nth-child(1){z-index:1}
+.deck .shot-card:nth-child(2){z-index:3}
+.deck .shot-card:nth-child(3){z-index:2}
 
-/* copy sits in the middle of the ring */
+/* copy sits above the shots */
 .stage-copy{
   position:relative;z-index:3;text-align:center;color:#fff;
   pointer-events:none;flex:none;
@@ -714,26 +734,31 @@ footer a:hover{color:var(--sun)}
 }
 
 @media (max-width:760px){
-  .ring{--pw:106px;--rad:205px}
   .stage{height:260vh}
 }
 @media (max-width:420px){
-  .ring{--pw:88px;--rad:158px}
   .stage-copy{max-width:22ch}
+  .strip .shot-card:nth-child(even){--lift:10px}
+  .strip .shot-card:nth-child(3n){--lift:-8px}
 }
 
-/* Reduced motion: no sticky scrub at all — lay the phones out flat and still. */
+/* No JS and reduced motion both lose the scrub, so the strip has to be
+   reachable some other way: drop the sticky stage and let it scroll by hand. */
+html:not(.js) .stage,
+html:not(.js) .stage-in{height:auto;position:static}
+html:not(.js) .strip-wrap{overflow-x:auto}
+html:not(.js) .stage-rail,html:not(.js) .cue{display:none}
+
 @media (prefers-reduced-motion:reduce){
   .stage{height:auto}
   .stage-in{position:static;height:auto;padding-block:60px}
-  .ring-wrap{perspective:none;height:auto}
-  .ring{
-    transform:none;width:auto;height:auto;
-    display:flex;flex-wrap:wrap;gap:14px;justify-content:center;max-width:900px;
-  }
-  .phone{position:static;margin:0;transform:none;backface-visibility:visible}
   .stage-copy{position:static;margin-bottom:28px;max-width:46ch}
   .stage-rail,.cue{display:none}
+  .strip-wrap{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
+  .strip{transform:none;padding-inline:20px}
+  .deck{display:flex;flex-wrap:wrap;gap:16px;justify-content:center}
+  .deck .shot-card{position:static;transform:none}
+  .shot-card{--tilt:0deg;--lift:0px}
 }
 
 /* how-it-works steps */
@@ -975,34 +1000,33 @@ footer a:hover{color:var(--sun)}
 }
 @media (max-width:900px){
   .hero-split{grid-template-columns:1fr}
-  .hero-device{justify-self:center}
+  .hero-shots{justify-self:center}
 }
 .hero-copy{min-width:0}
 .hero-copy .app-hero{margin-bottom:6px}
 .hero-copy .lede{margin-top:14px}
 
-.hero-device{display:flex;justify-content:center;perspective:1400px}
-.device{
+.hero-shots{
   position:relative;
-  width:clamp(208px,24vw,268px);
-  aspect-ratio:1/2.03;
-  border-radius:clamp(30px,3.6vw,40px);
-  border:3px solid var(--ink);
-  background:#0b0a16;
-  overflow:hidden;
-  box-shadow:
-    0 40px 80px rgba(10,9,22,.45),
-    0 0 0 1px rgba(255,255,255,.1) inset,
-    var(--shadow-lg);
-  transform:rotate(-2deg);
-  transition:transform .5s cubic-bezier(.2,.8,.25,1);
+  display:grid;place-items:center;
+  min-height:clamp(300px,42vw,430px);
 }
-.hero-device:hover .device{transform:rotate(0deg) translateY(-6px)}
-.device .scr{font-size:1.06rem}
-.device .notch{
-  top:10px;width:36%;height:16px;border-radius:12px;
+.hero-shots .shot-card{position:absolute;--cw:clamp(132px,15.5vw,180px)}
+.hero-shots .shot-card:nth-child(1){transform:translateX(-58%) rotate(-11deg) scale(.93);z-index:1}
+.hero-shots .shot-card:nth-child(2){transform:translateY(-4%)                 ;z-index:3}
+.hero-shots .shot-card:nth-child(3){transform:translateX(58%)  rotate(11deg)  scale(.93);z-index:2}
+.hero-shots .shot-card{transition:transform .55s cubic-bezier(.2,.9,.25,1.2)}
+.hero-shots:hover .shot-card:nth-child(1){transform:translateX(-68%) rotate(-14deg) scale(.95)}
+.hero-shots:hover .shot-card:nth-child(2){transform:translateY(-9%)  scale(1.04)}
+.hero-shots:hover .shot-card:nth-child(3){transform:translateX(68%)  rotate(14deg)  scale(.95)}
+
+/* app page: a single shot, tilted, no fake phone chrome */
+.hero-shots.one{min-height:0}
+.hero-shots.one .shot-card{
+  position:relative;--cw:clamp(176px,21vw,232px);--tilt:-3.5deg;
+  transform:rotate(var(--tilt)) translateY(var(--lift,0px));
 }
-@media (prefers-reduced-motion:reduce){.device{transition:none;transform:none}}
+.hero-shots.one:hover .shot-card{transform:rotate(0deg) translateY(-8px)}
 
 /* stat row under the hero copy */
 .statline{
@@ -1040,27 +1064,6 @@ footer a:hover{color:var(--sun)}
 }
 .btn.ghost:hover{background:rgba(255,255,255,.12)}
 
-/* Home hero: a small fan of devices — says "several apps" before a word is read */
-.hero-device.fan{position:relative;min-height:clamp(300px,42vw,430px)}
-.hero-device.fan .device{
-  position:absolute;top:50%;left:50%;
-  width:clamp(150px,17vw,196px);
-  transform-origin:50% 60%;
-}
-.hero-device.fan .device.d0{transform:translate(-50%,-50%) rotate(-11deg) translateX(-56%) scale(.92);z-index:1}
-.hero-device.fan .device.d1{transform:translate(-50%,-50%) rotate(0deg);z-index:3}
-.hero-device.fan .device.d2{transform:translate(-50%,-50%) rotate(11deg) translateX(56%) scale(.92);z-index:2}
-.hero-device.fan:hover .device.d0{transform:translate(-50%,-50%) rotate(-14deg) translateX(-64%) scale(.94)}
-.hero-device.fan:hover .device.d2{transform:translate(-50%,-50%) rotate(14deg) translateX(64%) scale(.94)}
-.hero-device.fan:hover .device.d1{transform:translate(-50%,-52%) rotate(0deg) scale(1.03)}
-@media (max-width:520px){
-  .hero-device.fan{min-height:270px}
-  .hero-device.fan .device{width:126px}
-}
-@media (prefers-reduced-motion:reduce){
-  .hero-device.fan:hover .device{transform:translate(-50%,-50%)}
-}
-
 /* ===========================================================================
    CINEMATIC LAYER
    Techniques lifted from retail.arkcontrol.app — mask-driven reveals, ambient
@@ -1094,24 +1097,25 @@ footer a:hover{color:var(--sun)}
   0%,100%{transform:translate3d(0,0,0) rotate(-2deg)}
   50%    {transform:translate3d(0,-14px,0) rotate(-1.2deg)}
 }
-@keyframes ambient-float-b{
-  0%,100%{transform:translate(-50%,-50%) rotate(-11deg) translateX(-56%) scale(.92)}
-  50%    {transform:translate(-50%,-53%) rotate(-12deg) translateX(-57%) scale(.925)}
+@keyframes card-bob-b{
+  0%,100%{transform:translateX(-58%) rotate(-11deg) scale(.93)}
+  50%    {transform:translateX(-59%) translateY(-11px) rotate(-12deg) scale(.935)}
 }
-@keyframes ambient-float-c{
-  0%,100%{transform:translate(-50%,-50%) rotate(11deg) translateX(56%) scale(.92)}
-  50%    {transform:translate(-50%,-47%) rotate(12deg) translateX(57%) scale(.925)}
+@keyframes card-bob-c{
+  0%,100%{transform:translateX(58%) rotate(11deg) scale(.93)}
+  50%    {transform:translateX(59%) translateY(-9px) rotate(12deg) scale(.935)}
 }
-.hero-device:not(.fan) .device{animation:ambient-float 7s ease-in-out infinite}
-.hero-device.fan .device.d0{animation:ambient-float-b 9s ease-in-out infinite}
-.hero-device.fan .device.d2{animation:ambient-float-c 9s ease-in-out infinite -4.5s}
-.hero-device.fan:hover .device,
-.hero-device:hover .device{animation-play-state:paused}
+.hero-shots.one .shot-card{animation:ambient-float 7s ease-in-out infinite}
+.hero-shots .shot-card:nth-child(1){animation:card-bob-b 9s ease-in-out infinite}
+.hero-shots .shot-card:nth-child(3){animation:card-bob-c 9s ease-in-out infinite -4.5s}
+.hero-shots:hover .shot-card{animation-play-state:paused}
 
-/* --- light sweep across a device, like a screen catching the light -------- */
-.device::after{
-  content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
-  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.16) 45%,transparent 60%);
+/* --- light catching the screen, as a sheen over the shot ----------------- */
+.shot-card .shot{position:relative}
+.hero-shots .shot-card::after{
+  content:"";position:absolute;inset:6px 6px 8px;z-index:4;pointer-events:none;
+  border-radius:calc(var(--cw) * .13);
+  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.28) 45%,transparent 60%);
   background-size:260% 100%;
   animation:light-sweep 7s ease-in-out infinite;
 }
@@ -1130,7 +1134,7 @@ footer a:hover{color:var(--sun)}
 
 @media (prefers-reduced-motion:reduce){
   .js .mask-up{-webkit-mask-image:none;mask-image:none;opacity:1}
-  .hero-device .device,.device::after{animation:none}
+  .hero-shots .shot-card,.hero-shots .shot-card::after{animation:none;transition:none}
 }
 
 /* ===========================================================================
@@ -1188,4 +1192,88 @@ footer a:hover{color:var(--sun)}
   .film-words{gap:40px;display:grid}
   .fw{grid-area:auto;opacity:1!important;transform:none!important}
   .film-rail{display:none}
+}
+
+/* ===========================================================================
+   AMBIENT VIDEO
+   Background film on the story section and on app bands that have one.
+   Never blocks load: no src until motion.js attaches one near the viewport,
+   and the poster carries the look until then — or forever, if it never loads.
+   =========================================================================== */
+.ambient{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;z-index:0;pointer-events:none;
+  opacity:0;transition:opacity 1.1s ease;
+}
+.ambient.ready{opacity:1}
+
+/* Scrim. 0.62 measured against the brightest frame of the terraces clip gives
+   white text 6.5:1 — comfortably past the 4.5 small text needs, on any frame. */
+.band.has-video{background:var(--ink)}
+.band-scrim{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(20,18,43,.52) 0%, rgba(20,18,43,.70) 70%, rgba(20,18,43,.82) 100%),
+    linear-gradient(90deg, rgba(20,18,43,.55) 0%, rgba(20,18,43,.30) 60%, transparent 100%);
+}
+.band.has-video .wrap{position:relative;z-index:2}
+.band.has-video .statline{background:rgba(10,9,22,.5)}
+
+.film-stage .ambient{z-index:0}
+.film-scrim{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(60% 55% at 50% 48%, rgba(12,10,28,.78) 0%, rgba(12,10,28,.55) 60%, rgba(12,10,28,.85) 100%);
+}
+.film-stage .film-glow{z-index:1}
+.film-words,.film-rail{z-index:3}
+
+@media (prefers-reduced-motion:reduce){
+  .ambient{display:none}
+}
+
+/* ===========================================================================
+   PLAYFUL LAYER
+   Small, cheap reactions that make the page feel hand-made rather than
+   generated. All of it is transform/opacity only, so nothing reflows, and
+   all of it is switched off under prefers-reduced-motion at the bottom.
+   =========================================================================== */
+
+/* app icons give a little wobble when you point at their card */
+@keyframes icon-wobble{
+  0%,100%{transform:rotate(0deg)    scale(1)}
+  28%    {transform:rotate(-8deg)   scale(1.09)}
+  55%    {transform:rotate(5.5deg)  scale(1.06)}
+  78%    {transform:rotate(-2.5deg) scale(1.02)}
+}
+.app-card:hover .ico img,
+.app-card:focus-visible .ico img{animation:icon-wobble .62s cubic-bezier(.3,1.4,.5,1)}
+
+/* the arrow leans out of the card before you have clicked it */
+.app-card .go{transition:transform .34s cubic-bezier(.2,.9,.25,1.5)}
+.app-card:hover .go{transform:translateX(5px) rotate(-8deg)}
+
+/* strip cards straighten up and rise when pointed at */
+.strip .shot-card{transition:transform .4s cubic-bezier(.2,.9,.25,1.4)}
+.strip .shot-card:hover{transform:rotate(0deg) translateY(calc(var(--lift,0px) - 14px)) scale(1.05);z-index:5}
+
+/* sticker badges settle with a small bounce once they are on screen */
+@keyframes badge-pop{
+  0%  {transform:scale(.2) rotate(-25deg);opacity:0}
+  70% {transform:scale(1.14) rotate(6deg);opacity:1}
+  100%{transform:scale(1) rotate(0deg);opacity:1}
+}
+.shot-card .badge{animation:badge-pop .62s cubic-bezier(.3,1.5,.5,1) both}
+
+/* the headline sticker tilts, because a sticker never goes on straight */
+.sticker{transform:rotate(-1.4deg);transition:transform .35s cubic-bezier(.2,.9,.25,1.6)}
+h1:hover .sticker{transform:rotate(1.8deg) scale(1.03)}
+
+/* buttons get a springier press than a flat translate */
+.btn{transition:transform .22s cubic-bezier(.2,.9,.25,1.5),box-shadow .22s ease}
+
+@media (prefers-reduced-motion:reduce){
+  .app-card:hover .ico img,.shot-card .badge{animation:none}
+  .app-card .go,.strip .shot-card,.sticker,.btn{transition:none}
+  .app-card:hover .go,.strip .shot-card:hover,h1:hover .sticker{transform:none}
+  .sticker{transform:rotate(-1.4deg)}
 }

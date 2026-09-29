@@ -16,7 +16,7 @@ export const pages = [
       ['p', 'I am Aziz Sassi, an independent iOS developer. I build small, focused iPhone apps on my own — no team, no investors, no growth department deciding what gets shipped.'],
       ['h2', 'What I build'],
       ['p', 'Every app here started as something I wanted to exist and could not find. A dog-walk tracker that treats walking as social rather than a chore. A calorie counter that admits what a photo cannot show. A Bali planner built around how the island actually works. A quit-smoking coach built for the ten minutes a craving lasts rather than the day counter.'],
-      ['p', 'All of them are free on the App Store. More are in progress.'],
+      ['p', 'All of them are on the App Store. More are in progress.'],
       ['h2', 'Why there are guides here'],
       ['p', 'Each app sits in a subject where most of the writing online is thin, padded, or quietly selling something. The guides are my attempt at the opposite: the direct answer in the first paragraph, real sources cited, and honesty about the limits.'],
       ['p', 'That last part matters most. The guide on AI calorie counting says plainly that photo-based apps underestimate meals by around a third — including, inevitably, mine. Writing that down is the point. An app that tells you when it is uncertain is more useful than one that sounds confident and is wrong.'],
@@ -85,11 +85,11 @@ export const pages = [
     slug: 'disclosure',
     title: 'Disclosure',
     description:
-      'How this site makes money, stated plainly: free apps, and any affiliate links will be labelled. Nothing is recommended because it pays.',
+      'How this site makes money, stated plainly. Any affiliate link is labelled, and nothing is recommended because it pays.',
     blocks: [
       ['p', 'Plain statement of how this site is funded and what that does, and does not, influence.'],
       ['h2', 'The apps'],
-      ['p', 'All four apps are free to download. Where an app offers a paid upgrade, that is how the work is funded. The guides exist partly because they are useful and partly because people who find them may try an app — that is not hidden, it is the business model.'],
+      ['p', 'The apps fund themselves; each App Store listing spells out exactly how, before you download it. The guides exist partly because they are useful and partly because people who find them may try an app — that is not hidden, it is the business model.'],
       ['h2', 'Affiliate links'],
       ['p', '<strong>This site currently contains no affiliate links.</strong>'],
       ['p', 'That may change for the travel guides, where recommending an eSIM, travel insurance or a tour is genuinely useful. If it does, three things will be true:'],

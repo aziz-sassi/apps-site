@@ -62,13 +62,12 @@ export const apps = [
     accentInk: '#C2410C',   // text-safe variant (5.8:1 on white)
     accentSoft: '#FFF0EA',
     category: 'Health & Fitness',
-    price: 'Free',
     storeUrl: 'https://apps.apple.com/us/app/jupiter-walkies-dog-walks/id6774188640',
     released: '2026-06-11',
     minOs: '17.0',
     title: 'Jupiter Walkies — Dog Walk Tracker with GPS Map & Leaderboard',
     description:
-      'Track every dog walk with a live GPS map \u2014 distance, pace and calories. Share-ready walk cards, walking friends nearby, friendly leaderboard. Free.',
+      'Track every dog walk with a live GPS map \u2014 distance, pace and calories. Share-ready walk cards, walking friends nearby, friendly leaderboard.',
     hero:
       'Tap start and Jupiter maps your walk in real time — route, distance, time, pace and calories — then turns it into a card worth sharing.',
     features: [
@@ -80,8 +79,8 @@ export const apps = [
     faq: [
       ['Does Jupiter Walkies track my walk with GPS?',
        'Yes. Tap start and Jupiter records your route on a live map, along with distance, duration, pace and estimated calories. You do not have to enter anything by hand.'],
-      ['Is Jupiter Walkies free?',
-       'Yes, Jupiter Walkies is free to download on the App Store. It requires iOS 17 or later.'],
+      ['What do I need to run Jupiter Walkies?',
+       'An iPhone running iOS 17 or later. The live map and pace tracking use the same location services as any GPS run tracker.'],
       ['Does it drain my battery on long walks?',
        'Jupiter uses the same location APIs as other fitness trackers and stops recording as soon as you end the walk. For walks over an hour, expect battery use comparable to any GPS run tracker.'],
       ['Can I use it for more than one dog?',
@@ -109,13 +108,12 @@ export const apps = [
     accentInk: '#047857',   // text-safe variant (6.0:1 on white)
     accentSoft: '#E9F9F1',
     category: 'Health & Fitness',
-    price: 'Free',
     storeUrl: 'https://apps.apple.com/us/app/calorie-tracker-macros-bo/id6767255239',
     released: '2026-05-21',
     minOs: '17.0',
     title: 'Bo — AI Calorie Tracker That Asks the Question Others Skip',
     description:
-      'Snap a meal and get a calorie count you can trust. Bo asks the one follow-up question \u2014 dressing? oil? \u2014 that other AI calorie apps skip. Free on iPhone.',
+      'Snap a meal and get a calorie count you can trust. Bo asks the one follow-up question \u2014 dressing? oil? \u2014 that other AI calorie apps skip.',
     hero:
       'Bo does not just count what it can see. It asks the missing piece — ranch or vinaigrette? side of rice? — so the salad you logged is not off by 400 calories.',
     features: [
@@ -127,8 +125,8 @@ export const apps = [
     faq: [
       ['How accurate is Bo compared with other AI calorie apps?',
        'Independent testing in 2026 found popular AI food apps underestimated calories and fat by roughly a third on prepared meals, largely because a photo cannot show oil, dressing or hidden ingredients. Bo asks one targeted follow-up question about exactly those things, which is the single highest-leverage fix available. No photo-based estimate is exact — treat any of them as a good estimate, not a lab measurement.'],
-      ['Is Bo free?',
-       'Yes, Bo is free to download on the App Store. It requires iOS 17 or later.'],
+      ['What do I need to run Bo?',
+       'An iPhone running iOS 17 or later. Photo analysis happens when you snap the meal, so you need a connection at that moment.'],
       ['Can I log food by voice instead of a photo?',
        'Yes. Voice logging is built in, which is usually faster for meals that are awkward to photograph, like a handful of nuts or a drink.'],
       ['Does Bo track macros as well as calories?',
@@ -140,6 +138,7 @@ export const apps = [
 
   {
     slug: 'bali-secret',
+    video: 'bali',
     altNames: ['The Bali Secret app', 'Bali Secret', 'Bali Secret app'],
     screen: 'trip',
     shots: ['bali-1.jpg', 'bali-2.jpg', 'bali-3.jpg'],
@@ -156,13 +155,12 @@ export const apps = [
     accentInk: '#0E7490',   // text-safe variant (5.9:1 on white)
     accentSoft: '#E4F7F9',
     category: 'Travel',
-    price: 'Free',
     storeUrl: 'https://apps.apple.com/us/app/the-bali-secret/id6761162361',
     released: '2026-04-23',
     minOs: '14.0',
     title: 'The Bali Secret \u2014 Bali Trip Planner & Budget Tracker',
     description:
-      'Build a day-by-day Bali itinerary, track your budget in rupiah and dollars, and find the spots that are not on every other list. Free on iPhone.',
+      'Build a day-by-day Bali itinerary, track your budget in rupiah and dollars, and find the spots that are not on every other list.',
     hero:
       'Build a day-by-day itinerary for Ubud, Canggu, Uluwatu and beyond — with a budget that keeps up, and the spots most guides leave out.',
     features: [
@@ -178,8 +176,8 @@ export const apps = [
        'Excluding international flights, roughly $350–$550 per person for budget travel, $700–$1,400 mid-range, and $2,500+ for luxury. Daily spend runs about $25–$40 budget, $70–$130 mid-range, and $300+ luxury.'],
       ['Do I have to pay the Bali tourist levy?',
        'Yes. Since 2024 every foreign visitor pays a one-time levy of IDR 150,000 (about $9.30) per person. Pay it online through the official Love Bali portal before you fly, or at a counter on arrival — paying ahead saves a queue.'],
-      ['Is The Bali Secret free?',
-       'Yes, The Bali Secret is free to download on the App Store. It requires iOS 14 or later.'],
+      ['What do I need to run The Bali Secret?',
+       'An iPhone running iOS 14 or later. Your itinerary and budget stay on the device, so they are readable without a signal in Bali.'],
       ['Is the app useful if I have been to Bali before?',
        'That is largely who it is built for. The itinerary and budget tools help on any trip, and the hidden-gems side is aimed at people who have already done Tanah Lot and the Monkey Forest.'],
     ],
@@ -187,6 +185,7 @@ export const apps = [
 
   {
     slug: 'hold',
+    video: 'hold',
     altNames: ['HOLD app', 'HOLD quit smoking', 'HOLD quit smoking app', 'HOLD quit vaping'],
     screen: 'breathe',
     shots: ['hold-1.jpg', 'hold-2.jpg', 'hold-3.jpg'],
@@ -203,13 +202,12 @@ export const apps = [
     accentInk: '#4338CA',   // text-safe variant (7.6:1 on white)
     accentSoft: '#EEEBFF',
     category: 'Health & Fitness',
-    price: 'Free',
     storeUrl: 'https://apps.apple.com/us/app/hold-quit-smoking-vaping/id6759056448',
     released: '2026-02-25',
     minOs: '15.6',
     title: 'HOLD — AI Quit Coach for Smoking & Vaping Cravings',
     description:
-      'An AI quit coach for when a craving hits, not just a counter tallying days. Guided breathing, real-time support and progress tracking. Free on iPhone.',
+      'An AI quit coach for when a craving hits, not just a counter tallying days. Guided breathing, real-time support and progress tracking.',
     hero:
       'Most quit apps count your days. HOLD is built for the ten minutes that decide whether you keep them — the craving itself.',
     features: [
@@ -223,8 +221,8 @@ export const apps = [
        'An individual craving usually passes in 10 to 15 minutes, whether or not you smoke or vape. Cravings are most frequent in the first few days, peak around day 3, and fade substantially over 3 to 4 weeks. Occasional cravings can still surface months later, which is normal and not a sign of failure.'],
       ['Does HOLD work for vaping as well as cigarettes?',
        'Yes. The dependence is on nicotine either way, and the craving pattern is the same, so the same tools apply to both.'],
-      ['Is HOLD free?',
-       'Yes, HOLD is free to download on the App Store. It requires iOS 15.6 or later.'],
+      ['What do I need to run HOLD?',
+       'An iPhone running iOS 15.6 or later. The breathing exercises and craving timer work without a connection.'],
       ['What are the skin health insights?',
        'Smoking and vaping affect circulation and skin appearance. HOLD tracks the timeline of those changes as you stay nicotine-free, because a visible result is more motivating than an abstract one.'],
       ['Is HOLD a replacement for medical treatment?',
