@@ -1277,3 +1277,178 @@ h1:hover .sticker{transform:rotate(1.8deg) scale(1.03)}
   .app-card:hover .go,.strip .shot-card:hover,h1:hover .sticker{transform:none}
   .sticker{transform:rotate(-1.4deg)}
 }
+
+/* ===========================================================================
+   Trust layer — added 2026-10-13.
+   Everything here states something verifiable: who publishes the apps, what
+   the App Store listing says, how the guides are sourced. No invented social
+   proof, no star ratings (every app has 0 or 1 real rating, so a rating badge
+   would imply a popularity they have not earned).
+   =========================================================================== */
+
+/* ---------- nav: About / Disclosure reachable from every page ---------- */
+.nav-sep{
+  width:1px;height:18px;background:var(--line);
+  margin-inline:6px;flex:none;
+}
+.nav-links a.nav-meta{color:var(--ink-soft)}
+.nav-links a.nav-meta:hover{color:var(--ink)}
+
+/* The app links collapse on small screens, but the two accountability links
+   must not — being able to find who runs a site is the point. */
+@media (max-width:700px){
+  .nav-links{
+    display:flex;margin-left:auto;gap:2px;
+  }
+  .nav-links a:not(.nav-meta),
+  .nav-sep{display:none}
+  .nav-links a.nav-meta{font-size:13px;padding:6px 9px}
+}
+
+/* ---------- how the guides are made ---------- */
+.method{
+  list-style:none;margin:0 0 40px;padding:0;
+  display:grid;gap:14px;
+  grid-template-columns:repeat(3,1fr);
+}
+.method li{
+  padding:18px 20px;
+  background:var(--paper);
+  border:2px solid var(--ink);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+}
+.method b{
+  display:block;
+  font-family:'Bricolage Grotesque','Manrope',sans-serif;
+  font-weight:800;font-size:15px;letter-spacing:-.01em;
+  margin-bottom:5px;
+}
+.method span{display:block;color:var(--ink-soft);font-size:14.5px;line-height:1.55}
+@media (max-width:860px){.method{grid-template-columns:1fr}}
+
+/* ---------- real screens, shown plainly ---------- */
+.screens-list{display:grid;gap:30px}
+.screens-row{
+  padding:22px 24px 26px;
+  border:2px solid var(--ink);
+  border-radius:22px;
+  background:var(--paper);
+  box-shadow:var(--shadow);
+}
+.screens-head{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.screens-head>img{width:52px;height:52px;border-radius:14px;flex:none}
+.screens-name{display:flex;flex-direction:column;min-width:0}
+.screens-name a{
+  font-family:'Bricolage Grotesque','Manrope',sans-serif;
+  font-weight:800;font-size:19px;letter-spacing:-.02em;
+  text-decoration:none;
+}
+.screens-name a:hover{color:var(--accent-ink)}
+.screens-name span{color:var(--ink-soft);font-size:14px}
+.screens-go{
+  margin-left:auto;flex:none;
+  font-size:14px;font-weight:700;text-decoration:none;
+  color:var(--accent-ink);
+  padding:7px 13px;border-radius:999px;
+  background:var(--accent-soft);
+}
+.screens-go:hover{background:var(--accent);color:#fff}
+.screens-shots{
+  display:flex;gap:16px;flex-wrap:wrap;
+}
+/* The stage shadow was built for a dark backdrop; on paper it reads as grime. */
+.screens-shots .shot-card{
+  --cw:clamp(124px,17vw,166px);
+  --tilt:0deg;--lift:0px;
+  box-shadow:0 10px 24px rgba(20,18,43,.16),0 2px 5px rgba(20,18,43,.10);
+}
+/* On a phone three phone-shots cannot sit side by side at a legible size, and
+   wrapping them 2+1 leaves a dead half-row inside the card. Scroll them
+   instead: full size, snapped, and the cut-off third shot is what tells you
+   the row scrolls. */
+@media (max-width:620px){
+  .screens-row{padding:18px 0 20px}
+  .screens-head{flex-wrap:wrap;padding-inline:18px}
+  .screens-go{margin-left:0;order:3}
+  .screens-shots{
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    gap:12px;
+    padding:4px 18px 10px;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;
+  }
+  .screens-shots::-webkit-scrollbar{display:none}
+  .screens-shots .shot-card{
+    --cw:clamp(118px,33vw,150px);
+    scroll-snap-align:start;
+  }
+}
+
+/* ---------- who builds these ---------- */
+.maker{
+  display:grid;gap:34px;
+  grid-template-columns:1.15fr .85fr;
+  align-items:start;
+}
+.maker-copy .lede{margin-top:14px}
+.maker-copy .cta-row{margin-top:24px}
+.maker-facts{
+  list-style:none;margin:0;padding:22px 24px;
+  background:var(--paper);
+  border:2px solid var(--ink);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  display:grid;gap:15px;
+}
+.maker-facts li{display:flex;flex-direction:column;gap:2px}
+.maker-facts b{
+  font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.maker-facts span{font-size:15px;line-height:1.5}
+.maker-facts a{color:var(--accent-ink);font-weight:700}
+@media (max-width:860px){.maker{grid-template-columns:1fr;gap:26px}}
+
+/* ---------- App Store facts, as published ---------- */
+.spec-strip{padding-block:34px}
+.spec{
+  list-style:none;margin:0;padding:18px 22px;
+  display:flex;flex-wrap:wrap;gap:10px 34px;
+  border:2px solid var(--ink);
+  border-radius:18px;
+  background:var(--paper);
+  box-shadow:var(--shadow);
+}
+.spec li{display:flex;flex-direction:column;gap:1px}
+.spec b{
+  font-size:11.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.spec span{
+  font-family:'Bricolage Grotesque','Manrope',sans-serif;
+  font-weight:800;font-size:16px;letter-spacing:-.015em;
+}
+.spec a{color:var(--accent-ink);text-decoration:none}
+.spec a:hover{text-decoration:underline}
+.spec-note{
+  margin:12px 2px 0;
+  font-size:13.5px;color:var(--ink-soft);
+}
+.spec-note a{color:var(--accent-ink);font-weight:700;text-decoration:none;white-space:nowrap}
+.spec-note a:hover{text-decoration:underline}
+@media (max-width:620px){
+  .spec{gap:12px 24px;padding:16px 18px}
+  .spec span{font-size:15px}
+}
+
+/* The shared ARROW svg carries no intrinsic size — it is sized by `.btn svg`.
+   Anywhere outside a button it must be constrained explicitly or it expands to
+   fill its container. */
+.screens-go,
+.spec-note a{display:inline-flex;align-items:center;gap:7px}
+.screens-go svg,
+.spec-note a svg{width:14px;height:14px;flex:none}

@@ -1,15 +1,27 @@
 # Daily guide agent
 
-You maintain **https://www.appsbysass.com**, a static site for four free iPhone
-apps by Aziz Sassi. Pages are generated from `src/` by `node build.mjs`.
+You maintain **https://www.appsbysass.com**, a static site for the iPhone apps
+by Aziz Sassi. Pages are generated from `src/` by `node build.mjs`.
 **Never edit `dist/`** — it is build output and is gitignored.
 
 Your job: research real search demand, add **at most one** new guide, validate
-it, and push. Pushing to `main` auto-deploys via Vercel.
+it, and **commit it locally**. You never push — see section 6. Aziz reviews the
+diff and pushes, and his push to `main` is what auto-deploys via Vercel.
 
-## The four apps
+Two standing rules that override anything else in this file:
 
-Use the slug as the article's `app` field.
+- **Never state or imply a price.** The apps are $0 downloads that monetise
+  through in-app purchases, so "free" is misleading and an IAP disclosure is not
+  wanted either. The site makes no price claim at all, and no `offers`/`price`
+  belongs in the JSON-LD. `/disclosure/` is the single exception and already
+  handles it.
+- **Never hard-code how many apps there are.** More are coming. Derive counts
+  from the `apps` array instead of writing "all four".
+
+## The apps
+
+Use the slug as the article's `app` field. This table is the list of apps —
+if `src/content.mjs` has more than are listed here, trust `content.mjs`.
 
 | slug | app | subject |
 |---|---|---|
@@ -25,8 +37,8 @@ Read `src/articles.mjs` and `src/content.mjs` in full. Note every existing
 
 ## 2. Research
 
-Use WebSearch to find a question people genuinely search, in one of the four
-subjects, that the site does **not** already answer. Prefer whichever app has
+Use WebSearch to find a question people genuinely search, in one of the
+subjects above, that the site does **not** already answer. Prefer whichever app has
 the fewest guides. The best targets are specific questions with a factual
 answer ("how long does X last", "is X safe", "how much X per day").
 
@@ -65,7 +77,7 @@ existing style exactly:
 ```js
 {
   slug: 'kebab-case-slug',
-  app: 'one-of-the-four-slugs',
+  app: 'one-of-the-slugs-above',
   title: 'Sentence Case Title',
   description: '70-165 characters. This length is enforced by the build.',
   published: 'YYYY-MM-DD',   // today

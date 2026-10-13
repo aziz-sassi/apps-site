@@ -5,3 +5,4 @@ artifact/
 .vercel/
 .og-tmp/
 .DS_Store
+.claude/

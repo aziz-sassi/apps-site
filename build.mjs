@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { site, apps, appBySlug } from './src/content.mjs';
 import { articles } from './src/articles.mjs';
 import { pages } from './src/pages.mjs';
+import { readFileSync } from 'node:fs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 // FLAT=1 emits one directory of relative-linked .html files, for hosts that
@@ -17,6 +18,17 @@ const ROOT = dirname(fileURLToPath(import.meta.url));
 const FLAT = process.env.FLAT === '1';
 const NOINDEX = process.env.NOINDEX === '1';
 const DIST = join(ROOT, FLAT ? 'dist-flat' : 'dist');
+
+// Live App Store facts (version, update date, size), refreshed by
+// `node tools/fetch-store.mjs`. Read from the cached file rather than fetched
+// here, so a network problem can never break a build or a deploy. If the file
+// is missing the spec rows simply do not render.
+let storeData = {};
+try {
+  storeData = JSON.parse(readFileSync(join(ROOT, 'src', 'store-data.json'), 'utf8'));
+} catch {
+  console.warn('! src/store-data.json missing — run node tools/fetch-store.mjs');
+}
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
   .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -27,6 +39,13 @@ const words = (a) => a.blocks.reduce((n, [t, v]) =>
     : (v.rows || []).flat().join(' ').split(/\s+/).length), 0);
 const readMins = (a) => Math.max(2, Math.round(words(a) / 220));
 const articlesFor = (slug) => articles.filter((a) => a.app === slug);
+
+// Trust figures shown on the home page. Computed, never typed by hand, so they
+// cannot drift away from what the site actually contains.
+const totalSources = articles.reduce((n, a) => n + (a.sources?.length || 0), 0);
+const minSources = articles.length
+  ? Math.min(...articles.map((a) => a.sources?.length || 0))
+  : 0;
 
 // Health and nutrition are \"Your Money or Your Life\" topics. Google's quality
 // guidelines expect a clear, visible disclaimer rather than one buried at the
@@ -41,6 +60,7 @@ const hHome    = ()       => (FLAT ? 'index.html' : '/');
 const hApp     = (s2)     => (FLAT ? `${s2}.html` : `/${s2}/`);
 const hArticle = (ap, s2) => (FLAT ? `${ap}--${s2}.html` : `/${ap}/${s2}/`);
 const hAsset   = (f)      => (FLAT ? f : `/${f}`);
+const hPage    = (s2)     => (FLAT ? `${s2}.html` : `/${s2}/`);
 
 const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 const OUT   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>';
@@ -224,6 +244,9 @@ ${noNav ? '' : `<nav class="nav">
     <a class="logo" href="${hHome()}"><span></span>${esc(site.name)}</a>
     <div class="nav-links">
       ${apps.map((a) => `<a href="${hApp(a.slug)}">${esc(a.name)}</a>`).join('\n      ')}
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a class="nav-meta" href="${hPage('about')}">About</a>
+      <a class="nav-meta" href="${hPage('disclosure')}">Disclosure</a>
     </div>
   </div>
 </nav>`}
@@ -335,6 +358,7 @@ function homePage() {
         </div>
         <ul class="statline">
           <li><b>${articles.length}</b><span>researched guides</span></li>
+          <li><b>${totalSources}</b><span>sources cited</span></li>
           <li><b>Independent</b><span>built solo</span></li>
         </ul>
       </div>
@@ -372,13 +396,52 @@ ${TICKER}
   </div>
 </section>
 
-${stripStage({
-  cards: apps.flatMap((a) => a.shots.map((shot, i) => ({ app: a, shot, lead: i === 0 }))),
-  heading: 'Everything I\u2019ve shipped',
-  sub: 'Keep scrolling \u2014 the strip tracks with you, and rewinds when you scroll back.',
-})}
+<section id="screens">
+  <div class="wrap">
+    <div class="sec-head reveal mask-up">
+      <h2 class="d">What they actually look like</h2>
+      <p>Real screens from the builds that are on the App&nbsp;Store right now &mdash; not mockups, not renders.</p>
+    </div>
+    <div class="screens-list">
+      ${apps.map((a) => `
+      <div class="screens-row reveal" style="--accent:${a.accent};--accent-ink:${a.accentInk}">
+        <div class="screens-head">
+          <img src="${hAsset(`icons/${a.icon}`)}" alt="" width="56" height="56" loading="lazy" decoding="async">
+          <div class="screens-name">
+            <a href="${hApp(a.slug)}">${esc(a.name)}</a>
+            <span>${esc(a.tagline)}</span>
+          </div>
+          <a class="screens-go" href="${hApp(a.slug)}">Open ${ARROW}</a>
+        </div>
+        <div class="screens-shots">
+          ${a.shots.map((shot, i) => shotCard(a, shot, i, false)).join('')}
+        </div>
+      </div>`).join('')}
+    </div>
+  </div>
+</section>
 
-${filmSection()}
+<section class="tinted seam" id="who">
+  <div class="wrap">
+    <div class="maker reveal">
+      <div class="maker-copy">
+        <p class="eyebrow">Who builds these</p>
+        <h2 class="d">One person. No company behind it.</h2>
+        <p class="lede">I&rsquo;m ${esc(site.author)}. I design, build and support every app on this site myself &mdash; no team, no investors, no outsourced support desk. If something breaks, the person reading your email is the person who wrote the code.</p>
+        <div class="cta-row">
+          <a class="btn" href="${esc(site.developerUrl)}" rel="noopener">See them all on the App Store ${ARROW}</a>
+          <a class="btn light" href="${hPage('about')}">More about me ${ARROW}</a>
+        </div>
+      </div>
+      <ul class="maker-facts">
+        <li><b>Published by</b><span><a href="${esc(site.developerUrl)}" rel="noopener">${esc(site.author)}</a>, verified on the App&nbsp;Store</span></li>
+        <li><b>Reachable at</b><span><a href="mailto:${esc(site.contactEmail)}">${esc(site.contactEmail)}</a> &mdash; a real inbox</span></li>
+        <li><b>How the apps are funded</b><span><a href="${hPage('disclosure')}">Read the disclosure</a></span></li>
+        <li><b>What this site collects</b><span><a href="${hPage('privacy')}">No cookies, no ad trackers</a></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
 
 <section class="tinted seam" id="guides">
   <div class="wrap">
@@ -386,6 +449,11 @@ ${filmSection()}
       <h2 class="d">Guides &amp; answers</h2>
       <p>Straight answers to the questions people actually ask &mdash; researched, sourced, and free of the fluff most of these articles are padded with.</p>
     </div>
+    <ul class="method reveal">
+      <li><b>Sourced</b><span>Every guide cites at least ${minSources} independent sources, linked at the bottom so you can check them yourself.</span></li>
+      <li><b>Dated</b><span>Each one shows when it was last updated. Nothing here is quietly edited and passed off as current.</span></li>
+      <li><b>Careful where it counts</b><span>Guides about quitting smoking or eating carry a plain note that they are information, not medical advice.</span></li>
+    </ul>
     ${apps.map((app) => `
     <div class="guide-group" style="--accent:${app.accent};--accent-ink:${app.accentInk}">
       <h3 class="group-head">
@@ -470,6 +538,24 @@ function appPage(app) {
     </div>
   </div>
 </header>
+
+${(() => {
+  const d = storeData[app.slug];
+  if (!d) return '';
+  return `
+<section class="spec-strip">
+  <div class="wrap">
+    <ul class="spec">
+      <li><b>Version</b><span>${esc(d.version)}</span></li>
+      <li><b>Last updated</b><span><time datetime="${d.updated}">${niceDate(d.updated)}</time></span></li>
+      <li><b>Size</b><span>${d.sizeMb} MB</span></li>
+      <li><b>Requires</b><span>iOS ${esc(d.minOs || app.minOs)}+</span></li>
+      <li><b>Seller</b><span><a href="${esc(site.developerUrl)}" rel="noopener">${esc(site.author)}</a></span></li>
+    </ul>
+    <p class="spec-note">Straight from the App&nbsp;Store listing${storeData._fetched ? `, checked ${niceDate(storeData._fetched)}` : ''}. <a href="${esc(app.storeUrl)}" rel="noopener">Verify it yourself ${ARROW}</a></p>
+  </div>
+</section>`;
+})()}
 
 <section>
   <div class="wrap">
