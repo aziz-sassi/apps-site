@@ -1452,3 +1452,29 @@ h1:hover .sticker{transform:rotate(1.8deg) scale(1.03)}
 .spec-note a{display:inline-flex;align-items:center;gap:7px}
 .screens-go svg,
 .spec-note a svg{width:14px;height:14px;flex:none}
+
+/* ===========================================================================
+   Hero wordmark — the launch film's opening, on the page.
+   MADE. folds into its own period, which grows into the eyebrow pill that was
+   always going to be there. Fixed height, so it can never shift layout.
+   =========================================================================== */
+.markline{position:relative;height:34px;margin-bottom:14px}
+.markline .eyebrow{position:absolute;left:0;top:4px;margin:0}
+.mark-word{
+  position:absolute;left:0;top:0;height:34px;
+  font-family:'Bricolage MADE','Bricolage Grotesque',sans-serif;
+  font-weight:800;font-size:34px;line-height:34px;color:var(--ink);
+  white-space:nowrap;pointer-events:none;
+}
+.mark-word i{position:absolute;left:0;top:0;display:inline-block;font-style:normal;
+  transform-origin:0% 50%;will-change:transform}
+/* Without JS the pill is simply there, and the loose glyphs never show. */
+.mark-word{display:none}
+.js .mark-word{display:block}
+.js .markline[data-mark] .eyebrow{opacity:0}
+.js .markline.mark-done .eyebrow{opacity:1}
+.js .markline.mark-done .mark-word{display:none}
+@media (prefers-reduced-motion:reduce){
+  .js .mark-word{display:none}
+  .js .markline[data-mark] .eyebrow{opacity:1}
+}

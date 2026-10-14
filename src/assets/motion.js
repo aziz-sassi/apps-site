@@ -124,3 +124,97 @@
   frame();
   syncVideos();
 })();
+
+  /* ---------- hero wordmark: MADE. folds into the eyebrow pill ----------
+     Same closed-form springs as the launch film, so the motion matches frame
+     for frame. Every value is a pure function of elapsed time: no state, no
+     chained transitions, nothing to drift if a frame is dropped.            */
+  (function () {
+    var line = document.querySelector('.markline[data-mark]');
+    if (!line) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      line.classList.add('mark-done'); return;
+    }
+    var word = line.querySelector('.mark-word');
+    var pill = line.querySelector('.eyebrow');
+    var gl = [].slice.call(word.querySelectorAll('i'));
+    if (!gl.length) { line.classList.add('mark-done'); return; }
+
+    function springStep(x, f, z) {
+      if (x <= 0) return 0;
+      var w = 2 * Math.PI * f, wd = w * Math.sqrt(1 - z * z);
+      return 1 - Math.exp(-z * w * x) * (Math.cos(wd * x) + (z * w / wd) * Math.sin(wd * x));
+    }
+    var cl = function (x) { return x < 0 ? 0 : x > 1 ? 1 : x; };
+    var ease = function (t, a, d) { var x = cl((t - a) / d); return x * x * (3 - 2 * x); };
+    var lerp = function (a, b, u) { return a + (b - a) * u; };
+
+    var M = null;
+    function measure() {
+      // each glyph's own width at both ends of the width axis
+      var probe = document.createElement('span');
+      probe.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;' +
+        "font-family:'Bricolage MADE','Bricolage Grotesque',sans-serif;font-weight:800;font-size:34px";
+      document.body.appendChild(probe);
+      var at = function (ch, wd) {
+        probe.style.fontVariationSettings = '"wdth" ' + wd;
+        probe.textContent = ch;
+        return probe.getBoundingClientRect().width;
+      };
+      var g = gl.map(function (el) { return { w: at(el.textContent, 100), wN: at(el.textContent, 75) }; });
+      probe.remove();
+      var total = g.reduce(function (a, v) { return a + v.w; }, 0);
+      // put the period where the pill's centre is, so the dot becomes the pill
+      var pr = pill.getBoundingClientRect(), lr = line.getBoundingClientRect();
+      var dotCx = pr.left - lr.left + pr.width / 2;
+      M = { g: g, total: total, dotCx: dotCx, pillW: pr.width, pillH: pr.height };
+    }
+
+    var DUR = 2.05, t0 = 0;
+    function frame(now) {
+      if (!t0) t0 = now;
+      var t = (now - t0) / 1000;
+      if (!M) measure();
+      var k = ease(t, 0.35, 1.00);                 // the squeeze
+      var s = lerp(1, 0.07, k);
+      var wd = lerp(100, 75, k);
+      var last = gl.length - 1;
+      var dot = M.g[last];
+      var left = M.dotCx - dot.w / 2;
+      var xs = [], right = left;
+      for (var i = last - 1; i >= 0; i--) { right -= M.g[i].w * s; xs[i] = right; }
+      for (var j = 0; j < gl.length; j++) {
+        var el = gl[j], gm = M.g[j];
+        if (j === last) {
+          el.style.fontVariationSettings = '"wdth" 100';
+          el.style.transform = 'translateX(' + left.toFixed(2) + 'px)';
+          el.style.opacity = t > 1.45 ? 0 : 1;     // hand the dot over to the pill
+          continue;
+        }
+        var nat = lerp(gm.w, gm.wN, k);
+        el.style.fontVariationSettings = '"wdth" ' + wd.toFixed(1);
+        el.style.transform = 'translateX(' + xs[j].toFixed(2) + 'px) scaleX(' + ((gm.w * s) / nat).toFixed(4) + ')';
+        el.style.opacity = k > 0.97 ? 0 : 1;
+      }
+      // the dot springs open into the pill that was always in the markup
+      var grow = springStep(t - 1.40, 2.7, 0.62);
+      if (t >= 1.40) {
+        pill.style.opacity = 1;
+        pill.style.transformOrigin = '50% 50%';
+        pill.style.transform = 'scaleX(' + lerp(dot.w / M.pillW, 1, grow).toFixed(4) +
+                               ') scaleY(' + lerp(dot.w / M.pillH, 1, grow).toFixed(4) + ')';
+        pill.style.color = 'rgba(255,255,255,' + cl((t - 1.60) / 0.34).toFixed(3) + ')';
+      }
+      if (t < DUR) { requestAnimationFrame(frame); }
+      else {
+        // hand every property back to the stylesheet; leave no inline residue
+        pill.removeAttribute('style');
+        line.classList.add('mark-done');
+      }
+    }
+    // only start once the 5-glyph face is really there, or the squeeze measures a fallback
+    var go = function () { requestAnimationFrame(frame); };
+    if (document.fonts && document.fonts.load) {
+      document.fonts.load('800 34px "Bricolage MADE"', 'MADE.').then(go, go);
+    } else go();
+  })();

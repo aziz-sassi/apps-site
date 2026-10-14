@@ -221,6 +221,7 @@ ${NOINDEX ? '<meta name="robots" content="noindex,nofollow">' : ''}
 <link rel="apple-touch-icon" href="${hAsset('icons/jupiter.jpg')}">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="${hAsset('fonts/BricolageGrotesque-latin.woff2')}">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="${hAsset('fonts/Manrope-latin.woff2')}">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="${hAsset('fonts/Bricolage-MADE.woff2')}">
 <link rel="stylesheet" href="${hAsset('styles.css')}">
 ${site.analytics?.searchConsole ? `<meta name="google-site-verification" content="${esc(site.analytics.searchConsole)}">` : ''}
 ${site.verification?.impact ? `<meta name="impact-site-verification" value="${esc(site.verification.impact)}">` : ''}
@@ -347,7 +348,10 @@ function homePage() {
 <header class="band hero" id="hero">
   ${SKY_FULL}
   <div class="wrap">
-    <p class="eyebrow on-brand">iOS &middot; Independent</p>
+    <div class="markline" data-mark>
+      <span class="mark-word" aria-hidden="true"><i>M</i><i>A</i><i>D</i><i>E</i><i>.</i></span>
+      <p class="eyebrow on-brand">iOS &middot; Independent</p>
+    </div>
     <div class="hero-split">
       <div class="hero-copy">
         <h1 class="d">iPhone apps,<br>made <span class="sticker">properly</span>.</h1>
