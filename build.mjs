@@ -226,8 +226,7 @@ ${NOINDEX ? '<meta name="robots" content="noindex,nofollow">' : ''}
 ${site.analytics?.searchConsole ? `<meta name="google-site-verification" content="${esc(site.analytics.searchConsole)}">` : ''}
 ${site.verification?.impact ? `<meta name="impact-site-verification" value="${esc(site.verification.impact)}">` : ''}
 ${site.analytics?.vercel ? `<script defer src="/_vercel/insights/script.js"></script>` : ''}
-${site.analytics?.ga4 ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(site.analytics.ga4)}"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${esc(site.analytics.ga4)}');</script>` : ''}
+${site.analytics?.ga4 ? `<script>window.__ga4Id=${JSON.stringify(site.analytics.ga4)}</script>` : ''}
 ${accent ? `<style>:root{--accent:${accent};--accent-soft:${accentSoft};--accent-ink:${accentInk || accent}}</style>` : ''}
 ${jsonld.map((o) => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n')}
 </head>
@@ -289,8 +288,22 @@ ${body}
   </div>
 </div>
 
+${site.analytics?.ga4 ? `
+<div class="consent" id="consent" role="dialog" aria-modal="false" aria-labelledby="consent-t" hidden>
+  <div class="consent-in">
+    <p class="eyebrow" id="consent-t">Analytics</p>
+    <p class="consent-copy">This site uses Google Analytics to see which guides people find useful.
+      It sets cookies. Nothing is sold or shared with advertisers, and declining costs you nothing &mdash;
+      the site works identically either way. <a href="${hPage('privacy')}">What is collected</a>.</p>
+    <div class="consent-row">
+      <button class="consent-btn" type="button" data-consent="granted">Allow analytics</button>
+      <button class="consent-btn alt" type="button" data-consent="denied">Decline</button>
+    </div>
+  </div>
+</div>` : ''}
 <script src="${hAsset('escape.js')}" defer></script>
 <script src="${hAsset('motion.js')}" defer></script>
+${site.analytics?.ga4 ? `<script src="${hAsset('consent.js')}" defer></script>` : ''}
 </body>
 </html>
 `;
@@ -441,7 +454,7 @@ ${TICKER}
         <li><b>Published by</b><span><a href="${esc(site.developerUrl)}" rel="noopener">${esc(site.author)}</a>, verified on the App&nbsp;Store</span></li>
         <li><b>Reachable at</b><span><a href="mailto:${esc(site.contactEmail)}">${esc(site.contactEmail)}</a> &mdash; a real inbox</span></li>
         <li><b>How the apps are funded</b><span><a href="${hPage('disclosure')}">Read the disclosure</a></span></li>
-        <li><b>What this site collects</b><span><a href="${hPage('privacy')}">No cookies, no ad trackers</a></span></li>
+        <li><b>What this site collects</b><span><a href="${hPage('privacy')}">${site.analytics?.ga4 ? 'Analytics only, your choice' : 'No cookies, no ad trackers'}</a></span></li>
       </ul>
     </div>
   </div>
@@ -901,6 +914,7 @@ await writeFile(join(DIST, 'styles.css'), fontCss + '\n' + mainCss);
 await cp(join(ROOT, 'src/assets/fonts'), join(DIST, 'fonts'), { recursive: true });
 await cp(join(ROOT, 'src/assets/escape.js'), join(DIST, 'escape.js'));
 await cp(join(ROOT, 'src/assets/motion.js'), join(DIST, 'motion.js'));
+await cp(join(ROOT, 'src/assets/consent.js'), join(DIST, 'consent.js'));
 await cp(join(ROOT, 'icons'), join(DIST, 'icons'), { recursive: true });
 await cp(join(ROOT, 'src/assets/shots'), join(DIST, 'shots'), { recursive: true });
 await cp(join(ROOT, 'src/assets/og'), join(DIST, 'og'), { recursive: true });

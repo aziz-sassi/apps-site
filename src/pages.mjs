@@ -6,6 +6,10 @@
 // not do is worse than none at all.
 // ---------------------------------------------------------------------------
 
+import { site } from './content.mjs';
+
+const GA4 = Boolean(site.analytics?.ga4);
+
 export const pages = [
   {
     slug: 'about',
@@ -61,15 +65,23 @@ export const pages = [
       ['h2', 'What is collected'],
       ['ul', [
         '<strong>Server logs.</strong> The site is hosted on Vercel, which records standard request data — IP address, browser, page requested — as any web server does. This is operational and is handled under Vercel’s own privacy policy.',
-        '<strong>Analytics.</strong> Vercel Web Analytics records page views and which App&nbsp;Store links are tapped, so I can tell which guides are actually useful. It is <strong>cookieless</strong> — it stores nothing on your device, does not follow you between sites, and does not build a profile of you. That is also why this site shows no cookie banner: there is nothing to consent to.',
-      ]],
-      ['p', 'If Google Analytics or anything cookie-based is ever added, this page will say so <em>before</em> it is switched on, not after.'],
+        '<strong>Analytics.</strong> Vercel Web Analytics records page views and which App&nbsp;Store links are tapped, so I can tell which guides are actually useful. It is <strong>cookieless</strong> — it stores nothing on your device, does not follow you between sites, and does not build a profile of you.',
+      ].concat(GA4 ? [
+        '<strong>Google Analytics, only if you allow it.</strong> If you choose &ldquo;Allow analytics&rdquo; on the banner, Google Analytics&nbsp;4 is loaded and sets cookies to recognise a returning browser. If you decline, or ignore the banner, <em>the Google script is never loaded at all</em> — not loaded-but-disabled, not present. Your choice is remembered in your browser&rsquo;s local storage rather than a cookie, so declining does not itself leave anything behind.',
+      ] : [])],
+      ...(GA4 ? [
+        ['p', 'That banner is the only one on this site. Allow and decline carry equal weight, and nothing on the site is withheld if you decline.'],
+      ] : [
+        ['p', 'That is also why this site shows no cookie banner: there is nothing to consent to. If Google Analytics or anything cookie-based is ever added, this page will say so <em>before</em> it is switched on, not after.'],
+      ]),
       ['h2', 'What is not collected'],
       ['ul', [
         'No account or profile data — there are no accounts.',
         'No email addresses, unless you choose to email me, in which case I have your email because you sent it.',
         'No advertising or cross-site tracking networks.',
-        'No cookies. The site sets none at all.',
+        GA4
+          ? 'No cookies unless you allow analytics. Decline, or simply ignore the banner, and the site sets none at all.'
+          : 'No cookies. The site sets none at all.',
         'Nothing is sold, rented, or shared with data brokers.',
       ]],
       ['h2', 'Links to other sites'],

@@ -1478,3 +1478,46 @@ h1:hover .sticker{transform:rotate(1.8deg) scale(1.03)}
   .js .mark-word{display:none}
   .js .markline[data-mark] .eyebrow{opacity:1}
 }
+
+/* ===========================================================================
+   Consent banner. Only rendered when a GA4 id is configured; until someone
+   allows it, no Google script is on the page at all. Accept and decline are
+   given equal weight on purpose — a decline that is harder than an accept is
+   not a free choice, and regulators treat it as no consent.
+   =========================================================================== */
+.consent{
+  position:fixed;left:16px;right:16px;bottom:16px;z-index:90;
+  display:flex;justify-content:center;
+}
+.consent[hidden]{display:none}
+.consent-in{
+  width:min(560px,100%);
+  background:var(--paper);
+  border:2px solid var(--ink);
+  border-radius:22px;
+  box-shadow:6px 6px 0 var(--ink);
+  padding:18px 20px 20px;
+}
+.consent .eyebrow{margin:0 0 8px}
+.consent-copy{font-size:14.5px;line-height:1.52;margin:0 0 14px;color:var(--ink)}
+.consent-copy a{color:var(--ink);text-underline-offset:3px}
+.consent-row{display:flex;gap:10px;flex-wrap:wrap}
+/* Both buttons are styled here rather than reusing .btn.ghost, which is white
+   on white outside the hero band — an invisible decline is a dark pattern. */
+.consent-btn{
+  font-family:'Bricolage Grotesque','Manrope',sans-serif;
+  font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;
+  padding:11px 20px;border-radius:999px;cursor:pointer;
+  border:2px solid var(--ink);
+  background:var(--ink);color:var(--paper);
+  box-shadow:3px 3px 0 var(--ink);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.consent-btn.alt{background:var(--paper);color:var(--ink);box-shadow:3px 3px 0 var(--ink)}
+.consent-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.consent-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.consent-btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+@media (max-width:520px){
+  .consent{left:10px;right:10px;bottom:10px}
+  .consent-btn{flex:1 1 auto}
+}

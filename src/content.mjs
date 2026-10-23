@@ -38,6 +38,10 @@ export const site = {
     // Vercel Web Analytics — cookieless, no consent banner needed, no account
     // to configure. Served from /_vercel/insights/ by the host itself.
     vercel: true,
+    // Paste the measurement id to switch GA4 on. Doing so ALSO flips the
+    // consent banner on and rewrites /privacy/ in the same build, so the page
+    // never describes tracking that is not happening, in either direction.
+    // Until then no Google script is shipped and no banner is rendered.
     ga4: '',           // e.g. 'G-XXXXXXXXXX' from Google Analytics 4
     searchConsole: '', // the content value of Google Search Console's HTML-tag verification
   },
