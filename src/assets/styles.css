@@ -1521,3 +1521,39 @@ h1:hover .sticker{transform:rotate(1.8deg) scale(1.03)}
   .consent{left:10px;right:10px;bottom:10px}
   .consent-btn{flex:1 1 auto}
 }
+
+/* ===========================================================================
+   Section headings, condensed and uppercase, after bigbrowser.co. Applied to
+   page section headings only — article <h2>/<h3> carry no .d class, so
+   long-form prose keeps sentence case and stays readable.
+   The hero <h1> is deliberately NOT uppercased: "IPHONE" is not how Apple
+   writes it, and the brand voice there is a sentence, not a shout.
+   =========================================================================== */
+h2.d, .sec-head h2.d{
+  font-family:'Bricolage Display','Bricolage Grotesque',sans-serif;
+  font-variation-settings:'wdth' 78,'wght' 800;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.005em;
+  /* a boxed word needs more room than bare caps: .92 made the border of a
+     wrapped .sticker touch the line above it */
+  line-height:1.12;
+  font-size:clamp(32px,5vw,58px);
+  text-wrap:balance;
+}
+h2.d .sticker{
+  border-width:3px;
+  border-radius:13px;
+  padding:0 .16em .04em;
+  margin-inline:.04em .1em;
+  transform:rotate(-1.2deg);
+  font-variation-settings:'wdth' 78,'wght' 800;
+}
+/* the band headings sit on a dark/accent field */
+.band.hero h2.d,.band.ink h2.d{color:var(--paper)}
+
+/* ---------- app cards: one tint per app, after the reference's card rows ----
+   The accent already exists per app; this just stops every card being white. */
+.app-card{background:var(--card-tint,var(--paper))}
+.app-card .ico{box-shadow:3px 3px 0 var(--ink)}
+

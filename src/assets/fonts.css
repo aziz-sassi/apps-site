@@ -43,3 +43,14 @@
   font-stretch:75% 100%;
   font-display:block;
 }
+
+/* Caps-only variable cut of Bricolage (18 KB) for the condensed, uppercase
+   section headings. Headings are text-transform:uppercase, so lowercase glyphs
+   are never needed — which is why the width axis costs 18 KB here and not 131. */
+@font-face{
+  font-family:'Bricolage Display';
+  src:url('fonts/Bricolage-Display.woff2') format('woff2');
+  font-weight:200 800;
+  font-stretch:75% 100%;
+  font-display:swap;
+}

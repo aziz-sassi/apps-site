@@ -222,6 +222,7 @@ ${NOINDEX ? '<meta name="robots" content="noindex,nofollow">' : ''}
 <link rel="preload" as="font" type="font/woff2" crossorigin href="${hAsset('fonts/BricolageGrotesque-latin.woff2')}">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="${hAsset('fonts/Manrope-latin.woff2')}">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="${hAsset('fonts/Bricolage-MADE.woff2')}">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="${hAsset('fonts/Bricolage-Display.woff2')}">
 <link rel="stylesheet" href="${hAsset('styles.css')}">
 ${site.analytics?.searchConsole ? `<meta name="google-site-verification" content="${esc(site.analytics.searchConsole)}">` : ''}
 ${site.verification?.impact ? `<meta name="impact-site-verification" value="${esc(site.verification.impact)}">` : ''}
@@ -390,12 +391,12 @@ ${TICKER}
 <section id="apps">
   <div class="wrap">
     <div class="sec-head reveal mask-up">
-      <h2 class="d">The apps</h2>
+      <h2 class="d">The <span class="sticker">apps</span></h2>
       <p>Each one started as something I wanted to exist, then got built until it did.</p>
     </div>
     <div class="grid two">
       ${apps.map((a, i) => `
-      <a class="app-card reveal d${(i % 4) + 1}" href="${hApp(a.slug)}" style="--accent:${a.accent}">
+      <a class="app-card reveal d${(i % 4) + 1}" href="${hApp(a.slug)}" style="--accent:${a.accent};--card-tint:${a.accentSoft}">
         <span class="ico"><img src="${hAsset(`icons/${a.icon}`)}" alt="${esc(a.name)} app icon" width="136" height="136" loading="eager"></span>
         <span class="body">
           <span class="nm">${esc(a.name)}</span>
@@ -416,7 +417,7 @@ ${TICKER}
 <section id="screens">
   <div class="wrap">
     <div class="sec-head reveal mask-up">
-      <h2 class="d">What they actually look like</h2>
+      <h2 class="d">What they <span class="sticker">actually</span> look like</h2>
       <p>Real screens from the builds that are on the App&nbsp;Store right now &mdash; not mockups, not renders.</p>
     </div>
     <div class="screens-list">
@@ -443,7 +444,7 @@ ${TICKER}
     <div class="maker reveal">
       <div class="maker-copy">
         <p class="eyebrow">Who builds these</p>
-        <h2 class="d">One person. No company behind it.</h2>
+        <h2 class="d">One <span class="sticker">person</span>. No company behind it.</h2>
         <p class="lede">I&rsquo;m ${esc(site.author)}. I design, build and support every app on this site myself &mdash; no team, no investors, no outsourced support desk. If something breaks, the person reading your email is the person who wrote the code.</p>
         <div class="cta-row">
           <a class="btn" href="${esc(site.developerUrl)}" rel="noopener">See them all on the App Store ${ARROW}</a>
@@ -463,7 +464,7 @@ ${TICKER}
 <section class="tinted seam" id="guides">
   <div class="wrap">
     <div class="sec-head reveal mask-up">
-      <h2 class="d">Guides &amp; answers</h2>
+      <h2 class="d">Guides &amp; <span class="sticker">answers</span></h2>
       <p>Straight answers to the questions people actually ask &mdash; researched, sourced, and free of the fluff most of these articles are padded with.</p>
     </div>
     <ul class="method reveal">
@@ -576,7 +577,7 @@ ${(() => {
 
 <section>
   <div class="wrap">
-    <div class="sec-head reveal mask-up"><h2 class="d">What it does</h2></div>
+    <div class="sec-head reveal mask-up"><h2 class="d">What it <span class="sticker">does</span></h2></div>
     <div class="grid two">
       ${app.features.map(([h, p], i) => `<div class="card reveal d${(i % 4) + 1}"><h3 class="d">${esc(h)}</h3><p>${esc(p)}</p></div>`).join('')}
     </div>
@@ -586,7 +587,7 @@ ${(() => {
 <section class="tinted seam">
   <div class="wrap">
     <div class="sec-head reveal mask-up">
-      <h2 class="d">How it works</h2>
+      <h2 class="d">How it <span class="sticker">works</span></h2>
       <p>Three steps, no account needed to try it.</p>
     </div>
     <div class="grid three">
@@ -848,10 +849,10 @@ function notFoundPage() {
 
 <section>
   <div class="wrap">
-    <div class="sec-head reveal mask-up"><h2 class="d">The apps</h2></div>
+    <div class="sec-head reveal mask-up"><h2 class="d">The <span class="sticker">apps</span></h2></div>
     <div class="grid two">
       ${apps.map((a) => `
-      <a class="app-card" href="${hApp(a.slug)}" style="--accent:${a.accent}">
+      <a class="app-card" href="${hApp(a.slug)}" style="--accent:${a.accent};--card-tint:${a.accentSoft}">
         <span class="ico"><img src="${hAsset(`icons/${a.icon}`)}" alt="" width="136" height="136"></span>
         <span class="body">
           <span class="nm">${esc(a.name)}</span>
