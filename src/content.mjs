@@ -44,6 +44,9 @@ export const site = {
     // Until then no Google script is shipped and no banner is rendered.
     ga4: '',           // e.g. 'G-XXXXXXXXXX' from Google Analytics 4
     searchConsole: '', // the content value of Google Search Console's HTML-tag verification
+    // IndexNow: ping Bing/Yandex/Seznam/Naver without an account. Ownership is
+    // proven by serving this key at /<key>.txt, which build.mjs copies to dist.
+    indexNowKey: '26c6ccb53e09f9a8a085da56a2f14b33',
   },
 };
 

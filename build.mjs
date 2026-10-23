@@ -916,6 +916,9 @@ await cp(join(ROOT, 'src/assets/fonts'), join(DIST, 'fonts'), { recursive: true 
 await cp(join(ROOT, 'src/assets/escape.js'), join(DIST, 'escape.js'));
 await cp(join(ROOT, 'src/assets/motion.js'), join(DIST, 'motion.js'));
 await cp(join(ROOT, 'src/assets/consent.js'), join(DIST, 'consent.js'));
+if (site.analytics?.indexNowKey) {
+  await cp(join(ROOT, 'src/assets/indexnow'), DIST, { recursive: true });
+}
 await cp(join(ROOT, 'icons'), join(DIST, 'icons'), { recursive: true });
 await cp(join(ROOT, 'src/assets/shots'), join(DIST, 'shots'), { recursive: true });
 await cp(join(ROOT, 'src/assets/og'), join(DIST, 'og'), { recursive: true });
