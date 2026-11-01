@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { site, apps, otherWork, appBySlug } from './src/content.mjs';
 import { articles } from './src/articles.mjs';
 import { pages } from './src/pages.mjs';
+import { plans } from './src/plans.mjs';
 import { readFileSync } from 'node:fs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
@@ -193,7 +194,7 @@ const storeLink = (app, label = 'Get it on the App Store', cls = 'btn light') =>
 // ---------------------------------------------------------------------------
 // Document shell
 // ---------------------------------------------------------------------------
-function layout({ title, description, path, accent, accentSoft, accentInk, ogImage, body, jsonld = [], noNav = false }) {
+function layout({ title, description, path, accent, accentSoft, accentInk, ogImage, body, jsonld = [], noNav = false, noindex = false }) {
   const canonical = abs(path);
   return `<!doctype html>
 <html lang="en">
@@ -203,7 +204,7 @@ function layout({ title, description, path, accent, accentSoft, accentInk, ogIma
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${esc(canonical)}">
-${NOINDEX ? '<meta name="robots" content="noindex,nofollow">' : ''}
+${NOINDEX ? '<meta name="robots" content="noindex,nofollow">' : noindex ? '<meta name="robots" content="noindex,follow">' : ''}
 <meta name="theme-color" content="${esc(accent || '#5B46F0')}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(site.name)}">
@@ -857,6 +858,74 @@ function staticPage(pg) {
   });
 }
 
+// The page a comment-to-DM link lands on. Built for a phone in Instagram's
+// webview: the plan first, the app second, no nav to wander off through.
+function planPage(p) {
+  const app = appBySlug[p.app];
+  const guide = articles.find((a) => a.slug === p.guide && a.app === p.app);
+  const day = (d, i) => {
+    const open = i < p.open;
+    return `<li class="plan-day${open ? ' open' : ''}">
+      <p class="pd-n">Day ${i + 1} <span>${esc(d.area)}</span></p>
+      <h3>${esc(d.title)}</h3>
+      <ul class="pd-stops">${d.stops.map(([slot, name, cost, tip]) => `
+        <li><span class="pd-slot">${esc(slot)}</span><span class="pd-what"><b>${esc(name)}</b>${
+          open && tip ? `<span class="pd-tip">${esc(tip)}</span>` : ''}</span>${
+          open && cost ? `<span class="pd-cost">${esc(cost)}</span>` : ''}</li>`).join('')}
+      </ul>
+      ${open ? '' : `<p class="pd-more">Tips, costs and timings for these stops are in the app</p>`}
+    </li>`;
+  };
+  const body = `
+<header class="band">
+  ${SKY}
+  <div class="wrap">
+    <p class="crumb"><a href="${hApp(app.slug)}">${esc(app.name)}</a> <span>/</span> The plan you asked for</p>
+    <h1 class="d">${esc(p.title.split(':')[0])}</h1>
+    <p class="lede">${esc(p.intro)}</p>
+    <div class="cta-row">${storeLink(app, 'Open it in the app')}</div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap plan">
+    <h2 class="d">Three bases, two moves</h2>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Days</th><th>Base</th><th>For</th></tr></thead>
+      <tbody>${p.bases.map((r) => `<tr>${r.map((c) => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody>
+    </table></div>
+    <div class="callout">Plan around real drive times, not the map's: ${p.moves.map(([r, t]) => `<strong>${esc(r)}</strong> ${esc(t)}`).join(' · ')}. Move between bases in the morning, before the traffic builds.</div>
+
+    <h2 class="d">Day by day</h2>
+    <ol class="plan-days">${p.days.map(day).join('')}</ol>
+
+    <div class="get-app plan-unlock">
+      <span class="ico"><img src="${hAsset(`icons/${app.icon}`)}" alt="" width="152" height="152"></span>
+      <div class="txt">
+        <h2>This is the plan for everyone. ${esc(app.name)} builds yours.</h2>
+        <ul>${p.unlock.map((u) => `<li>${esc(u)}</li>`).join('')}</ul>
+      </div>
+      ${storeLink(app, 'Get the full plan')}
+    </div>
+
+    ${guide ? `<p class="plan-guide">Want the reasoning, costs and what to skip? Read <a href="${hArticle(guide.app, guide.slug)}">${esc(guide.title)}</a>.</p>` : ''}
+  </div>
+</section>
+`;
+  return layout({
+    title: p.title,
+    description: p.description,
+    path: `/${p.app}/${p.slug}/`,
+    accent: app.accent,
+    accentSoft: app.accentSoft,
+    accentInk: app.accentInk,
+    ogImage: app.slug,
+    body,
+    noNav: true,
+    noindex: true,
+  });
+}
+
 // A dead end should still offer somewhere to go. Vercel serves this for any
 // unmatched path when 404.html sits at the output root.
 function notFoundPage() {
@@ -927,7 +996,8 @@ written.push(await emit('/', homePage()));
 for (const app of apps) written.push(await emit(`/${app.slug}`, appPage(app)));
 for (const a of articles) written.push(await emit(`/${a.app}/${a.slug}`, articlePage(a)));
 for (const pg of pages) written.push(await emit(`/${pg.slug}`, staticPage(pg)));
-// Not pushed to `written`: a 404 must never appear in the sitemap.
+// Not pushed to `written`: plan pages and the 404 stay out of the sitemap.
+for (const p of plans) await emit(`/${p.app}/${p.slug}`, planPage(p));
 await writeFile(join(DIST, FLAT ? '404.html' : '404.html'), notFoundPage());
 
 // assets
