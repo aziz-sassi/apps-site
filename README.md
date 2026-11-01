@@ -139,6 +139,11 @@ schema and the related-posts blocks all update themselves.
 
 Block types: `h2` `p` `ul` `ol` `callout` `note` `table`.
 
+Each guide's mid-article App Store card names the app feature closest to the
+guide's topic, picked by word overlap with the app's `features` in
+`content.mjs`. Where the pick is wrong, set `feature: '<exact feature title>'`
+on the article; a title that matches no feature fails the build.
+
 ## The scroll stage
 
 ### The hero

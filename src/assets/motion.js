@@ -218,3 +218,63 @@
       document.fonts.load('800 34px "Bricolage MADE"', 'MADE.').then(go, go);
     } else go();
   })();
+
+  /* ---------- guide pages: progress, contents, download bar ----------------
+     Runs with reduced motion too: none of this is animation, it is state.
+     The bar only exists in the stylesheet's hidden state once this script has
+     claimed it (.js-guide), so without JS it simply stays on screen.        */
+  (function () {
+    var main = document.querySelector('.g-main');
+    if (!main) return;
+    document.documentElement.classList.add('js-guide');
+    var prog = document.querySelector('.read-progress');
+    var bar = document.getElementById('dl-bar');
+    var answer = main.querySelector('.answer');
+    var end = document.querySelector('.g-end');
+    var mid = main.querySelector('.mid-cta');
+    var heads = [].slice.call(main.querySelectorAll('.prose > h2[id], .art-faq[id]'));
+    var links = {};
+    [].forEach.call(document.querySelectorAll('.toc-d a'), function (a) { links[a.hash.slice(1)] = a; });
+    var current = null;
+
+    // tapping a contents entry on a phone should get the list out of the way
+    [].forEach.call(document.querySelectorAll('.toc-m a'), function (a) {
+      a.addEventListener('click', function () { a.closest('details').open = false; });
+    });
+
+    function tick() {
+      var vh = window.innerHeight;
+      var r = main.getBoundingClientRect();
+      var p = (vh * 0.35 - r.top) / Math.max(1, r.height);
+      if (prog) prog.style.setProperty('--rp', (p < 0 ? 0 : p > 1 ? 1 : p).toFixed(4));
+
+      var id = null;
+      for (var i = 0; i < heads.length; i++) {
+        if (heads[i].getBoundingClientRect().top < vh * 0.3) id = heads[i].id; else break;
+      }
+      if (id !== current) {
+        if (links[current]) links[current].removeAttribute('aria-current');
+        if (links[id]) links[id].setAttribute('aria-current', 'location');
+        current = id;
+      }
+
+      if (bar) {
+        var past = !answer || answer.getBoundingClientRect().bottom < 0;
+        var atEnd = end && end.getBoundingClientRect().top < vh;
+        // never a second App Store button stacked on top of the one in view
+        var mr = mid && mid.getBoundingClientRect();
+        var atMid = mr && mr.top < vh && mr.bottom > 0;
+        bar.classList.toggle('on', past && !atEnd && !atMid);
+      }
+    }
+
+    var queued = false;
+    function onScroll() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () { tick(); queued = false; });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    tick();
+  })();
