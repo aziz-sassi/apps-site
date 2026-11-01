@@ -781,7 +781,9 @@ ${related.length ? `<section>
     accent: app.accent,
     accentSoft: app.accentSoft,
     accentInk: app.accentInk,
-    ogImage: app.slug,
+    // each guide gets its own card; sharing the app's image made 9 HOLD guides
+    // look identical in a link preview
+    ogImage: a.slug,
     body,
     jsonld: [
       {

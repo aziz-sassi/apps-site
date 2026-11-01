@@ -9,5 +9,10 @@
     "audit": "node audit.mjs",
     "og": "node tools/make-og.mjs"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "playwright": "^1.59.0"
+  }
 }

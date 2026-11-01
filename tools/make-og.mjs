@@ -1,79 +1,104 @@
-// Renders 1200x630 Open Graph cards with headless Chrome (already on this Mac
-// for Lighthouse). Run: node tools/make-og.mjs
-import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
-import { execFile } from 'node:child_process';
-import { promisify } from 'node:util';
-import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { apps, site } from '../src/content.mjs';
+/* Per-page Open Graph images.
+   Every guide shared the one default.jpg, so 33 different guides looked
+   identical in a link preview. This renders one image per guide (and per app
+   and page) from the site's OWN stylesheet and fonts, so a share looks like
+   the site rather than like a generic card.
 
-const run = promisify(execFile);
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const CHROME = process.env.CHROME_PATH
-  || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
-const TMP = join(ROOT, '.og-tmp');
+   Output is static and committed. OG images are fetched by crawlers, never by
+   the page, so this adds nothing to page weight.
+
+   Run from the repo root AFTER `node build.mjs`, because it loads fonts and
+   styles out of dist/:
+     node tools/make-og.mjs
+*/
+import { chromium } from 'playwright';
+import { mkdir } from 'node:fs/promises';
+import { createServer } from 'node:http';
+import { readFile } from 'node:fs/promises';
+import { join, extname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { site, apps, appBySlug } from '../src/content.mjs';
+import { articles } from '../src/articles.mjs';
+
+const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..');
+const DIST = join(ROOT, 'dist');
 const OUT = join(ROOT, 'src/assets/og');
+const TYPES = { '.css':'text/css', '.woff2':'font/woff2', '.jpg':'image/jpeg', '.png':'image/png', '.svg':'image/svg+xml' };
+
+// serve dist so the template can use the real styles.css and fonts
+const server = createServer(async (req, res) => {
+  try {
+    const f = join(DIST, decodeURIComponent(req.url.split('?')[0]));
+    const body = await readFile(f);
+    res.writeHead(200, { 'Content-Type': TYPES[extname(f)] || 'application/octet-stream' });
+    res.end(body);
+  } catch { res.writeHead(404); res.end(); }
+});
+await new Promise((r) => server.listen(0, r));
+const PORT = server.address().port;
 
 const esc = (s) => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
-async function card({ file, accent, accentInk, icon, title, sub, kicker }) {
-  const iconData = icon
-    ? 'data:image/jpeg;base64,' + (await readFile(join(ROOT, 'icons', icon))).toString('base64')
-    : null;
-  const fontB = (await readFile(join(ROOT, 'src/assets/fonts/BricolageGrotesque-latin.woff2'))).toString('base64');
-  const fontM = (await readFile(join(ROOT, 'src/assets/fonts/Manrope-latin.woff2'))).toString('base64');
-  const cloud = (x, y, w, o) => `<div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;opacity:${o};color:#fff">
-    <svg viewBox="0 0 200 92" style="width:100%;display:block"><g fill="currentColor">
-    <ellipse cx="56" cy="56" rx="42" ry="28"/><ellipse cx="102" cy="43" rx="40" ry="33"/>
-    <ellipse cx="148" cy="58" rx="36" ry="25"/><rect x="30" y="56" width="140" height="28" rx="14"/>
-    </g></svg></div>`;
-
-  const html = `<!doctype html><html><head><meta charset="utf-8"><style>
-@font-face{font-family:B;src:url(data:font/woff2;base64,${fontB}) format('woff2');font-weight:700 800}
-@font-face{font-family:M;src:url(data:font/woff2;base64,${fontM}) format('woff2');font-weight:500 800}
-*{margin:0;box-sizing:border-box}
-body{width:1200px;height:630px;overflow:hidden;background:${accent};position:relative;font-family:M,sans-serif}
-.g{position:absolute;inset:0;background:radial-gradient(60% 70% at 15% 0%,rgba(255,255,255,.26),transparent 62%),linear-gradient(180deg,transparent,rgba(0,0,0,.2))}
-.c{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:center;padding:74px 78px;color:#fff}
-.k{font-family:B;font-weight:800;font-size:19px;letter-spacing:.2em;text-transform:uppercase;opacity:.82;margin-bottom:26px}
-.t{font-family:B;font-weight:800;font-size:${title.length > 34 ? 68 : 84}px;line-height:1.0;letter-spacing:-.035em;max-width:14ch}
-.s{font-size:28px;line-height:1.42;margin-top:24px;max-width:26ch;color:rgba(255,255,255,.93)}
-.ic{position:absolute;right:82px;top:50%;transform:translateY(-50%);width:264px;height:264px;border-radius:62px;border:6px solid rgba(0,0,0,.34);overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.4)}
-.ic img{width:100%;height:100%;object-fit:cover;display:block}
-.b{position:absolute;left:78px;bottom:52px;z-index:3;display:flex;align-items:center;gap:11px;font-family:B;font-weight:800;font-size:20px;letter-spacing:-.02em;color:#fff}
-.b i{width:15px;height:15px;border-radius:5px;background:#fff;display:block}
-</style></head><body>
-<div class="g"></div>
-${cloud(-40, 40, 300, .2)}${cloud(720, -30, 420, .14)}${cloud(120, 430, 250, .16)}${cloud(880, 400, 330, .12)}
-<div class="c">
-  <div class="k">${esc(kicker)}</div>
-  <div class="t">${esc(title)}</div>
-  ${sub ? `<div class="s">${esc(sub)}</div>` : ''}
-</div>
-${iconData ? `<div class="ic"><img src="${iconData}"></div>` : ''}
-<div class="b"><i></i>${esc(site.name)}</div>
-</body></html>`;
-
-  const tmpFile = join(TMP, file + '.html');
-  await writeFile(tmpFile, html);
-  await run(CHROME, ['--headless', '--disable-gpu', '--hide-scrollbars',
-    '--force-device-scale-factor=1', '--window-size=1200,630',
-    `--screenshot=${join(OUT, file + '.png')}`, 'file://' + tmpFile]);
-  console.log('  ' + file + '.png');
+function template({ eyebrow, title, accent, accentSoft, icon }) {
+  return `<!doctype html><meta charset="utf-8">
+<link rel="stylesheet" href="http://localhost:${PORT}/styles.css">
+<style>
+  html,body{margin:0;width:1200px;height:630px;overflow:hidden}
+  .og{position:relative;width:1200px;height:630px;background:${accentSoft};
+      display:flex;flex-direction:column;justify-content:space-between;
+      padding:62px 66px;box-sizing:border-box;border-bottom:14px solid ${accent}}
+  .og-eyebrow{display:inline-flex;align-self:flex-start;align-items:center;gap:10px;
+      background:#14122B;color:#fff;border-radius:999px;padding:11px 20px;
+      font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:17px;
+      letter-spacing:.16em;text-transform:uppercase}
+  .og-eyebrow img{width:30px;height:30px;border-radius:8px;display:block}
+  .og-title{font-family:'Bricolage Display','Bricolage Grotesque',sans-serif;
+      font-variation-settings:'wdth' 80,'wght' 800;font-weight:800;
+      text-transform:uppercase;color:#14122B;line-height:1.02;
+      font-size:${title.length > 64 ? 60 : title.length > 42 ? 70 : 84}px;
+      letter-spacing:.004em;margin:26px 0 0;max-width:1010px}
+  .og-foot{display:flex;align-items:center;justify-content:space-between}
+  .og-brand{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;
+      color:#14122B;display:flex;align-items:center;gap:12px}
+  .og-dot{width:17px;height:17px;border-radius:50%;background:${accent};display:block}
+  .og-url{font-family:'Manrope',sans-serif;font-weight:700;font-size:19px;color:#14122B;opacity:.62}
+</style>
+<div class="og">
+  <div>
+    <span class="og-eyebrow">${icon ? `<img src="http://localhost:${PORT}/icons/${icon}">` : ''}${esc(eyebrow)}</span>
+    <h1 class="og-title">${esc(title)}</h1>
+  </div>
+  <div class="og-foot">
+    <span class="og-brand"><span class="og-dot"></span>${esc(site.author)}</span>
+    <span class="og-url">appsbysass.com</span>
+  </div>
+</div>`;
 }
 
-await rm(TMP, { recursive: true, force: true });
-await mkdir(TMP, { recursive: true });
 await mkdir(OUT, { recursive: true });
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
 
-console.log('rendering OG cards:');
-await card({ file: 'default', accent: '#5B46F0', icon: null,
-  kicker: 'iOS · Independent',
-  title: 'iPhone apps, made properly.',
-  sub: 'Free apps and researched guides.' });
-
+const jobs = [];
 for (const a of apps) {
-  await card({ file: a.slug, accent: a.accent, icon: a.icon,
-    kicker: a.category, title: a.name, sub: a.tagline });
+  jobs.push({ name: a.slug, eyebrow: a.name, title: a.tagline, accent: a.accent, accentSoft: a.accentSoft, icon: a.icon });
 }
-await rm(TMP, { recursive: true, force: true });
+for (const art of articles) {
+  const a = appBySlug[art.app];
+  if (!a) { console.warn('  skip (unknown app):', art.slug); continue; }
+  jobs.push({ name: art.slug, eyebrow: a.name, title: art.title, accent: a.accent, accentSoft: a.accentSoft, icon: a.icon });
+}
+jobs.push({ name: 'default', eyebrow: 'iOS · Independent', title: 'iPhone apps, made properly.',
+            accent: '#5B46F0', accentSoft: '#EEEBFF', icon: null });
+
+let n = 0;
+for (const j of jobs) {
+  await page.setContent(template(j), { waitUntil: 'load' });
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForTimeout(90);
+  await page.screenshot({ path: join(OUT, `${j.name}.jpg`), type: 'jpeg', quality: 86 });
+  n++;
+}
+console.log(`wrote ${n} og images to src/assets/og/`);
+await browser.close();
+server.close();
