@@ -5,6 +5,8 @@ ManyChat workspace: "Jupiter Walkies app"
 
 Instagram allows one automatic DM per comment, so message 1 must get a tap. Messages 2 to 4 send only after that tap.
 
+**What is actually set up in ManyChat Free (quick automation):** trigger, public replies, message 1, then one link DM that merges messages 2 and 4. It has two buttons, the walk plan and the App Store link. The size question (message 3) needs the full Flow Builder or a paid plan, so it is left out for now.
+
 ---
 
 ## Trigger
