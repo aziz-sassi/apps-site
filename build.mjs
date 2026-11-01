@@ -972,7 +972,7 @@ function planPage(p) {
     <p class="crumb"><a href="${hApp(app.slug)}">${esc(app.name)}</a> <span>/</span> The plan you asked for</p>
     <span class="stamp"><span>The plan you asked for</span></span>
     <h1 class="poster">${esc(p.title.split(':')[0])}</h1>
-    <p class="pill">${p.days.length} days &middot; ${table.rows.length} ${esc((table.head[1] || 'stops').toLowerCase())}${table.rows.length === 1 ? '' : 's'}</p>
+    <p class="pill">${p.days.length} days${table.head[1] === 'Base' ? ` &middot; ${table.rows.length} bases` : ''}</p>
     <p class="lede">${esc(p.intro)}</p>
     <div class="cta-row">${storeLink(app, 'Open it in the app', 'btn')}</div>
   </div>
