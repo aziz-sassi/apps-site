@@ -1557,3 +1557,41 @@ h2.d .sticker{
 .app-card{background:var(--card-tint,var(--paper))}
 .app-card .ico{box-shadow:3px 3px 0 var(--ink)}
 
+
+/* ===========================================================================
+   "Not an iPhone app" — work that lives off the App Store, linked out rather
+   than absorbed. Deliberately states no price, no plan and no trial: same rule
+   the apps follow. Outbound, so each card is an external link.
+   =========================================================================== */
+.work-card{
+  display:flex;flex-direction:column;gap:9px;
+  background:var(--card-tint,var(--paper));
+  border:2.5px solid var(--ink);
+  border-radius:22px;
+  padding:22px 22px 20px;
+  text-decoration:none;color:var(--ink);
+  box-shadow:var(--shadow);
+  transition:transform .16s ease,box-shadow .16s ease;
+}
+.work-card:hover{transform:translate(-3px,-3px);box-shadow:var(--shadow-lg)}
+.work-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.work-nm{
+  font-family:'Bricolage Grotesque','Manrope',sans-serif;
+  font-weight:800;font-size:23px;letter-spacing:-.01em;
+}
+.work-where{
+  font-family:'Bricolage Grotesque','Manrope',sans-serif;
+  font-weight:800;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  padding:4px 10px;border-radius:999px;
+  background:var(--accent);color:#fff;
+}
+.work-tag{font-style:italic;font-size:15px;opacity:.78}
+.work-blurb{font-size:14.5px;line-height:1.55;opacity:.9}
+.work-go{
+  margin-top:4px;
+  font-family:'Bricolage Grotesque','Manrope',sans-serif;
+  font-weight:800;font-size:12px;letter-spacing:.09em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:7px;
+}
+.work-card:hover .work-go{text-decoration:underline;text-underline-offset:3px}
+.work-go svg{width:13px;height:13px}

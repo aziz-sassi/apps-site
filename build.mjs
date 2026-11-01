@@ -6,7 +6,7 @@
 import { mkdir, writeFile, readFile, readdir, rm, cp } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { site, apps, appBySlug } from './src/content.mjs';
+import { site, apps, otherWork, appBySlug } from './src/content.mjs';
 import { articles } from './src/articles.mjs';
 import { pages } from './src/pages.mjs';
 import { readFileSync } from 'node:fs';
@@ -457,6 +457,28 @@ ${TICKER}
         <li><b>How the apps are funded</b><span><a href="${hPage('disclosure')}">Read the disclosure</a></span></li>
         <li><b>What this site collects</b><span><a href="${hPage('privacy')}">${site.analytics?.ga4 ? 'Analytics only, your choice' : 'No cookies, no ad trackers'}</a></span></li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<section id="other">
+  <div class="wrap">
+    <div class="sec-head reveal mask-up">
+      <h2 class="d">Not an <span class="sticker">iPhone</span> app</h2>
+      <p>Software I build that does not live on the App&nbsp;Store. Different work, same one person.</p>
+    </div>
+    <div class="grid two">
+      ${otherWork.map((w, i) => `
+      <a class="work-card reveal d${i + 1}" href="${w.url}" target="_blank" rel="noopener"
+         style="--accent:${w.accent};--card-tint:${w.accentSoft}">
+        <span class="work-top">
+          <span class="work-nm">${esc(w.name)}</span>
+          <span class="work-where">${esc(w.where)}</span>
+        </span>
+        <span class="work-tag">${esc(w.tagline)}</span>
+        <span class="work-blurb">${esc(w.blurb)}</span>
+        <span class="work-go">Visit ${esc(w.name)} ${ARROW}</span>
+      </a>`).join('')}
     </div>
   </div>
 </section>

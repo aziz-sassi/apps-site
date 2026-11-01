@@ -50,6 +50,39 @@ export const site = {
   },
 };
 
+// ---------------------------------------------------------------------------
+// Work that is not an iPhone app. Linked out, not absorbed: the guides on this
+// site all target consumer topics, and folding B2B software into that would
+// blur what Google has spent two months learning this domain is about.
+// NO PRICING LANGUAGE HERE — same rule as the apps. What it does, who it is
+// for, and a link. Nothing about cost, plans, trials or "paid".
+// ---------------------------------------------------------------------------
+export const otherWork = [
+  {
+    name: 'LOYA',
+    where: 'United Arab Emirates',
+    url: 'https://www.loyadxb.com',
+    tagline: 'Your business online in 10 minutes.',
+    blurb:
+      'A page, a wallet loyalty card and reservations for a local business, all behind one link. ' +
+      'Customers add the card to Apple or Google Wallet, so there is no app to download. ' +
+      'Built for cafes, salons, barbers, gyms and shops. Five languages.',
+    accent: '#0E7C5A',
+    accentSoft: '#E6F4EF',
+  },
+  {
+    name: 'LOYA Tunisia',
+    where: 'Tunisia',
+    url: 'https://tunisia.loyadxb.com',
+    tagline: 'Chaque visite vous rapproche.',
+    blurb:
+      'The same idea, rebuilt for Tunisian businesses — reservations confirmed over WhatsApp, ' +
+      'and the interface in French, Tunisian derja, Arabic and English.',
+    accent: '#B8860B',
+    accentSoft: '#FAF2DF',
+  },
+];
+
 export const apps = [
   {
     slug: 'jupiter-walkies',
