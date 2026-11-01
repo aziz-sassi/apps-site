@@ -14,11 +14,11 @@
     "minOs": "17.0"
   },
   "bali-secret": {
-    "version": "1.3",
-    "updated": "2026-08-13",
+    "version": "2.0.0",
+    "updated": "2026-10-30",
     "released": "2026-04-23",
-    "sizeMb": 41,
-    "minOs": "14.0"
+    "sizeMb": 200,
+    "minOs": "17.0"
   },
   "hold": {
     "version": "1.3",
@@ -27,5 +27,5 @@
     "sizeMb": 66,
     "minOs": "15.6"
   },
-  "_fetched": "2026-10-13"
+  "_fetched": "2026-11-01"
 }
