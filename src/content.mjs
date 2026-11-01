@@ -6,7 +6,7 @@
 
 export const site = {
   name: 'Aziz Sassi',
-  tagline: 'Four iPhone apps, built one at a time.',
+  tagline: 'iPhone apps, built one at a time.',
   // Canonical origin. Used for canonical URLs, the sitemap and Open Graph tags,
   // all of which need absolute URLs. Must match the live domain exactly.
   // Canonical origin. SITE_ORIGIN overrides it for staging so a test deploy
@@ -98,6 +98,10 @@ export const apps = [
     fullName: 'Jupiter Walkies: Dog Walks',
     tagline: 'Strava, made for dog walks.',
     icon: 'jupiter.jpg',
+    // Poster colours for this app's cards and hero, from The Bali Secret's
+    // Jungle Pop palette. panelInk must pass 4.5:1 on panel for body text.
+    panel: '#FF5A36', panelHead: '#FFFFFF', panelInk: '#13261F', pill: '#13261F', pillInk: '#FFC23D',
+    sticker: 'Walk tracked',
     accent: '#FF6B35',
     accentInk: '#C2410C',   // text-safe variant (5.8:1 on white)
     accentSoft: '#FFF0EA',
@@ -146,6 +150,10 @@ export const apps = [
     fullName: 'Calorie Tracker & Macros — Bo',
     tagline: 'The honest AI calorie counter.',
     icon: 'bo.jpg',
+    // Poster colours for this app's cards and hero, from The Bali Secret's
+    // Jungle Pop palette. panelInk must pass 4.5:1 on panel for body text.
+    panel: '#3DDC97', panelHead: '#0F3D2E', panelInk: '#0F3D2E', pill: '#0F3D2E', pillInk: '#3DDC97',
+    sticker: 'Snap. Logged.',
     accent: '#12B76A',
     accentInk: '#047857',   // text-safe variant (6.0:1 on white)
     accentSoft: '#E9F9F1',
@@ -193,6 +201,10 @@ export const apps = [
     fullName: 'The Bali Secret',
     tagline: 'Plan trips. Find hidden gems.',
     icon: 'bali.jpg',
+    // Poster colours for this app's cards and hero, from The Bali Secret's
+    // Jungle Pop palette. panelInk must pass 4.5:1 on panel for body text.
+    panel: '#0F3D2E', panelHead: '#F6F1E4', panelInk: '#F6F1E4', pill: '#3DDC97', pillInk: '#0F3D2E',
+    sticker: 'Sunset in 20 min',
     accent: '#00A6B8',
     accentInk: '#0E7490',   // text-safe variant (5.9:1 on white)
     accentSoft: '#E4F7F9',
@@ -240,6 +252,10 @@ export const apps = [
     fullName: 'HOLD — Quit Smoking & Vaping',
     tagline: 'Beat nicotine cravings, fast.',
     icon: 'hold.jpg',
+    // Poster colours for this app's cards and hero, from The Bali Secret's
+    // Jungle Pop palette. panelInk must pass 4.5:1 on panel for body text.
+    panel: '#5B46F0', panelHead: '#FFFFFF', panelInk: '#FFFFFF', pill: '#FFC23D', pillInk: '#13261F',
+    sticker: 'One moment at a time',
     accent: '#5B46F0',
     accentInk: '#4338CA',   // text-safe variant (7.6:1 on white)
     accentSoft: '#EEEBFF',

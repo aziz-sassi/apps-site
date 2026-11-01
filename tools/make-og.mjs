@@ -1,14 +1,14 @@
 /* Per-page Open Graph images.
    Every guide shared the one default.jpg, so 33 different guides looked
    identical in a link preview. This renders one image per guide (and per app
-   and page) from the site's OWN stylesheet and fonts, so a share looks like
+   and page) in the site's own fonts and poster colours, so a share looks like
    the site rather than like a generic card.
 
    Output is static and committed. OG images are fetched by crawlers, never by
    the page, so this adds nothing to page weight.
 
    Run from the repo root AFTER `node build.mjs`, because it loads fonts and
-   styles out of dist/:
+   icons out of dist/:
      node tools/make-og.mjs
 */
 import { chromium } from 'playwright';
@@ -30,7 +30,8 @@ const server = createServer(async (req, res) => {
   try {
     const f = join(DIST, decodeURIComponent(req.url.split('?')[0]));
     const body = await readFile(f);
-    res.writeHead(200, { 'Content-Type': TYPES[extname(f)] || 'application/octet-stream' });
+    // the card is set as content with no origin, so fonts need CORS to load
+    res.writeHead(200, { 'Content-Type': TYPES[extname(f)] || 'application/octet-stream', 'Access-Control-Allow-Origin': '*' });
     res.end(body);
   } catch { res.writeHead(404); res.end(); }
 });
@@ -39,29 +40,30 @@ const PORT = server.address().port;
 
 const esc = (s) => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
-function template({ eyebrow, title, accent, accentSoft, icon }) {
+function template({ eyebrow, title, panel, head, ink, pill, pillInk, icon }) {
   return `<!doctype html><meta charset="utf-8">
-<link rel="stylesheet" href="http://localhost:${PORT}/styles.css">
 <style>
+  @font-face{font-family:'Sofia Sans Condensed';font-weight:700 900;src:url('http://localhost:${PORT}/fonts/SofiaSansCondensed-latin.woff2') format('woff2')}
+  @font-face{font-family:'Nunito';font-weight:500 900;src:url('http://localhost:${PORT}/fonts/Nunito-latin.woff2') format('woff2')}
   html,body{margin:0;width:1200px;height:630px;overflow:hidden}
-  .og{position:relative;width:1200px;height:630px;background:${accentSoft};
+  .og{position:relative;width:1200px;height:630px;background:${panel};color:${ink};
       display:flex;flex-direction:column;justify-content:space-between;
-      padding:62px 66px;box-sizing:border-box;border-bottom:14px solid ${accent}}
-  .og-eyebrow{display:inline-flex;align-self:flex-start;align-items:center;gap:10px;
-      background:#14122B;color:#fff;border-radius:999px;padding:11px 20px;
-      font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:17px;
-      letter-spacing:.16em;text-transform:uppercase}
-  .og-eyebrow img{width:30px;height:30px;border-radius:8px;display:block}
-  .og-title{font-family:'Bricolage Display','Bricolage Grotesque',sans-serif;
-      font-variation-settings:'wdth' 80,'wght' 800;font-weight:800;
-      text-transform:uppercase;color:#14122B;line-height:1.02;
-      font-size:${title.length > 64 ? 60 : title.length > 42 ? 70 : 84}px;
-      letter-spacing:.004em;margin:26px 0 0;max-width:1010px}
-  .og-foot{display:flex;align-items:center;justify-content:space-between}
-  .og-brand{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;
-      color:#14122B;display:flex;align-items:center;gap:12px}
-  .og-dot{width:17px;height:17px;border-radius:50%;background:${accent};display:block}
-  .og-url{font-family:'Manrope',sans-serif;font-weight:700;font-size:19px;color:#14122B;opacity:.62}
+      padding:58px 66px 0;box-sizing:border-box;overflow:hidden}
+  .og::before{content:"";position:absolute;right:-160px;top:-220px;width:640px;height:640px;border-radius:50%;background:rgba(255,255,255,.08)}
+  .og-eyebrow{position:relative;display:inline-flex;align-self:flex-start;align-items:center;gap:12px;
+      font-family:'Nunito',sans-serif;font-weight:900;font-size:24px}
+  .og-eyebrow img{width:52px;height:52px;border-radius:14px;display:block}
+  .og-title{position:relative;font-family:'Sofia Sans Condensed',sans-serif;font-weight:900;
+      text-transform:uppercase;color:${head};line-height:.9;
+      font-size:${title.length > 64 ? 78 : title.length > 42 ? 92 : 112}px;
+      margin:24px 0 0;max-width:1040px;text-wrap:balance}
+  .og-foot{position:relative;display:flex;align-items:center;justify-content:space-between;
+      background:#F6F1E4;color:#13261F;margin:0 -66px;padding:22px 66px 26px}
+  .og-foot svg{position:absolute;left:0;right:0;top:-29px;width:100%;height:30px;color:#F6F1E4}
+  .og-brand{font-family:'Sofia Sans Condensed',sans-serif;font-weight:900;font-size:34px;text-transform:uppercase;display:flex;align-items:center;gap:12px}
+  .og-dot{width:22px;height:22px;border-radius:7px;background:#0F3D2E;display:grid;place-items:center;transform:rotate(-8deg)}
+  .og-dot::after{content:"";width:10px;height:10px;border-radius:50%;background:#3DDC97}
+  .og-url{font-family:'Nunito',sans-serif;font-weight:800;font-size:21px;opacity:.7}
 </style>
 <div class="og">
   <div>
@@ -69,11 +71,14 @@ function template({ eyebrow, title, accent, accentSoft, icon }) {
     <h1 class="og-title">${esc(title)}</h1>
   </div>
   <div class="og-foot">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path fill="currentColor" d="M0 34C160 6 330 4 520 26s370 40 560 20 280-40 360-30V60H0z"/></svg>
     <span class="og-brand"><span class="og-dot"></span>${esc(site.author)}</span>
     <span class="og-url">appsbysass.com</span>
   </div>
 </div>`;
 }
+
+const colours = (a) => ({ panel: a.panel, head: a.panelHead, ink: a.panelInk, pill: a.pill, pillInk: a.pillInk });
 
 await mkdir(OUT, { recursive: true });
 const browser = await chromium.launch();
@@ -81,20 +86,25 @@ const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, dev
 
 const jobs = [];
 for (const a of apps) {
-  jobs.push({ name: a.slug, eyebrow: a.name, title: a.tagline, accent: a.accent, accentSoft: a.accentSoft, icon: a.icon });
+  jobs.push({ name: a.slug, eyebrow: a.name, title: a.tagline, ...colours(a), icon: a.icon });
 }
 for (const art of articles) {
   const a = appBySlug[art.app];
   if (!a) { console.warn('  skip (unknown app):', art.slug); continue; }
-  jobs.push({ name: art.slug, eyebrow: a.name, title: art.title, accent: a.accent, accentSoft: a.accentSoft, icon: a.icon });
+  jobs.push({ name: art.slug, eyebrow: a.name, title: art.title, ...colours(a), icon: a.icon });
 }
-jobs.push({ name: 'default', eyebrow: 'iOS · Independent', title: 'iPhone apps, made properly.',
-            accent: '#5B46F0', accentSoft: '#EEEBFF', icon: null });
+jobs.push({ name: 'default', eyebrow: 'Independent iPhone apps', title: 'iPhone apps that do one job.',
+            panel: '#0F3D2E', head: '#F6F1E4', ink: '#F6F1E4', pill: '#3DDC97', pillInk: '#0F3D2E', icon: null });
 
 let n = 0;
 for (const j of jobs) {
   await page.setContent(template(j), { waitUntil: 'load' });
-  await page.evaluate(() => document.fonts.ready);
+  // fonts.ready resolves at once if nothing has started loading yet, so ask
+  // for both faces by name and wait for them
+  await page.evaluate(() => Promise.all([
+    document.fonts.load('900 80px "Sofia Sans Condensed"', 'A'),
+    document.fonts.load('900 24px "Nunito"', 'A'),
+  ]).then(() => document.fonts.ready));
   await page.waitForTimeout(90);
   await page.screenshot({ path: join(OUT, `${j.name}.jpg`), type: 'jpeg', quality: 86 });
   n++;

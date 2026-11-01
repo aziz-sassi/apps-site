@@ -7,7 +7,8 @@ no dependencies, no build tooling beyond Node.
 ```
 src/content.mjs      the four apps: copy, features, FAQs, App Store URLs
 src/articles.mjs     the twelve guides
-src/assets/          styles.css + escape.js (copied verbatim into the build)
+src/assets/          styles.css, motion.js, escape.js, fonts, shots, photos, video
+src/plan-media.mjs   photos and video for the plan pages
 build.mjs            the generator
 seo-check.mjs        validates every built page
 icons/               app icons pulled from the App Store
@@ -144,72 +145,78 @@ guide's topic, picked by word overlap with the app's `features` in
 `content.mjs`. Where the pick is wrong, set `feature: '<exact feature title>'`
 on the article; a title that matches no feature fails the build.
 
-## The scroll stage
+## Design: Jungle Pop
 
-### The hero
+The look is taken from The Bali Secret 2.0 (the app's `DesignSystem` package:
+`Palette.swift`, `Typography.swift`, `Stamps.swift`, `Waves.swift`) so the site
+and the apps read as one family.
 
-`.band.hero` is `100svh`, so the sky is the first thing and it is whole. Seven
-cloud layers, each with a `DEPTH` weight in `motion.js`. As you scroll, nearer
-layers move further, grow more and fade sooner, and alternate layers push left
-and right — which is what reads as descending *through* the clouds rather than
-panning past a picture.
+- **Canvas and colour.** Cream `#F6F1E4`, jungle `#0F3D2E`, mint `#3DDC97`,
+  coral `#FF5A36` for the one thing to tap, sun `#FFC23D` for sticker tags.
+- **Type.** Sofia Sans Condensed Black in caps for headlines (`.poster`), Nunito
+  for everything else, both self-hosted as latin + latin-ext variable woff2.
+- **Per-app posters.** Each app in `content.mjs` has `panel`, `panelHead`,
+  `panelInk`, `pill`, `pillInk` and a short `sticker`. `panelVars(app)` turns
+  them into CSS custom properties for a card or a whole page. `panelInk` must
+  pass 4.5:1 on `panel`; `panelHead` only needs 3:1 because it is only used for
+  large caps.
+- **Motifs.** Mint pill under a headline (`.pill`), tilted sticker (`.tag`),
+  perforated postage stamp (`.stamp`, pure CSS radial-gradient), wavy edge
+  between grounds (`WAVE()` in `build.mjs`).
 
-The cloud wrapper takes the scroll transform while the drift animation lives on
-the `<svg>` inside it. That split matters: both need a transform, and on one
-element the second would overwrite the first.
+### Motion
 
-### The ring
+`motion.js` derives every value from scroll position, so scrolling back
+rewinds exactly, and does nothing at all under `prefers-reduced-motion` (every
+element sits in its final state and no video is fetched).
 
-`.stage` is a 300vh section with a `position: sticky` inner panel. `motion.js`
-maps scroll progress through it to `--rot` (0 → 1 → one full turn), `--a` (the
-first 16%, which rises the phones into place) and `--p` (everything else).
-Because the values are *derived from scroll position* rather than played on a
-timer, scrolling back rewinds exactly — that reversibility is the whole point.
+| Where | What moves |
+|---|---|
+| Home, demo stage | The phone pins while the headlines change, one per quarter of the 340vh track (`--p`, `.beats li.on`) |
+| App page, features | On wide screens the phone pins and swaps to the screenshot for the feature in view |
+| App page, film band | The ambient clip grows from a card to nearly full width as it arrives (`--fp`) |
+| Plan hero | The photo zooms gently as you scroll off it (`--hp`) |
+| Plan days | Each day photo drifts as it crosses the screen (`--vp`) |
 
-### Live screens, not just screenshots
+### Video
 
-Every third phone runs real app UI built from CSS and SVG, keyed off the same
-`--p`, so it scrubs with the scroll like everything else:
+All video is `preload="none"` with no `src`; `motion.js` attaches one source
+(WebM if supported, else MP4) when the section is about a screen away, and
+pauses anything off screen.
 
-| Screen | App | What moves |
+| File | What | Weight |
 |---|---|---|
-| `scr-walk` | Jupiter | A GPS route draws itself via `stroke-dashoffset` over a map grid |
-| `scr-macro` | Bo | A calorie ring fills, with macro bars scaling underneath |
-| `scr-trip` | The Bali Secret | Itinerary days slide in one after another |
-| `scr-breathe` | HOLD | A breathing orb, on its own loop since breathing should not depend on scrolling |
+| `bali-demo` | The Bali Secret's own 30 s demo (`BaliWise/docs/media/demo-en.mp4`), 360×640, no audio | ~0.5 MB |
+| `bali` | Rice terraces, behind the film band on The Bali Secret's page | ~0.6 MB |
+| `hold` | HOLD's film band | ~0.6 MB |
+| `bali-beach` | Coverr clip of Bingin Beach behind the first-week plan hero | ~0.3 MB |
 
-Add one by putting markup in `SCREENS` in `build.mjs` and a `screen:` key on the
-app in `content.mjs`. `every: 3` on the home ring and `every: 4` on app pages
-controls the live-to-screenshot ratio.
+### Plan photos
 
-The phones are CSS 3D: each is `rotateY(i * 360deg/n) translateZ(--rad)` inside
-a `preserve-3d` parent, with `backface-visibility: hidden` so the far half drops
-out and the near arc stays legible.
+Plan pages get a hero photo and one 4:5 photo per day from `src/plan-media.mjs`
+(kept apart from `plans.mjs` so words and pictures change independently). The
+files live in `src/assets/photos/`; `CREDITS.json` there records the Unsplash
+source of each. Alt text describes the photo, never the named stop, because a
+stock photo is not "Crate Cafe". A plan with no media still renders, with
+app-coloured tiles.
 
-**Why not a Remotion-rendered sequence.** Remotion renders React to video, so
-it could only produce a file to scrub. `<video>` scrubbing is unreliable on iOS
-Safari, and a frame sequence at this length runs 700 KB–2 MB — on an audience
-that is mostly cellular inside Instagram's webview. The CSS version is sharp at
-any DPI, weighs nothing beyond the 12 screenshots (~15 KB each, lazy-loaded),
-and scrubs perfectly on every device.
-
-Remotion *is* the right tool for rendering promo videos for the Instagram
-accounts themselves. That's a separate deliverable, not a page element.
-
-Tuning: `--pw` (phone width), `--rad` (ring radius), `.stage { height }` (how
-much scroll one rotation costs). All in `styles.css` under SCROLL STAGE.
+To add photos for a plan: crop 480×600 for days and 1200×750 (+ a 600×750
+`-m` crop for phones) for the hero, keep each under ~100 KB, and add an entry
+keyed by the plan's slug.
 
 ## App pages are landing pages
 
 Each `/app-name/` is built to receive traffic from that app's own Instagram
 account, so it stands alone:
 
-hero with icon + CTA → what it does → how it works (3 steps) → scroll ring →
-FAQ with `FAQPage` schema → guides → final CTA.
+poster hero in the app's colour with icon + CTA → App Store facts → what it does
+(pinned phone that swaps screens) → film band (if the app has a clip) → how it
+works (3 steps) → real screens → FAQ with `FAQPage` schema → guides → closing
+poster.
 
 Two CTAs above the fold and one at the bottom, all carrying `data-store` so the
-Instagram escape applies. Per-app accent colour, and the ring shows only that
-app's screenshots.
+Instagram escape applies. Every colour on the page comes from the app's poster
+colours.
 
 ## SEO tooling — how to wire up each one
 
@@ -281,22 +288,14 @@ preloaded.
 Keep it that way. Every 100 ms here is paid by someone on cellular inside
 Instagram's webview, which is the entire audience.
 
-### On video backgrounds
+### On video
 
-Deliberately not used. A 1080p hero loop is 1–3 MB even compressed — roughly
-20× the current *entire page* — and iOS Low Power Mode blocks autoplay, so a
-meaningful share of visitors get a static poster frame anyway. Remotion is a
-video **rendering** tool (React → MP4); it has no runtime role in a page like
-this and would add a React + ffmpeg pipeline to a project that currently has
-zero dependencies.
-
-The motion here is CSS/SVG instead — drifting clouds, scroll parallax, staggered
-reveals, a marquee — which weighs about 2 KB, always plays, and costs 0 ms of
-blocking time (measured TBT is 0).
-
-If you still want a video hero, the cheap version is a 3–4 second silent loop
-at 720p, under 400 KB, `preload="none"` with a poster image, on the home page
-only. Say the word and I'll add it.
+Video is used, but never as something the page waits for: every clip is
+`preload="none"` with no `src` until it is about a screen away, small (0.3–0.6
+MB, 360p for the phone demo, 540p for bands), silent, and skipped entirely for
+reduced-motion users, who get the poster. iOS Low Power Mode blocks autoplay, so
+each clip must still make sense as its poster frame. See *Design: Jungle Pop*
+for the list.
 
 ### Worth doing next
 
