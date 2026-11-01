@@ -866,14 +866,14 @@ function planPage(p) {
   const day = (d, i) => {
     const open = i < p.open;
     return `<li class="plan-day${open ? ' open' : ''}">
-      <p class="pd-n">Day ${i + 1} <span>${esc(d.area)}</span></p>
+      <p class="pd-n">Day ${i + 1} <span>${esc(d.tag)}</span></p>
       <h3>${esc(d.title)}</h3>
       <ul class="pd-stops">${d.stops.map(([slot, name, cost, tip]) => `
         <li><span class="pd-slot">${esc(slot)}</span><span class="pd-what"><b>${esc(name)}</b>${
           open && tip ? `<span class="pd-tip">${esc(tip)}</span>` : ''}</span>${
           open && cost ? `<span class="pd-cost">${esc(cost)}</span>` : ''}</li>`).join('')}
       </ul>
-      ${open ? '' : `<p class="pd-more">Tips, costs and timings for these stops are in the app</p>`}
+      ${open ? '' : `<p class="pd-more">${esc(p.more)}</p>`}
     </li>`;
   };
   const body = `
@@ -889,12 +889,12 @@ function planPage(p) {
 
 <section>
   <div class="wrap plan">
-    <h2 class="d">Three bases, two moves</h2>
+    <h2 class="d">${esc(p.tableTitle)}</h2>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Days</th><th>Base</th><th>For</th></tr></thead>
-      <tbody>${p.bases.map((r) => `<tr>${r.map((c) => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody>
+      <thead><tr>${p.table.head.map((h) => `<th>${esc(h)}</th>`).join('')}</tr></thead>
+      <tbody>${p.table.rows.map((r) => `<tr>${r.map((c) => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody>
     </table></div>
-    <div class="callout">Plan around real drive times, not the map's: ${p.moves.map(([r, t]) => `<strong>${esc(r)}</strong> ${esc(t)}`).join(' · ')}. Move between bases in the morning, before the traffic builds.</div>
+    <div class="callout">${p.callout}</div>
 
     <h2 class="d">Day by day</h2>
     <ol class="plan-days">${p.days.map(day).join('')}</ol>
@@ -902,7 +902,7 @@ function planPage(p) {
     <div class="get-app plan-unlock">
       <span class="ico"><img src="${hAsset(`icons/${app.icon}`)}" alt="" width="152" height="152"></span>
       <div class="txt">
-        <h2>This is the plan for everyone. ${esc(app.name)} builds yours.</h2>
+        <h2>${esc(p.unlockTitle)}</h2>
         <ul>${p.unlock.map((u) => `<li>${esc(u)}</li>`).join('')}</ul>
       </div>
       ${storeLink(app, 'Get the full plan')}
