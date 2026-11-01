@@ -322,27 +322,78 @@ function fixLinks(html) {
              .replace(/href="\/([a-z0-9-]+)\/"/g, 'href="$1.html"');
 }
 
-function inlineCta(app) {
-  return `<aside class="mid-cta">
-    <span class="ic"><img src="${hAsset('icons/' + app.icon)}" alt="" width="104" height="104" loading="lazy"></span>
-    <span class="tx"><b>${esc(app.name)}</b>${esc(app.tagline)}</span>
-    <a class="btn accent" href="${esc(app.storeUrl)}" data-store="${esc(app.storeUrl)}">Get it on the App&nbsp;Store ${OUT}</a>
+const plain = (s) => String(s).replace(/<[^>]+>/g, '').replace(/&[a-z#0-9]+;/gi, ' ');
+const slugify = (s) => plain(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 64);
+const headings = (blocks) => {
+  const seen = new Set();
+  return blocks.filter(([t]) => t === 'h2').map(([, v]) => {
+    let id = slugify(v) || 'section', n = 2;
+    while (seen.has(id)) id = `${slugify(v)}-${n++}`;
+    seen.add(id);
+    return { id, text: v };
+  });
+};
+
+// The app feature closest to what a guide is about, so the mid-article CTA
+// talks about the thing the reader is reading about rather than the app in
+// general. Plain word overlap is enough at this size, and it keeps working
+// when a guide or a feature is added without anyone wiring them together.
+const STOP = new Set('the a an and or of to in on for is are be it you your with at by from that this not do does how what when why can as more than just own'.split(' '));
+const bag = (s) => new Set(plain(s).toLowerCase().split(/[^a-z0-9]+/)
+  .filter((w) => w.length > 2 && !STOP.has(w)).map((w) => w.replace(/(ing|ed|s)$/, '')));
+const topicOf = (a) => bag([a.title, a.answer, ...a.blocks.filter(([t]) => t === 'h2').map(([, v]) => v)].join(' '));
+function featureFor(a, app) {
+  if (a.feature) {
+    const f = app.features.find(([t]) => t === a.feature);
+    if (!f) throw new Error(`${a.slug}: feature "${a.feature}" is not one of ${app.name}'s features`);
+    return f;
+  }
+  // Words every guide for this app shares ("dog", "walk") say nothing about
+  // this one, so each word counts by how rare it is among the app's guides.
+  const peers = articlesFor(app.slug).map(topicOf);
+  const weight = (w) => 1 - peers.filter((t) => t.has(w)).length / (peers.length + 1);
+  const topic = topicOf(a);
+  let best = app.features[0], top = 0;
+  for (const f of app.features) {
+    const score = [...bag(f[0] + ' ' + f[1])].filter((w) => topic.has(w)).reduce((n, w) => n + weight(w), 0);
+    if (score > top) { best = f; top = score; }
+  }
+  return best;
+}
+
+// Mid-article CTA: what this guide's topic looks like inside the app, with a
+// real screenshot beside it so the claim has something to point at. A
+// feature's optional third entry in content.mjs names the shot that shows it.
+function inlineCta(app, feature = app.features[0]) {
+  const shot = feature[2] || app.shots[1] || app.shots[0];
+  return `<aside class="mid-cta" aria-label="${esc(app.name)} on the App Store">
+    <figure class="mc-shot" aria-hidden="true"><img src="${hAsset('shots/' + shot)}" alt="" width="240" height="518" loading="lazy" decoding="async"></figure>
+    <div class="mc-body">
+      <p class="mc-kicker"><span class="ic"><img src="${hAsset('icons/' + app.icon)}" alt="" width="104" height="104" loading="lazy"></span>In ${esc(app.name)}</p>
+      <p class="mc-h">${esc(feature[0])}</p>
+      <p class="mc-tx">${esc(feature[1])}</p>
+      <a class="btn accent" href="${esc(app.storeUrl)}" data-store="${esc(app.storeUrl)}">Get it on the App&nbsp;Store ${OUT}</a>
+    </div>
   </aside>`;
 }
 
-function renderBlocks(blocks, app) {
+function renderBlocks(blocks, app, feature) {
+  const ids = headings(blocks).map((h) => h.id);
+  let h2i = 0;
   return blocks.map(([type, val]) => {
     switch (type) {
-      case 'h2':      return `<h2>${val}</h2>`;
+      case 'h2':      return `<h2 id="${ids[h2i++]}">${val}</h2>`;
       case 'p':       return `<p>${val}</p>`;
       case 'ul':      return `<ul>${val.map((li) => `<li>${li}</li>`).join('')}</ul>`;
       case 'ol':      return `<ol>${val.map((li) => `<li>${li}</li>`).join('')}</ol>`;
       case 'callout': return `<div class="callout">${val}</div>`;
       case 'note':    return `<div class="note">${val}</div>`;
       case 'contact': return `<p class="mailto"><a href="mailto:${esc(site.contactEmail)}">${esc(site.contactEmail)}</a></p>`;
-      case 'table':   return `<div class="tbl-wrap"><table><thead><tr>${
+      // Three-plus columns cannot fit a phone, so those tables carry each
+      // header as data-label and the CSS restacks every row into a card.
+      case 'table':   return `<div class="tbl-wrap${val.head.length > 2 ? ' stack' : ''}"><table><thead><tr>${
         val.head.map((h) => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${
-        val.rows.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join('')}</tr>`).join('')
+        val.rows.map((r) => `<tr>${r.map((c, i) => `<td data-label="${esc(val.head[i] || '')}">${c}</td>`).join('')}</tr>`).join('')
       }</tbody></table></div>`;
       default:        return '';
     }
@@ -350,7 +401,7 @@ function renderBlocks(blocks, app) {
     out.push(html);
     // after the second <h2> section, roughly a third in
     if (app && arr.slice(0, i + 1).filter((h) => h.startsWith('<h2')).length === 2
-        && arr[i + 1] && arr[i + 1].startsWith('<h2')) out.push(inlineCta(app));
+        && arr[i + 1] && arr[i + 1].startsWith('<h2')) out.push(inlineCta(app, feature));
     return out;
   }, []).join('\n');
 }
@@ -710,35 +761,56 @@ ${posts.length ? `<section id="guides">
 function articlePage(a) {
   const app = appBySlug[a.app];
   const related = articlesFor(a.app).filter((x) => x.slug !== a.slug);
+  const toc = headings(a.blocks);
+  const feature = featureFor(a, app);
+  const tocList = `<ol class="toc-list">${toc.map((h) =>
+    `<li><a href="#${h.id}">${plain(h.text)}</a></li>`).join('')}${
+    a.faqs?.length ? '<li><a href="#common-questions">Common questions</a></li>' : ''}</ol>`;
   const body = `
-<header class="band">
+<div class="read-progress" aria-hidden="true"><i></i></div>
+
+<header class="band g-hero">
   ${SKY}
   <div class="wrap">
-    <p class="crumb"><a href="${hHome()}">Home</a> <span>/</span> <a href="${hApp(app.slug)}">${esc(app.name)}</a> <span>/</span> Guide</p>
-    <h1 class="d">${esc(a.title)}</h1>
-    <p class="lede">${esc(a.description)}</p>
-    <p class="byline">
-      <span>By <a href="${FLAT ? 'about.html' : '/about/'}">${esc(site.author)}</a></span>
-      <span>${a.updated && a.updated !== a.published
-        ? `Updated <time datetime="${a.updated}">${niceDate(a.updated)}</time>`
-        : `<time datetime="${a.published}">${niceDate(a.published)}</time>`}</span>
-      <span>${readMins(a)} min read</span>
-    </p>
+    <div class="g-hero-in">
+      <div class="g-hero-copy">
+        <p class="crumb"><a href="${hHome()}">Home</a> <span>/</span> <a href="${hApp(app.slug)}">${esc(app.name)}</a> <span>/</span> Guide</p>
+        <p class="g-chip"><img src="${hAsset('icons/' + app.icon)}" alt="" width="56" height="56">${esc(app.name)} guide</p>
+        <h1 class="d">${esc(a.title)}</h1>
+        <p class="lede">${esc(a.description)}</p>
+        <p class="byline">
+          <span>By&nbsp;<a href="${FLAT ? 'about.html' : '/about/'}">${esc(site.author)}</a></span>
+          <span>${a.updated && a.updated !== a.published
+            ? `Updated&nbsp;<time datetime="${a.updated}">${niceDate(a.updated)}</time>`
+            : `<time datetime="${a.published}">${niceDate(a.published)}</time>`}</span>
+          <span>${readMins(a)} min read</span>
+          ${a.sources?.length ? `<span>${a.sources.length} sources</span>` : ''}
+        </p>
+      </div>
+      <div class="g-hero-shot" aria-hidden="true">
+        ${shotCard(app, app.shots[0], 1, true)}
+      </div>
+    </div>
   </div>
 </header>
 
-<section>
-  <div class="wrap">
+<section class="g-body">
+  <div class="wrap g-grid">
+    <div class="g-main">
     <article class="prose">
       <div class="answer">
         <p class="lbl">Short answer</p>
         <p>${esc(a.answer)}</p>
       </div>
       ${YMYL.has(a.app) ? `<p class="ymyl"><strong>General information, not medical advice.</strong> Written from published sources, which are listed at the end. It is not a substitute for a doctor, pharmacist or registered dietitian who knows your situation.</p>` : ''}
-      ${renderBlocks(a.blocks, app)}
+      ${toc.length > 2 ? `<details class="toc toc-m">
+        <summary><span>In this guide</span><em>${toc.length} sections &middot; ${readMins(a)} min</em></summary>
+        ${tocList}
+      </details>` : ''}
+      ${renderBlocks(a.blocks, app, feature)}
     </article>
 
-    ${a.faqs?.length ? `<section class="art-faq">
+    ${a.faqs?.length ? `<section class="art-faq" id="common-questions">
       <h2>Common questions</h2>
       <div class="faq">
         ${a.faqs.map(([q, ans], i) => `<details class="q"${i === 0 ? ' open' : ''}><summary>${esc(q)}</summary><div class="a"><p>${ans}</p></div></details>`).join('')}
@@ -749,21 +821,50 @@ function articlePage(a) {
       <h2>Sources</h2>
       <ul>${a.sources.map(([t, u]) => `<li><a href="${esc(u)}" rel="nofollow noopener" target="_blank">${esc(t)}</a></li>`).join('')}</ul>
     </div>` : ''}
+    </div>
+
+    <aside class="g-side" aria-label="Guide contents">
+      <div class="g-side-in">
+        ${toc.length > 2 ? `<nav class="toc toc-d" aria-label="In this guide">
+          <p class="toc-h">In this guide</p>
+          ${tocList}
+        </nav>` : ''}
+        <div class="side-app">
+          <span class="ic"><img src="${hAsset('icons/' + app.icon)}" alt="" width="104" height="104" loading="lazy"></span>
+          <p class="sa-nm">${esc(app.name)}</p>
+          <p class="sa-tx">${esc(app.tagline)}</p>
+          ${storeLink(app, 'Get the app', 'btn light')}
+        </div>
+      </div>
+    </aside>
   </div>
 </section>
 
-<section class="tinted seam">
+<section class="tinted seam g-end">
   <div class="wrap">
-    <div class="get-app">
-      <span class="ico"><img src="${hAsset(`icons/${app.icon}`)}" alt="" width="152" height="152"></span>
-      <div class="txt">
-        <h2>${esc(app.name)}</h2>
-        <p>${esc(app.tagline)} On the App&nbsp;Store.</p>
+    <div class="app-end">
+      <div class="ae-copy">
+        <p class="ae-kicker"><span class="ic"><img src="${hAsset(`icons/${app.icon}`)}" alt="" width="152" height="152" loading="lazy"></span>${esc(app.fullName || app.name)}</p>
+        <h2>${esc(app.tagline)}</h2>
+        <p class="ae-hero">${esc(app.hero)}</p>
+        <ul class="ae-feats">${app.features.slice(0, 3).map(([t]) => `<li>${esc(t)}</li>`).join('')}</ul>
+        <div class="cta-row">
+          ${storeLink(app, 'Get it on the App Store', 'btn light')}
+          <a class="ae-more" href="${hApp(app.slug)}">How ${esc(app.name)} works ${ARROW}</a>
+        </div>
       </div>
-      ${storeLink(app, 'Get the app')}
+      <div class="ae-shots" aria-hidden="true">
+        ${app.shots.slice(0, 3).map((s, i) => shotCard(app, s, i, false)).join('')}
+      </div>
     </div>
   </div>
 </section>
+
+<div class="dl-bar" id="dl-bar">
+  <span class="ic"><img src="${hAsset('icons/' + app.icon)}" alt="" width="104" height="104" loading="lazy"></span>
+  <span class="dl-tx"><b>${esc(app.name)}</b><span>${esc(app.tagline)}</span></span>
+  <a class="btn accent" href="${esc(app.storeUrl)}" data-store="${esc(app.storeUrl)}">Get ${OUT}</a>
+</div>
 
 ${related.length ? `<section>
   <div class="wrap">

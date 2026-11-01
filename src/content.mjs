@@ -110,11 +110,13 @@ export const apps = [
       'Track every dog walk with a live GPS map \u2014 distance, pace and calories. Share-ready walk cards, walking friends nearby, friendly leaderboard.',
     hero:
       'Tap start and Jupiter maps your walk in real time — route, distance, time, pace and calories — then turns it into a card worth sharing.',
+    // [title, description, screenshot that shows it]. The screenshot is
+    // optional; guides use it beside the feature in their mid-article card.
     features: [
-      ['Live GPS route map', 'Watch the line draw itself as you walk. Distance, duration, pace and calories, all tracked automatically.'],
-      ['Share-ready walk cards', 'Every walk becomes a clean card with your route and stats on it. Built for Stories, not spreadsheets.'],
-      ['A friendly leaderboard', 'Compare weekly distance with other walkers. Competitive enough to get you out the door, gentle enough to stay fun.'],
-      ['Walking friends nearby', 'Find people walking dogs around you. Dog walking is the most social exercise there is — the apps just never treated it that way.'],
+      ['Live GPS route map', 'Watch the line draw itself as you walk. Distance, duration, pace and calories, all tracked automatically.', 'jupiter-2.jpg'],
+      ['Share-ready walk cards', 'Every walk becomes a clean card with your route and stats on it. Built for Stories, not spreadsheets.', 'jupiter-3.jpg'],
+      ['A friendly leaderboard', 'Compare weekly distance with other walkers. Competitive enough to get you out the door, gentle enough to stay fun.', 'jupiter-1.jpg'],
+      ['Walking friends nearby', 'Find people walking dogs around you. Dog walking is the most social exercise there is — the apps just never treated it that way.', 'jupiter-1.jpg'],
     ],
     faq: [
       ['Does Jupiter Walkies track my walk with GPS?',
@@ -157,10 +159,10 @@ export const apps = [
     hero:
       'Bo does not just count what it can see. It asks the missing piece — ranch or vinaigrette? side of rice? — so the salad you logged is not off by 400 calories.',
     features: [
-      ['One follow-up question', 'Six seconds end to end. Bo asks the single thing a photo cannot show, which is usually where the calories are hiding.'],
-      ['Photo and voice logging', 'Snap the plate or just say what you ate. Both land in the same log with macros attached.'],
-      ['Macros, not just calories', 'Protein, carbs and fat tracked per meal and per day, because the number on its own rarely tells you enough.'],
-      ['Honest about uncertainty', 'When Bo is not sure, it says so instead of inventing a confident number. That is the whole point.'],
+      ['One follow-up question', 'Six seconds end to end. Bo asks the single thing a photo cannot show, which is usually where the calories are hiding.', 'bo-2.jpg'],
+      ['Photo and voice logging', 'Snap the plate or just say what you ate. Both land in the same log with macros attached.', 'bo-2.jpg'],
+      ['Macros, not just calories', 'Protein, carbs and fat tracked per meal and per day, because the number on its own rarely tells you enough.', 'bo-1.jpg'],
+      ['Honest about uncertainty', 'When Bo is not sure, it says so instead of inventing a confident number. That is the whole point.', 'bo-3.jpg'],
     ],
     faq: [
       ['How accurate is Bo compared with other AI calorie apps?',
@@ -204,10 +206,10 @@ export const apps = [
     hero:
       'Build a day-by-day itinerary for Ubud, Canggu, Uluwatu and beyond — with a budget that keeps up, and the spots most guides leave out.',
     features: [
-      ['Day-by-day itineraries', 'From the rice terraces of Ubud to the surf at Canggu and the temples of Uluwatu, laid out by day so the trip actually fits together.'],
-      ['Budget that speaks rupiah', 'Track spending in IDR and your home currency at once, which is the single hardest part of a first Bali trip.'],
-      ['Hidden gems, not just the list', 'The waterfalls, warungs and beaches that do not appear in the first ten search results.'],
-      ['Works offline once planned', 'Your itinerary stays readable when the signal on the way to a waterfall does not.'],
+      ['Day-by-day itineraries', 'From the rice terraces of Ubud to the surf at Canggu and the temples of Uluwatu, laid out by day so the trip actually fits together.', 'bali-3.jpg'],
+      ['Budget that speaks rupiah', 'Track spending in IDR and your home currency at once, which is the single hardest part of a first Bali trip.', 'bali-2.jpg'],
+      ['Hidden gems, not just the list', 'The waterfalls, warungs and beaches that do not appear in the first ten search results.', 'bali-1.jpg'],
+      ['Works offline once planned', 'Your itinerary stays readable when the signal on the way to a waterfall does not.', 'bali-2.jpg'],
     ],
     faq: [
       ['When is the best time to visit Bali?',
@@ -251,10 +253,10 @@ export const apps = [
     hero:
       'Most quit apps count your days. HOLD is built for the ten minutes that decide whether you keep them — the craving itself.',
     features: [
-      ['There when the craving hits', 'A craving peaks and passes in about 10–15 minutes. HOLD gives you something to do for exactly that long.'],
-      ['Guided breathing', 'Short, structured breathing you can start one-handed, without reading instructions first.'],
-      ['Real-time AI support', 'Talk it through at 2am when no one else is up. No appointment, no waiting room.'],
-      ['Progress you can see', 'Time smoke-free, money saved, and skin health insights — because the visible changes are what keep people going.'],
+      ['There when the craving hits', 'A craving peaks and passes in about 10–15 minutes. HOLD gives you something to do for exactly that long.', 'hold-3.jpg'],
+      ['Guided breathing', 'Short, structured breathing you can start one-handed, without reading instructions first.', 'hold-3.jpg'],
+      ['Real-time AI support', 'Talk it through at 2am when no one else is up. No appointment, no waiting room.', 'hold-3.jpg'],
+      ['Progress you can see', 'Time smoke-free, money saved, and skin health insights — because the visible changes are what keep people going.', 'hold-2.jpg'],
     ],
     faq: [
       ['How long do nicotine cravings last?',

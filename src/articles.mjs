@@ -232,6 +232,7 @@ export const articles = [
   // ======================= JUPITER WALKIES =======================
   {
     slug: 'how-long-should-i-walk-my-dog',
+    feature: 'Live GPS route map', // the mid-guide CTA; word matching picks it otherwise
     faqs: [
       ['Is one long walk better than two short ones?', 'Two is usually better. It spreads toilet breaks, mental stimulation and joint load across the day, and most dogs settle better with a predictable rhythm than with one big outing.'],
       ['Can I skip a walk if my dog has a garden?', 'A garden covers toileting, not stimulation. Dogs need new smells and a change of environment, which is the part a familiar garden cannot provide however large it is.'],
@@ -308,6 +309,7 @@ export const articles = [
 
   {
     slug: 'puppy-walk-length',
+    feature: 'Live GPS route map', // the mid-guide CTA; word matching picks it otherwise
     faqs: [
       ['What happens if I over-exercise a puppy?', 'The concern is the growth plates, which stay soft until the skeleton matures. Sustained, repetitive, high-impact exercise before then is associated with joint problems later, particularly in large and giant breeds. A single long day is very unlikely to cause harm; months of forced daily road-walking is the pattern to avoid.'],
       ['Does play in the garden count towards the limit?', 'Free play at their own pace is different from structured lead walking, and puppies self-regulate reasonably well when left to it — they stop when they are tired. The 5-minute rule is about forced, sustained exercise that the puppy cannot opt out of.'],
@@ -395,6 +397,7 @@ export const articles = [
 
   {
     slug: 'dog-walking-in-hot-weather',
+    feature: 'Live GPS route map', // the mid-guide CTA; word matching picks it otherwise
     faqs: [
       ['What temperature is too hot to walk a dog?', 'There is no single number, because humidity and breed matter as much as air temperature. Use the pavement test, and treat anything above roughly 20°C as needing care for flat-faced, elderly, overweight or thick-coated dogs.'],
       ['Can I walk my dog on grass when it is hot?', 'Grass is far cooler than tarmac and a good alternative, but it does not remove the heat-stress risk — a dog can overheat on grass in still, humid air.'],
@@ -1721,6 +1724,7 @@ export const articles = [
 
   {
     slug: 'why-does-my-dog-stop-walking',
+    feature: 'Live GPS route map', // the mid-guide CTA; word matching picks it otherwise
     faqs: [
       ['Should I pull my dog when it refuses to move?', 'No. Tension escalates a dog that has already dug in, and dragging past something frightening confirms it was dangerous, making the next walk worse.'],
       ['Why does my dog stop at the same spot every time?', 'That usually means a specific cue — something it saw or heard there, or the point where you normally turn for home. A consistent stopping distance can also indicate pain or stamina limits.'],
