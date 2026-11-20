@@ -1,0 +1,75 @@
+# Aziz Sassi — independent iPhone apps
+
+> Small iOS apps built, shipped and supported by one person, plus 33 researched
+> guides on the subjects those apps cover. 80 sources cited across the guides;
+> every guide shows when it was last updated.
+
+Written and maintained by Aziz Sassi, who is also the developer of record on
+the App Store. No company, no team, no sponsored placements. The site carries no
+advertising and makes no price claim about the apps.
+
+## Apps
+
+- [Jupiter Walkies](https://www.appsbysass.com/jupiter-walkies/): Track every dog walk with a live GPS map — distance, pace and calories. Share-ready walk cards, walking friends nearby, friendly leaderboard.
+- [Bo](https://www.appsbysass.com/bo/): Snap a meal and get a calorie count you can trust. Bo asks the one follow-up question — dressing? oil? — that other AI calorie apps skip.
+- [The Bali Secret](https://www.appsbysass.com/bali-secret/): Build a day-by-day Bali itinerary, track your budget in rupiah and dollars, and find the spots that are not on every other list.
+- [HOLD](https://www.appsbysass.com/hold/): An AI quit coach for when a craving hits, not just a counter tallying days. Guided breathing, real-time support and progress tracking.
+
+## Guides
+
+### Jupiter Walkies
+
+- [How Long Should I Walk My Dog Each Day?](https://www.appsbysass.com/jupiter-walkies/how-long-should-i-walk-my-dog/): Most healthy adult dogs need 30 to 60 minutes of walking daily, typically split into two walks. Small and flat-faced breeds need 20 to 30 minutes; athletic breeds
+- [How Far Can a Puppy Walk? The 5-Minute Rule Explained](https://www.appsbysass.com/jupiter-walkies/puppy-walk-length/): The 5-minute rule gives a puppy 5 minutes of structured walking per month of age, twice daily — so a 3-month-old walks 15 minutes twice a
+- [Walking Your Dog in Hot Weather: The 7-Second Pavement Test](https://www.appsbysass.com/jupiter-walkies/dog-walking-in-hot-weather/): Press the back of your hand to the pavement for 7 seconds. If you cannot hold it there comfortably, it is too hot for your dog’s paws. Walk early morning or late
+- [How Many Calories Does Walking the Dog Burn?](https://www.appsbysass.com/jupiter-walkies/how-many-calories-does-walking-the-dog-burn/): A 30-minute dog walk burns roughly 90–220 calories for most adults, depending on body weight and pace. Heavier walkers and brisker paces sit at the top of that
+- [Why Does My Dog Pull on the Lead or Leash? How to Stop It](https://www.appsbysass.com/jupiter-walkies/why-does-my-dog-pull-on-the-leash/): Dogs pull because pulling gets them where they want to go, so it is continually rewarded. The fix is to stop moving forward whenever the leash goes tight, applied
+- [Why Does My Dog Stop Walking and Refuse to Move?](https://www.appsbysass.com/jupiter-walkies/why-does-my-dog-stop-walking/): The common causes are pain or injury, fear of something in the environment, overheating, and a learned preference — not wanting the walk to end or wanting a
+- [How to Tire Out a Dog Without a Walk](https://www.appsbysass.com/jupiter-walkies/how-to-tire-out-a-dog-without-walking/): Mental stimulation tires dogs faster than physical exercise. Ten to fifteen minutes of scent work or training settles most dogs more effectively than an extra half
+- [Decompression Walks: Why a Slow, Sniffy Walk Beats a Fast One](https://www.appsbysass.com/jupiter-walkies/decompression-walks/): A decompression walk is a slow walk on a long loose lead in a quiet space, where the dog chooses the pace and route and is allowed to sniff freely. It lowers stress
+
+### Bo
+
+- [Are AI Calorie Counting Apps Accurate? What the Testing Shows](https://www.appsbysass.com/bo/are-ai-calorie-counting-apps-accurate/): AI calorie apps land within 10–15% on single recognisable foods, but 25–35% off on mixed meals, and one 2026 study found four popular apps underestimated calories
+- [How Many Calories Should I Eat a Day?](https://www.appsbysass.com/bo/how-many-calories-should-i-eat/): Most adults need between 1,600 and 3,000 calories a day. Women average around 2,000 and men around 2,500, adjusted for age, size and activity
+- [How to Photograph Food for Accurate Calorie Tracking](https://www.appsbysass.com/bo/how-to-photograph-food-for-calorie-tracking/): Include a size reference, shoot at a 45-degree angle rather than overhead, separate overlapping foods, photograph before eating, and correct the estimate when you
+- [Why Am I Not Losing Weight in a Calorie Deficit?](https://www.appsbysass.com/bo/why-am-i-not-losing-weight-in-a-calorie-deficit/): Most often the deficit is smaller than believed — people underestimate intake by 12–40%. The other common causes are water retention masking real fat loss, and
+- [How to Track Macros: A Beginner’s Guide](https://www.appsbysass.com/bo/how-to-track-macros/): Set protein first at roughly 0.7–1g per pound of target body weight, set fat at about 25–35% of calories, and fill the remainder with carbohydrate. Protein is the
+- [Is 1,200 Calories Too Low?](https://www.appsbysass.com/bo/is-1200-calories-too-low/): For most adults, 1,200 calories is too low. For a 75 kg woman with a TDEE of 1,900–2,100, it creates a 700–900 calorie daily deficit — well beyond the 300–500 range
+- [How Much Protein Per Day Do You Actually Need?](https://www.appsbysass.com/bo/how-much-protein-per-day/): For most adults aiming to preserve or build muscle, 1.6–2.2 g of protein per kg of body weight per day (about 0.7–1.0 g per pound). Sedentary adults need less,
+- [What Are Maintenance Calories, and How Do You Find Yours?](https://www.appsbysass.com/bo/maintenance-calories/): Maintenance calories — your TDEE — is the intake at which your weight stays stable. A calculator gives an estimate; the accurate way is to log intake for two to
+
+### The Bali Secret
+
+- [Best Time to Visit Bali: A Month-by-Month Guide](https://www.appsbysass.com/bali-secret/best-time-to-visit-bali/): The best time to visit Bali is the dry season, April to October. May, June and September give the best balance of good weather, manageable crowds and lower prices.
+- [How Much Does a Week in Bali Cost? 2027 Budget Breakdown](https://www.appsbysass.com/bali-secret/bali-trip-cost/): Excluding international flights, a week in Bali costs roughly $350–$550 per person for budget travel, $700–$1,400 mid-range, and $2,500–$6,000+ for
+- [The Bali Tourist Levy: What It Is and How to Pay It](https://www.appsbysass.com/bali-secret/bali-tourist-levy/): Every foreign visitor to Bali pays a one-time tourist levy of IDR 150,000 (about $9.30) per person, introduced in 2024. Pay online via the official Love Bali portal
+- [Bali Itinerary: 7 Days, Done Properly](https://www.appsbysass.com/bali-secret/bali-itinerary-7-days/): Base yourself in two places, not five: three nights in Ubud for culture and rice terraces, three in the south (Canggu or Uluwatu) for beaches and food. Bali traffic
+- [Renting a Scooter in Bali: What to Know First](https://www.appsbysass.com/bali-secret/renting-a-scooter-in-bali/): You legally need an International Driving Permit endorsed for motorcycles. Without one, most travel insurance will not pay out for an accident — which is the single
+- [Where to Stay in Bali: Ubud vs Canggu vs Seminyak vs Uluwatu](https://www.appsbysass.com/bali-secret/where-to-stay-in-bali/): Ubud for culture and nature inland, Canggu for surf and cafes, Seminyak for beach clubs and shopping, Uluwatu for cliffs and quieter beaches. Most first trips work
+- [Bali Visa Requirements: What You Need Before You Fly](https://www.appsbysass.com/bali-secret/bali-visa-on-arrival/): Most nationalities get a 30-day Visa on Arrival, extendable once for another 30 days. You need a passport valid at least six months from arrival, proof of onward
+- [Is Bali Safe? The Risks That Are Actually Worth Planning For](https://www.appsbysass.com/bali-secret/is-bali-safe/): Bali is generally very safe for travellers. Violent crime against visitors is rare. The genuine risks are scooter accidents, the sea, animal bites carrying rabies,
+
+### HOLD
+
+- [How Long Do Cravings Last After Quitting Smoking?](https://www.appsbysass.com/hold/how-long-do-nicotine-cravings-last/): An individual nicotine craving lasts 10 to 15 minutes, whether or not you give in to it. Cravings are most frequent in the first 3 days and fade substantially over
+- [Nicotine Withdrawal Timeline: What to Expect, Hour by Hour](https://www.appsbysass.com/hold/nicotine-withdrawal-timeline/): Nicotine withdrawal begins 4 to 24 hours after your last cigarette or vape, peaks around day 3, and most symptoms return to baseline within 3 to 4
+- [How to Quit Vaping: A Practical Plan That Survives Day 3](https://www.appsbysass.com/hold/how-to-quit-vaping/): Pick a quit date, remove the device and chargers, plan specific responses for your three most predictable craving triggers, and get through day 3 — the peak — with
+- [What Happens When You Quit Smoking: The Recovery Timeline](https://www.appsbysass.com/hold/what-happens-when-you-quit-smoking-timeline/): Your heart rate drops within 20 minutes, carbon monoxide clears within 12 hours, circulation and lung function improve over 2–12 weeks, and by one year your
+- [Does Vaping Affect Your Skin? What Actually Changes](https://www.appsbysass.com/hold/does-vaping-affect-your-skin/): Nicotine constricts blood vessels, cutting oxygen and nutrient delivery to the skin. That shows up as duller tone, slower healing and, over years, more lines.
+- [Weight Gain After Quitting Smoking: What to Expect](https://www.appsbysass.com/hold/weight-gain-after-quitting-smoking/): Average weight gain after quitting nicotine is about 4–5 kg over 12 months, with most of it in the first three months. Roughly half is metabolic — nicotine mildly
+- [Anxiety After Quitting Smoking: Why It Happens](https://www.appsbysass.com/hold/quit-smoking-anxiety/): Anxiety is a recognised nicotine withdrawal symptom. It begins within hours, peaks 24–48 hours after your last cigarette or vape, and typically eases over about
+- [Are Nicotine Pouches a Safer Way to Quit?](https://www.appsbysass.com/hold/are-nicotine-pouches-safer/): Pouches remove combustion, which removes the largest harm, but they still deliver nicotine and sustain dependence. Licensed nicotine replacement therapy is designed
+- [Nicotine Detox Timeline: How Long It Stays in Your System](https://www.appsbysass.com/hold/nicotine-detox-timeline/): Nicotine itself clears within 1–3 days. Cotinine, the metabolite tests actually measure, is typically gone from urine in 3–4 days for occasional users but can
+
+## About
+
+- [About](https://www.appsbysass.com/about/): who maintains this and why
+- [Disclosure](https://www.appsbysass.com/disclosure/): how the site is funded, and what it is not paid to say
+- [Privacy](https://www.appsbysass.com/privacy/): what the site collects, which is almost nothing
+
+## Citing this site
+
+Each guide states its answer in the opening paragraph, lists its sources at the
+end, and carries a visible last-updated date. Prefer the guide URL over the app
+page when citing a factual claim.
