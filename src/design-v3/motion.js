@@ -58,3 +58,52 @@
     rail.dataset.doubled = '1';
   }
 })();
+
+/* --- scroll-driven showcase ---------------------------------------------
+   The section is 420vh tall with a sticky 100vh child. Progress through the
+   tall section picks which app is showing. One rAF-throttled scroll read; the
+   page never has its scrolling speed altered. */
+(function () {
+  var sec = document.getElementById('showcase');
+  var data = window.__APPS;
+  if (!sec || !data || !data.length) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var bg = sec.querySelector('.showcase-bg');
+  var nameEl = sec.querySelector('[data-sc-name]');
+  var lineEl = sec.querySelector('[data-sc-line]');
+  var numEl = sec.querySelector('[data-sc-n]');
+  var dots = [].slice.call(sec.querySelectorAll('.showcase-dots i'));
+  var imgs = [].slice.call(sec.querySelectorAll('.showcase-phone img'));
+  var cur = -1, queued = false;
+
+  var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+
+  function show(i) {
+    if (i === cur) return;
+    cur = i;
+    var d = data[i];
+    bg.style.setProperty('--sc-accent', d.accent);
+    nameEl.textContent = d.name;
+    lineEl.textContent = d.line;
+    numEl.textContent = pad(i + 1) + ' — ' + pad(data.length);
+    dots.forEach(function (el, n) { el.classList.toggle('on', n === i); });
+    imgs.forEach(function (el, n) { el.classList.toggle('on', n === i); });
+  }
+
+  function read() {
+    queued = false;
+    var r = sec.getBoundingClientRect();
+    var span = r.height - window.innerHeight;
+    if (span <= 0) return;
+    // 0 at the moment the section pins, 1 as it unpins
+    var p = Math.min(1, Math.max(0, -r.top / span));
+    show(Math.min(data.length - 1, Math.floor(p * data.length)));
+  }
+
+  addEventListener('scroll', function () {
+    if (!queued) { queued = true; requestAnimationFrame(read); }
+  }, { passive: true });
+  addEventListener('resize', read, { passive: true });
+  read();
+})();

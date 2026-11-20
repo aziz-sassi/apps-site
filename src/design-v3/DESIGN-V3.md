@@ -28,6 +28,7 @@ Tailwind, no animation library.
 | 1 | Nav | wayfinding | sticky, blurred, centre-out underline |
 | 2 | **Hero** | the one claim | kicker → mega headline w/ swipe highlight → lede → dual CTA → trust strip |
 | 3 | Marquee rail | breadth at a glance | app names, pauses on hover |
+| 3b | **Motion showcase** | what each app is, one at a time | 420vh section, sticky phone, accent floods per app, screens cross-fade — scroll-driven, no scroll-jacking |
 | 4 | **The apps** | the products | one tinted card per app: icon, name, tagline, chips, CTA, 3 real screens |
 | 5 | **Answers, not filler** | why the guides exist | 8 guide chips in app accents + "all 33" CTA |
 | 6 | **One person. No company.** | trust | 4-row fact list: publisher, inbox, funding, what's collected |
@@ -36,17 +37,27 @@ Tailwind, no animation library.
 
 ## 2. Copy
 
-- **Kicker** — `Independent · iOS`
-- **H1** — `Apps that do [one thing], properly.` (highlight on "one thing")
-- **Lede** — "A dog-walk tracker, an honest calorie counter, a Bali trip planner and a quit-smoking coach. Designed, built and supported by one person — the one who answers your email."
-- **CTAs** — `See the apps →` / `Read the guides`
-- **Trust** — `33 researched guides · 80 sources cited · 2+ sources per guide · 1 person, start to finish`
-- **Apps** — "Each one started as something I wanted to exist, then got built until it did."
-- **Guides** — "33 guides, 80 sources cited, every one dated. Written because the existing answers were thin, not to fill a content calendar."
-- **Who** — "I design, build and support every app here myself — no team, no investors, no outsourced support desk. If something breaks, the person reading your email wrote the code."
-- **Footer** — "Start with the one that fits."
+The first pass wrote an umbrella headline ("Apps that do one thing, properly")
+and a metric strip ("2+ sources per guide"). Both were invented and said
+nothing. They are gone. The site already had concrete copy in `content.mjs`
+and the page now uses it.
 
-Every number is computed from `articles.mjs` at build time, so none of it can drift.
+**Hero** — restrained on purpose; the apps carry the detail.
+- Kicker: `Independent · iOS`
+- H1: `I needed these. So I [built] them.`
+- Lede: "Small apps for problems I actually had. No team, no investors, nobody to talk me out of the odd ones."
+- CTAs: `What they do →` / `Read the guides`
+- **No metric strip.**
+
+**Each app** now states what it actually does, pulled from `content.mjs`:
+- Jupiter Walkies — "Track every dog walk with a live GPS map — distance, pace and calories. Share-ready walk cards, walking friends nearby, friendly leaderboard."
+- Bo — "Snap a meal and get a calorie count you can trust. Bo asks the one follow-up question — dressing? oil? — that other AI calorie apps skip."
+- The Bali Secret — "Build a day-by-day Bali itinerary, track your budget in rupiah and dollars, and find the spots that are not on every other list."
+- HOLD — "An AI quit coach for when a craving hits, not just a counter tallying days. Guided breathing, real-time support and progress tracking."
+
+Plus three real feature lines each ("Talk it through at 2am when no one else is
+up"), and the **real App Store facts** — version, last updated, size, minimum
+iOS — read from `store-data.json`. Checkable, not invented.
 
 ## 3. Components (in `styles.css`)
 

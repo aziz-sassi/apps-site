@@ -5,6 +5,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { site, apps, otherWork } from '../content.mjs';
 import { articles } from '../articles.mjs';
+const store = JSON.parse(await readFile(new URL('../store-data.json', import.meta.url), 'utf8'));
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../..');
 const OUT = join(ROOT, 'dist/v3');
@@ -12,7 +13,6 @@ const esc = (s) => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(
 
 const sources = new Set();
 articles.forEach((a) => (a.sources || []).forEach((s) => sources.add(s.url || s)));
-const minSources = Math.min(...articles.map((a) => (a.sources || []).length).filter(Boolean));
 
 const SHOTS = { 'jupiter-walkies':'jupiter', bo:'bo', 'bali-secret':'bali', hold:'hold' };
 const ICON  = { 'jupiter-walkies':'jupiter.jpg', bo:'bo.jpg', 'bali-secret':'bali.jpg', hold:'hold.jpg' };
@@ -20,16 +20,24 @@ const TINT  = { 'jupiter-walkies':'#FFF1EB', bo:'#E9F9F1', 'bali-secret':'#E4F7F
 
 const appCard = (a, i) => {
   const k = SHOTS[a.slug];
+  const spec = store[a.slug] || {};
+  const feats = (a.features || []).slice(0, 3);
   return `
       <article class="app rv d${(i % 3) + 1}" style="--tint:${TINT[a.slug]};--accent:${a.accent}">
-        <div>
-          <img class="app-ico" src="/icons/${ICON[a.slug]}" alt="" width="52" height="52" loading="lazy">
+        <div class="app-body">
+          <img class="app-ico" src="/icons/${ICON[a.slug]}" alt="" width="56" height="56" loading="lazy">
           <h3>${esc(a.name)}</h3>
           <p class="tag">${esc(a.tagline)}</p>
-          <div class="meta">
-            <span class="chip">${esc(a.category)}</span>
-            <span class="chip">iOS ${esc(a.minOs)}+</span>
-          </div>
+          <p class="blurb">${esc(a.description || '')}</p>
+          <ul class="feats">
+            ${feats.map(([h, p]) => `<li><b>${esc(h)}</b><span>${esc(p)}</span></li>`).join('')}
+          </ul>
+          <dl class="spec">
+            ${spec.version ? `<div><dt>Version</dt><dd>${esc(spec.version)}</dd></div>` : ''}
+            ${spec.updated ? `<div><dt>Updated</dt><dd>${new Date(spec.updated).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</dd></div>` : ''}
+            ${spec.sizeMb ? `<div><dt>Size</dt><dd>${esc(spec.sizeMb)} MB</dd></div>` : ''}
+            <div><dt>Requires</dt><dd>iOS ${esc(a.minOs)}+</dd></div>
+          </dl>
           <a class="btn" href="/${a.slug}/">Open ${esc(a.name)} &rarr;</a>
         </div>
         <div class="app-shot">
@@ -65,18 +73,12 @@ const html = `<!doctype html>
 <header class="hero">
   <div class="wrap">
     <span class="kicker rv"><b></b>Independent &middot; iOS</span>
-    <h1 class="mega rv d1">Apps that do<br><span class="hl">one thing</span>, properly.</h1>
-    <p class="lede rv d2">A dog-walk tracker, an honest calorie counter, a Bali trip planner and a
-      quit-smoking coach. Designed, built and supported by one person &mdash; the one who answers your email.</p>
+    <h1 class="mega rv d1">I needed these.<br>So I <span class="hl">built</span> them.</h1>
+    <p class="lede rv d2">Small apps for problems I actually had. No team, no investors,
+      nobody to talk me out of the odd ones.</p>
     <div class="cta-row rv d3">
-      <a class="btn" href="#apps">See the apps &rarr;</a>
+      <a class="btn" href="#apps">What they do &rarr;</a>
       <a class="btn ghost" href="#guides">Read the guides</a>
-    </div>
-    <div class="trust rv d3">
-      <div><b>${articles.length}</b><span>researched guides</span></div>
-      <div><b>${sources.size}</b><span>sources cited</span></div>
-      <div><b>${minSources}+</b><span>sources per guide</span></div>
-      <div><b>1</b><span>person, start to finish</span></div>
     </div>
   </div>
 </header>
@@ -87,6 +89,23 @@ const html = `<!doctype html>
     <span><i style="background:#0E1013"></i>More on the way</span>
   </div>
 </div>
+
+<section class="showcase" id="showcase" aria-label="What each app does">
+  <div class="showcase-pin">
+    <div class="showcase-bg"></div>
+    <div class="showcase-in">
+      <div class="showcase-copy">
+        <span class="n" data-sc-n>01 &mdash; ${apps.length.toString().padStart(2,'0')}</span>
+        <h3 data-sc-name>${esc(apps[0].name)}</h3>
+        <p data-sc-line>${esc(apps[0].description || apps[0].tagline)}</p>
+        <div class="showcase-dots">${apps.map((_, i) => `<i${i === 0 ? ' class="on"' : ''}></i>`).join('')}</div>
+      </div>
+      <div class="showcase-phone">
+        ${apps.map((a, i) => `<img src="/v3/showcase/${SHOTS[a.slug]}.jpg" alt="${esc(a.name)} screen"${i === 0 ? ' class="on"' : ''} loading="lazy">`).join('')}
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="sec" id="apps">
   <div class="wrap">
@@ -99,8 +118,8 @@ const html = `<!doctype html>
 <section class="sec" id="guides">
   <div class="wrap">
     <div class="sec-head"><h2>Answers, not filler</h2>
-      <p>${articles.length} guides, ${sources.size} sources cited, every one dated. Written because the
-         existing answers were thin, not to fill a content calendar.</p></div>
+      <p>Written because the answer I wanted did not exist yet, or existed badly.
+         Every one dated, every claim sourced.</p></div>
     <div class="gchips rv">
       ${articles.slice(0, 8).map((a) => {
         const app = apps.find((x) => x.slug === a.app);
@@ -158,6 +177,9 @@ const html = `<!doctype html>
   </div>
 </footer>
 
+<script>window.__APPS=${JSON.stringify(apps.map((a) => ({
+  name: a.name, line: a.description || a.tagline, accent: a.accent,
+})))}</script>
 <script src="/v3/motion.js" defer></script>
 </body></html>`;
 
@@ -165,5 +187,9 @@ await mkdir(OUT, { recursive: true });
 await writeFile(join(OUT, 'index.html'), html);
 for (const f of ['styles.css', 'fonts.css', 'motion.js']) {
   await copyFile(join(ROOT, 'src/design-v3', f), join(OUT, f));
+}
+await mkdir(join(OUT, 'showcase'), { recursive: true });
+for (const k of ['jupiter', 'bo', 'bali', 'hold']) {
+  await copyFile(join(ROOT, 'src/assets/showcase', `${k}.jpg`), join(OUT, 'showcase', `${k}.jpg`));
 }
 console.log(`dist/v3/index.html  ${(html.length / 1024).toFixed(1)} KB`);
