@@ -826,11 +826,11 @@ export const articles = [
       ['Is tipping expected?', 'Not obligatory, and it is genuinely appreciated rather than resented. Rounding up, or 5 to 10% where no service charge has been added, is normal. If the bill already carries a service charge you have effectively tipped.'],
     ],
     app: 'bali-secret',
-    title: 'How Much Does a Week in Bali Cost? 2026 Budget Breakdown',
+    title: 'How Much Does a Week in Bali Cost? 2027 Budget Breakdown',
     description:
       'A week in Bali costs roughly $350–$550 budget, $700–$1,400 mid-range, and $2,500+ luxury, excluding flights. Daily spend and category-by-category breakdown.',
     published: '2026-09-22',
-    updated: '2026-10-05',
+    updated: '2026-11-20',
     answer:
       'Excluding international flights, a week in Bali costs roughly $350–$550 per person for budget travel, $700–$1,400 mid-range, and $2,500–$6,000+ for luxury.',
     blocks: [
@@ -2238,7 +2238,7 @@ export const articles = [
     title: 'Bali Visa Requirements: What You Need Before You Fly',
     description:
       'Most visitors get a 30-day visa on arrival, extendable once. Passport validity, onward travel, the declaration form and the levy — the full checklist.',
-    published: '2026-09-22', updated: '2026-10-05',
+    published: '2026-09-22', updated: '2026-11-20',
     answer:
       'Most nationalities get a 30-day Visa on Arrival, extendable once for another 30 days. You need a passport valid at least six months from arrival, proof of onward travel, the completed All Indonesia declaration form, and the separate IDR 150,000 tourist levy.',
     blocks: [
@@ -2246,7 +2246,7 @@ export const articles = [
       ['h2', 'The entry checklist'],
       ['ol', [
         '<strong>Passport valid for at least six months</strong> from your arrival date. Not from departure — from arrival. This is the most common refusal reason.',
-        '<strong>Visa on Arrival</strong> — 30 days for most nationalities, IDR 500,000, purchasable on arrival or in advance as an e-VOA.',
+        '<strong>Visa on Arrival</strong> — 30 days for most nationalities, IDR&nbsp;500,000, purchasable on arrival or in advance as an e-VOA. <strong>Check this before you pay:</strong> in August 2026 the Directorate General of Immigration announced a two-tier fee — IDR&nbsp;750,000 for the e-VOA and IDR&nbsp;1,000,000 bought on arrival. We have found no confirmation it has taken effect, so treat IDR&nbsp;500,000 as the current figure and the higher tiers as a possibility to verify on the official portal before travelling.',
         '<strong>Proof of onward or return travel.</strong> Checked at your departure airport as often as on arrival.',
         '<strong>All Indonesia declaration form</strong> — the customs declaration, completed online before you fly or on arrival.',
         '<strong>Tourist levy</strong> — IDR 150,000 (about $9.30) per person, separate from the visa.',
