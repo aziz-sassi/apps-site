@@ -16,7 +16,7 @@ export const articles = [
       ['Does the craving get worse if I ignore it?', 'No. A craving rises, peaks and falls in 10 to 15 minutes whether or not you act on it. Smoking during one feels like it ended it, but it was ending anyway.'],
     ],
     app: 'hold',
-    title: 'How Long Do Nicotine Cravings Last?',
+    title: 'How Long Do Cravings Last After Quitting Smoking?',
     description:
       'A single nicotine craving passes in 10 to 15 minutes. Cravings peak around day 3 and fade over 3 to 4 weeks. Here is the full timeline and what actually helps.',
     published: '2026-09-22',
@@ -826,7 +826,7 @@ export const articles = [
       ['Is tipping expected?', 'Not obligatory, and it is genuinely appreciated rather than resented. Rounding up, or 5 to 10% where no service charge has been added, is normal. If the bill already carries a service charge you have effectively tipped.'],
     ],
     app: 'bali-secret',
-    title: 'How Much Does a Trip to Bali Cost? 2026 Budget Breakdown',
+    title: 'How Much Does a Week in Bali Cost? 2026 Budget Breakdown',
     description:
       'A week in Bali costs roughly $350–$550 budget, $700–$1,400 mid-range, and $2,500+ luxury, excluding flights. Daily spend and category-by-category breakdown.',
     published: '2026-09-22',
@@ -1183,7 +1183,7 @@ export const articles = [
       ['Does my dog pull because he is trying to be dominant?', 'No. The dominance framing has been abandoned by behaviour professionals for walking problems. Pulling is maintained by reinforcement — it moves the dog towards what it wants — not by a bid for status.'],
     ],
     app: 'jupiter-walkies',
-    title: 'Why Does My Dog Pull on the Leash? And How to Stop It',
+    title: 'Why Does My Dog Pull on the Lead or Leash? How to Stop It',
     description:
       'Dogs pull because it works — pulling moves them forward. The fix is making it stop working, consistently. The method, the equipment, and why week one gets worse.',
     published: '2026-09-22', updated: '2026-09-29',
@@ -2235,7 +2235,7 @@ export const articles = [
       ['What happens if I overstay?', 'IDR 1,000,000 per day, from day one. There is no grace period in Indonesian immigration law — one day late is one day of overstay. Past 60 days it escalates to detention, deportation and a blacklist entry.'],
     ],
     app: 'bali-secret',
-    title: 'Bali Visa on Arrival: What You Need Before You Fly',
+    title: 'Bali Visa Requirements: What You Need Before You Fly',
     description:
       'Most visitors get a 30-day visa on arrival, extendable once. Passport validity, onward travel, the declaration form and the levy — the full checklist.',
     published: '2026-09-22', updated: '2026-10-05',
