@@ -1,0 +1,180 @@
+/* ===========================================================================
+   EDITORIAL POP — design v3 for appsbysass.com
+   Type: Clash Display + Satoshi (Fontshare). Motion: hand-written, no library.
+   Every animation is CSS or a few lines of rAF, so the whole design layer is
+   kilobytes rather than a framework — this page's ranking depends on speed.
+   =========================================================================== */
+:root{
+  --paper:#FBFAF7;
+  --ink:#0E1013;
+  --ink-soft:#575C63;
+  --line:#E6E2DA;
+  --jupiter:#FF6B35;
+  --bo:#12B76A;
+  --bali:#00A6B8;
+  --hold:#5B46F0;
+  --radius:26px;
+  --shadow:0 2px 0 var(--ink);
+  --maxw:1180px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'Satoshi',system-ui,sans-serif;font-weight:500;
+  font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.wrap{width:min(var(--maxw),100% - 44px);margin-inline:auto}
+h1,h2,h3{font-family:'Clash Display','Satoshi',sans-serif;font-weight:700;line-height:.95;letter-spacing:-.025em}
+
+/* ---------- 1. animated mesh background (Originkit "Cloud Sky" idea) --------
+   Three blurred radial blobs on slow independent loops. GPU-cheap: it animates
+   transform only, never a filter or a gradient stop. */
+.mesh{position:fixed;inset:-25%;z-index:-1;pointer-events:none;filter:blur(86px);opacity:.5}
+.mesh i{position:absolute;display:block;border-radius:50%;mix-blend-mode:multiply}
+.mesh i:nth-child(1){width:46vw;height:46vw;left:4%;top:2%;background:#FFD9C7;animation:drift1 24s var(--ease) infinite alternate}
+.mesh i:nth-child(2){width:40vw;height:40vw;right:2%;top:12%;background:#C7F2E4;animation:drift2 30s var(--ease) infinite alternate}
+.mesh i:nth-child(3){width:38vw;height:38vw;left:34%;bottom:2%;background:#D9D2FF;animation:drift3 27s var(--ease) infinite alternate}
+@keyframes drift1{to{transform:translate3d(14vw,10vh,0) scale(1.18)}}
+@keyframes drift2{to{transform:translate3d(-12vw,14vh,0) scale(.86)}}
+@keyframes drift3{to{transform:translate3d(8vw,-12vh,0) scale(1.12)}}
+
+/* ---------- 2. scroll progress ---------- */
+.prog{position:fixed;left:0;top:0;height:3px;z-index:60;
+  background:linear-gradient(90deg,var(--jupiter),var(--bo),var(--bali),var(--hold));
+  width:var(--p,0%);transition:width .08s linear}
+
+/* ---------- 3. nav ---------- */
+.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+  background:color-mix(in srgb,var(--paper) 78%,transparent);
+  border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Clash Display',sans-serif;
+  font-weight:700;font-size:19px;letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
+.brand span{width:13px;height:13px;border-radius:50%;background:var(--hold);display:block}
+.nav-links{display:flex;gap:26px;align-items:center}
+.nav-links a{position:relative;text-decoration:none;color:var(--ink);font-size:14.5px;font-weight:700;padding:4px 0}
+/* animated underline, drawn from the centre out */
+.nav-links a::after{content:'';position:absolute;left:50%;bottom:0;height:2px;width:0;
+  background:var(--ink);transform:translateX(-50%);transition:width .3s var(--ease)}
+.nav-links a:hover::after{width:100%}
+@media (max-width:860px){.nav-links{display:none}}
+
+/* ---------- 4. hero ---------- */
+.hero{padding:clamp(56px,9vw,112px) 0 clamp(40px,6vw,72px);text-align:center}
+.kicker{display:inline-flex;align-items:center;gap:9px;border:1.5px solid var(--ink);
+  border-radius:999px;padding:7px 15px;font-size:12px;font-weight:900;letter-spacing:.14em;
+  text-transform:uppercase;margin-bottom:26px;background:var(--paper)}
+.kicker b{width:7px;height:7px;border-radius:50%;background:var(--bo);display:block;
+  animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.72)}}
+h1.mega{
+  font-size:clamp(50px,9.2vw,118px);
+  /* Clash Display is already tight; -.04em on top of that eats the word space
+     and "Apps that do" reads as one word. Pull the tracking back and buy the
+     spaces back explicitly. */
+  letter-spacing:-.025em;
+  word-spacing:.08em;
+  margin-bottom:24px;
+}
+h1.mega .hl{position:relative;white-space:nowrap}
+/* A highlight sits BEHIND the lower third of the glyphs. At bottom:.1em it
+   cleared the baseline entirely and read as an underline. */
+h1.mega .hl{isolation:isolate}
+h1.mega .hl::after{content:'';position:absolute;left:-2%;right:-2%;bottom:.14em;height:.22em;
+  background:var(--jupiter);z-index:-1;border-radius:3px;
+  transform:scaleX(0);transform-origin:left;animation:swipe .85s .75s var(--ease) forwards}
+@keyframes swipe{to{transform:scaleX(1)}}
+.lede{font-size:clamp(16.5px,2vw,20px);color:var(--ink-soft);max-width:620px;margin:0 auto 32px}
+.cta-row{display:flex;gap:13px;justify-content:center;flex-wrap:wrap}
+
+/* ---------- 5. magnetic button (Originkit "Venom Button" idea) ---------- */
+.btn{position:relative;display:inline-flex;align-items:center;gap:9px;
+  font-family:'Satoshi',sans-serif;font-weight:900;font-size:14.5px;letter-spacing:.02em;
+  padding:15px 26px;border-radius:999px;text-decoration:none;cursor:pointer;
+  border:2px solid var(--ink);background:var(--ink);color:var(--paper);
+  overflow:hidden;will-change:transform;transition:transform .18s var(--ease)}
+.btn.ghost{background:transparent;color:var(--ink)}
+/* the sheen sweeps on hover only — it is a transform, not a repaint */
+.btn::before{content:'';position:absolute;inset:0;transform:translateX(-110%);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent)}
+.btn:hover::before{transform:translateX(110%);transition:transform .6s var(--ease)}
+.btn:active{transform:scale(.97)}
+.btn:focus-visible{outline:3px solid var(--hold);outline-offset:3px}
+
+/* ---------- 6. trust strip ---------- */
+.trust{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-top:40px;
+  padding-top:26px;border-top:1px solid var(--line)}
+.trust div{text-align:center}
+.trust b{display:block;font-family:'Clash Display',sans-serif;font-size:30px;line-height:1}
+.trust span{font-size:11.5px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* ---------- 7. marquee rail ---------- */
+.rail{overflow:hidden;border-block:1px solid var(--line);padding:15px 0;margin:clamp(44px,7vw,80px) 0}
+.rail-in{display:flex;gap:46px;width:max-content;animation:slide 32s linear infinite}
+.rail-in span{display:inline-flex;align-items:center;gap:11px;font-family:'Clash Display',sans-serif;
+  font-size:21px;white-space:nowrap;color:var(--ink)}
+.rail-in i{width:9px;height:9px;border-radius:50%;display:block}
+@keyframes slide{to{transform:translateX(-50%)}}
+.rail:hover .rail-in{animation-play-state:paused}
+
+/* ---------- 8. section heads, sticky ---------- */
+.sec{padding:clamp(48px,7vw,96px) 0}
+/* NOT sticky. A pinned head over a short section stays put while the next
+   section scrolls underneath it, and the headline ends up struck through by
+   its own gradient. Static heads, with the rhythm carried by spacing. */
+.sec-head{padding:0 0 26px}
+.sec-head h2{font-size:clamp(32px,5.2vw,62px);word-spacing:.06em}
+.sec-head p{color:var(--ink-soft);margin-top:9px;max-width:560px}
+
+/* ---------- 9. app cards ---------- */
+.apps{display:grid;gap:18px}
+.app{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:center;
+  border:2px solid var(--ink);border-radius:var(--radius);padding:34px;overflow:hidden;
+  background:var(--tint);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.app:hover{transform:translateY(-4px);box-shadow:0 14px 0 -4px var(--ink)}
+.app h3{font-size:clamp(28px,3.6vw,44px);margin-bottom:9px}
+.app .tag{color:var(--ink-soft);margin-bottom:18px}
+.app .meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.chip{font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+  border:1.5px solid var(--ink);border-radius:999px;padding:5px 11px;background:var(--paper)}
+.app-shot{display:flex;gap:11px;justify-content:center}
+.app-shot img{width:30%;max-width:132px;border-radius:15px;border:2px solid var(--ink);display:block}
+.app-ico{width:52px;height:52px;border-radius:14px;border:2px solid var(--ink);margin-bottom:16px;display:block}
+@media (max-width:820px){.app{grid-template-columns:1fr;padding:24px}}
+
+/* ---------- 10. reveal on scroll ---------- */
+.rv{opacity:0;transform:translateY(26px)}
+.rv.in{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.d1{transition-delay:.06s}.rv.d2{transition-delay:.12s}.rv.d3{transition-delay:.18s}
+
+/* ---------- 11. footer ---------- */
+.foot{border-top:2px solid var(--ink);margin-top:clamp(50px,8vw,96px);padding:48px 0 40px;text-align:center}
+.foot h2{font-size:clamp(30px,5vw,56px);word-spacing:.06em;margin-bottom:16px}
+.foot .small{color:var(--ink-soft);font-size:14px;margin-top:26px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important}
+  .rv{opacity:1;transform:none}
+  h1.mega .hl::after{transform:scaleX(1)}
+  .mesh{display:none}
+}
+
+
+/* ---------- 12. fact list + guide chips (section depth) ---------- */
+.facts{display:grid;gap:0;border:2px solid var(--ink);border-radius:var(--radius);overflow:hidden;max-width:640px}
+.facts div{display:flex;justify-content:space-between;gap:18px;padding:15px 20px;
+  border-bottom:1px solid var(--line);background:var(--paper);flex-wrap:wrap}
+.facts div:last-child{border-bottom:0}
+.facts b{font-size:11.5px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft)}
+.facts span{font-weight:700}
+.facts a{color:var(--ink);text-underline-offset:3px}
+.gchips{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:24px}
+.gchip{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--ink);border-radius:999px;
+  padding:8px 14px;font-size:13.5px;font-weight:700;text-decoration:none;color:var(--ink);background:var(--paper);
+  transition:transform .2s var(--ease),background .2s var(--ease)}
+.gchip:hover{transform:translateY(-2px);background:#fff}
+.gchip i{width:8px;height:8px;border-radius:50%;display:block}

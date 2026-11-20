@@ -1,0 +1,5 @@
+/* Fontshare — verified live on api.fontshare.com.
+   Clash Display for headlines (characterful, tight, holds at 120px+),
+   Satoshi for everything else (a workhorse that stays legible at 15px).
+   Both free for commercial use under the Fontshare licence. */
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=satoshi@400,500,700,900&display=swap');
