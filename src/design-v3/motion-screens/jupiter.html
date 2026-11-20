@@ -1,0 +1,29 @@
+<!-- Jupiter Walkies — live walk, drawn in code.
+     An SVG route that draws itself while the stats count up and the pin walks
+     the path. ~4 KB, vector-crisp at any size, and it costs no video decode.
+     Every value is driven by CSS keyframes on a single shared timeline, so it
+     loops identically forever and pauses under prefers-reduced-motion. -->
+<div class="ms ms-jupiter" role="img" aria-label="A dog walk being tracked: the route draws itself while distance, time and pace count up">
+  <div class="ms-status"><span>9:41</span><span class="ms-sig"></span></div>
+  <svg class="ms-map" viewBox="0 0 240 518" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <rect width="240" height="518" fill="#E8F0E6"/>
+    <g stroke="#D3E0CF" stroke-width="7" fill="none">
+      <path d="M-10 96 H250 M-10 232 H250 M-10 372 H250 M55 -10 V528 M150 -10 V528"/>
+    </g>
+    <rect x="150" y="96" width="100" height="136" fill="#CFE3EF"/>
+    <g fill="#CBDCC6"><circle cx="30" cy="330" r="34"/><circle cx="200" cy="372" r="26"/></g>
+    <path class="ms-route" d="M44 440 C 44 360, 98 346, 104 282 C 110 212, 64 196, 70 138 C 76 88, 130 78, 164 96"
+          stroke="#13A05C" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+    <circle class="ms-dot" r="7" fill="#13A05C" stroke="#fff" stroke-width="3"/>
+  </svg>
+  <div class="ms-card">
+    <span class="ms-rec"><i></i>RECORDING</span>
+    <div class="ms-km"><b class="ms-count" data-to="1.23">0.00</b><span>km</span></div>
+    <div class="ms-stats">
+      <div><b class="ms-count" data-to="12:34" data-kind="time">00:00</b><span>TIME</span></div>
+      <div><b class="ms-count" data-to="10:13" data-kind="time">00:00</b><span>PACE</span></div>
+      <div><b class="ms-count" data-to="128">0</b><span>BPM</span></div>
+    </div>
+    <span class="ms-btn">Finish</span>
+  </div>
+</div>
