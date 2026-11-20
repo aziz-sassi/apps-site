@@ -7,6 +7,8 @@ import { mkdir, writeFile, readFile, readdir, rm, cp } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { site, apps, otherWork, appBySlug } from './src/content.mjs';
+import { LOCALES, DEFAULT_LOCALE, localePath, alternates, t } from './src/i18n.mjs';
+import { translations } from './src/translations/index.mjs';
 import { articles } from './src/articles.mjs';
 import { pages } from './src/pages.mjs';
 import { plans } from './src/plans.mjs';
@@ -107,16 +109,21 @@ const storeLink = (app, label = 'Get it on the App Store', cls = 'btn') =>
 // ---------------------------------------------------------------------------
 // Document shell
 // ---------------------------------------------------------------------------
-function layout({ title, description, path, app, ogImage, body, jsonld = [], noNav = false, noindex = false, current = '' }) {
-  const canonical = abs(path);
+function layout({ title, description, path, app, ogImage, body, jsonld = [], noNav = false, noindex = false, current = '', lang = DEFAULT_LOCALE, have = new Set() }) {
+  // `path` is always the English (canonical-shape) path; the locale decides the URL
+  const canonical = abs(localePath(path, lang));
+  const hrefLangs = alternates(path, abs, have)
+    .map((a) => `<link rel="alternate" hreflang="${a.hreflang}" href="${esc(a.href)}">`)
+    .join('\n');
   return `<!doctype html>
-<html lang="en">
+<html lang="${lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${esc(canonical)}">
+${hrefLangs}
 ${NOINDEX ? '<meta name="robots" content="noindex,nofollow">' : noindex ? '<meta name="robots" content="noindex,follow">' : ''}
 <meta name="theme-color" content="#0F3D2E">
 <meta property="og:type" content="website">
@@ -741,16 +748,18 @@ function endPoster(app, tag = 'h2', { title = app.tagline, list = app.features.s
     </div>`;
 }
 
-function articlePage(a) {
+function articlePage(a, lang = DEFAULT_LOCALE) {
   const app = appBySlug[a.app];
   const related = articlesFor(a.app).filter((x) => x.slug !== a.slug);
   const toc = headings(a.blocks);
   const feature = featureFor(a, app);
   const tocList = `<ol class="toc-list">${toc.map((h) =>
     `<li><a href="#${h.id}">${plain(h.text)}</a></li>`).join('')}${
-    a.faqs?.length ? '<li><a href="#common-questions">Common questions</a></li>' : ''}</ol>`;
+    a.faqs?.length ? `<li><a href="#common-questions">${t(lang, 'commonQuestions')}</a></li>` : ''}</ol>`;
   const body = `
 <div class="read-progress" aria-hidden="true"><i></i></div>
+${lang !== DEFAULT_LOCALE && t(lang, 'translatedNote')
+  ? `<p class="xlate-note"><span>${esc(t(lang, 'translatedNote'))}</span></p>` : ''}
 
 <header class="g-hero panel">
   <div class="wrap">
@@ -763,10 +772,10 @@ function articlePage(a) {
         <p class="byline">
           <span>By&nbsp;<a href="${FLAT ? 'about.html' : '/about/'}">${esc(site.author)}</a></span>
           <span>${a.updated && a.updated !== a.published
-            ? `Updated&nbsp;<time datetime="${a.updated}">${niceDate(a.updated)}</time>`
+            ? `${t(lang, 'updated')}&nbsp;<time datetime="${a.updated}">${niceDate(a.updated)}</time>`
             : `<time datetime="${a.published}">${niceDate(a.published)}</time>`}</span>
-          <span>${readMins(a)} min read</span>
-          ${a.sources?.length ? `<span>${a.sources.length} sources</span>` : ''}
+          <span>${readMins(a)} ${t(lang, 'minRead')}</span>
+          ${a.sources?.length ? `<span>${a.sources.length} ${t(lang, 'sources')}</span>` : ''}
         </p>
       </div>
       <div class="g-hero-shot" aria-hidden="true">
@@ -795,7 +804,7 @@ function articlePage(a) {
     </article>
 
     ${a.faqs?.length ? `<section class="art-faq" id="common-questions">
-      <h2>Common questions</h2>
+      <h2>${t(lang, 'commonQuestions')}</h2>
       <div class="faq">
         ${a.faqs.map(([q, ans], i) => `<details class="q"${i === 0 ? ' open' : ''}><summary>${esc(q)}</summary><div class="a"><p>${ans}</p></div></details>`).join('')}
       </div>
@@ -838,7 +847,7 @@ ${related.length ? `<section style="padding-top:0">
   <div class="wrap">
     <div class="sec-head reveal"><p class="eyebrow">More from ${esc(app.name)}</p><h2 class="poster">Keep <em>reading</em></h2></div>
     <div class="cards" style="${panelVars(app)}">
-      ${related.map((r, i) => `<a class="post compact reveal d${(i % 3) + 1}" href="${hArticle(r.app, r.slug)}"><h3>${esc(r.title)}</h3><p class="rd">${readMins(r)} min read</p></a>`).join('')}
+      ${related.map((r, i) => `<a class="post compact reveal d${(i % 3) + 1}" href="${hArticle(r.app, r.slug)}"><h3>${esc(r.title)}</h3><p class="rd">${readMins(r)} ${t(lang, 'minRead')}</p></a>`).join('')}
     </div>
   </div>
 </section>` : ''}
@@ -853,6 +862,8 @@ ${related.length ? `<section style="padding-top:0">
     // each guide gets its own card; sharing the app's image made 9 HOLD guides
     // look identical in a link preview
     ogImage: a.slug,
+    lang,
+    have: new Set(Object.keys(translations).filter((lc) => translations[lc][a.slug])),
     body,
     jsonld: [
       {
@@ -1085,6 +1096,18 @@ const written = [];
 written.push(await emit('/', homePage()));
 for (const app of apps) written.push(await emit(`/${app.slug}`, appPage(app)));
 for (const a of articles) written.push(await emit(`/${a.app}/${a.slug}`, articlePage(a)));
+// Localized guides. A locale only gets a URL once its translation exists, so
+// no page is ever published with a translated title and an English body.
+for (const loc of LOCALES) {
+  if (loc.code === DEFAULT_LOCALE) continue;
+  const set = translations[loc.code] || {};
+  for (const a of articles) {
+    const tr = set[a.slug];
+    if (!tr) continue;
+    const merged = { ...a, ...tr };
+    written.push(await emit(localePath(`/${a.app}/${a.slug}`, loc.code), articlePage(merged, loc.code)));
+  }
+}
 for (const pg of pages) written.push(await emit(`/${pg.slug}`, staticPage(pg)));
 // Not pushed to `written`: plan pages and the 404 stay out of the sitemap.
 for (const p of plans) await emit(`/${p.app}/${p.slug}`, planPage(p));

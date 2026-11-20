@@ -853,3 +853,8 @@ body:has(.sheet[data-on]) .dl-bar,body:has(.consent:not([hidden])) .dl-bar{displ
   .plan-hero-bg img,.pday-photo img{transform:none}
   .js .reveal{opacity:1;transform:none;transition:none}
 }
+
+/* A translated guide says so, and says its sources are in English. */
+.xlate-note{max-width:var(--readw,720px);margin:0 auto;padding:10px 18px 0}
+.xlate-note span{display:inline-block;font-size:12.5px;line-height:1.5;opacity:.68;
+  border-left:3px solid var(--mint,#3DDC97);padding-left:10px}
