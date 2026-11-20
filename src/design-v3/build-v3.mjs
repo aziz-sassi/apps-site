@@ -6,6 +6,11 @@ import { fileURLToPath } from 'node:url';
 import { site, apps, otherWork } from '../content.mjs';
 import { articles } from '../articles.mjs';
 const store = JSON.parse(await readFile(new URL('../store-data.json', import.meta.url), 'utf8'));
+// the code-drawn app screens, inlined so there is no extra request per screen
+const screens = {};
+for (const k of ['jupiter', 'bo', 'bali', 'hold']) {
+  screens[k] = await readFile(new URL(`./motion-screens/${k}.html`, import.meta.url), 'utf8');
+}
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../..');
 const OUT = join(ROOT, 'dist/v3');
@@ -54,6 +59,7 @@ const html = `<!doctype html>
 <meta name="robots" content="noindex"><!-- preview only; never index a draft design -->
 <link rel="stylesheet" href="/v3/fonts.css">
 <link rel="stylesheet" href="/v3/styles.css">
+<link rel="stylesheet" href="/v3/motion-screens/screens.css">
 </head><body>
 
 <div class="mesh" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -101,7 +107,7 @@ const html = `<!doctype html>
         <div class="showcase-dots">${apps.map((_, i) => `<i${i === 0 ? ' class="on"' : ''}></i>`).join('')}</div>
       </div>
       <div class="showcase-phone">
-        ${apps.map((a, i) => `<img src="/v3/showcase/${SHOTS[a.slug]}.jpg" alt="${esc(a.name)} screen"${i === 0 ? ' class="on"' : ''} loading="lazy">`).join('')}
+        ${apps.map((a, i) => `<div class="ms-slot${i === 0 ? ' on' : ''}">${screens[SHOTS[a.slug]] || ''}</div>`).join('')}
       </div>
     </div>
   </div>
@@ -181,6 +187,7 @@ const html = `<!doctype html>
   name: a.name, line: a.description || a.tagline, accent: a.accent,
 })))}</script>
 <script src="/v3/motion.js" defer></script>
+<script src="/v3/motion-screens/screens.js" defer></script>
 </body></html>`;
 
 await mkdir(OUT, { recursive: true });
@@ -188,8 +195,8 @@ await writeFile(join(OUT, 'index.html'), html);
 for (const f of ['styles.css', 'fonts.css', 'motion.js']) {
   await copyFile(join(ROOT, 'src/design-v3', f), join(OUT, f));
 }
-await mkdir(join(OUT, 'showcase'), { recursive: true });
-for (const k of ['jupiter', 'bo', 'bali', 'hold']) {
-  await copyFile(join(ROOT, 'src/assets/showcase', `${k}.jpg`), join(OUT, 'showcase', `${k}.jpg`));
+await mkdir(join(OUT, 'motion-screens'), { recursive: true });
+for (const f of ['screens.css', 'screens.js']) {
+  await copyFile(join(ROOT, 'src/design-v3/motion-screens', f), join(OUT, 'motion-screens', f));
 }
 console.log(`dist/v3/index.html  ${(html.length / 1024).toFixed(1)} KB`);

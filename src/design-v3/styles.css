@@ -238,3 +238,9 @@ h1.mega .hl::after{content:'';position:absolute;left:-2%;right:-2%;bottom:.14em;
   .showcase-pin{position:static;height:auto;padding:54px 0}
   .showcase-phone img:first-of-type{opacity:1}
 }
+
+/* the code-drawn screens replace the <img> slides in the showcase phone */
+.showcase-phone{background:#0E1013}
+.ms-slot{position:absolute;inset:0;opacity:0;transition:opacity .45s var(--ease);pointer-events:none}
+.ms-slot.on{opacity:1}
+.showcase-phone .ms{font-size:14px}

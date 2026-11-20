@@ -44,3 +44,94 @@
 /* host frame for previewing a screen on its own */
 .ms-frame{position:relative;width:260px;aspect-ratio:240/518;border-radius:30px;
   overflow:hidden;border:3px solid #0E1013;box-shadow:0 18px 44px rgba(0,0,0,.22)}
+
+/* =================== shared bits used by more than one screen ============ */
+.ms-on-dark{color:#fff}
+.ms-on-dark .ms-sig{background:#fff}
+/* .ms-status is absolute, so the first flow element has to clear it or the
+   title prints on top of the clock. */
+.ms-head{position:relative;z-index:2;padding:34px 18px 0;font-size:19px;font-weight:900;letter-spacing:-.02em}
+.ms-btn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,.4);color:#fff}
+
+/* =================== HOLD — guided breathing ============================= */
+/* 9s loop: 4s inhale, 1s hold, 4s exhale. The orb and the label share it. */
+.ms-hold{background:#241C54;color:#fff}
+.ms-sky{position:absolute;inset:0;overflow:hidden}
+.ms-sky i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.55;
+  animation:msTwinkle 4s ease-in-out infinite}
+.ms-sky i:nth-child(1){left:14%;top:16%;animation-delay:0s}
+.ms-sky i:nth-child(2){left:76%;top:12%;animation-delay:.7s}
+.ms-sky i:nth-child(3){left:32%;top:30%;animation-delay:1.4s}
+.ms-sky i:nth-child(4){left:86%;top:38%;animation-delay:2.1s}
+.ms-sky i:nth-child(5){left:8%;top:46%;animation-delay:2.8s}
+.ms-sky i:nth-child(6){left:60%;top:22%;animation-delay:3.5s}
+@keyframes msTwinkle{0%,100%{opacity:.2}50%{opacity:.85}}
+.ms-centre{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:16px;text-align:center;padding:0 24px}
+.ms-timer{display:block}
+.ms-timer b{display:block;font-size:17px;font-weight:900;font-variant-numeric:tabular-nums}
+.ms-timer em{font-style:normal;font-size:10px;opacity:.6}
+.ms-orb{width:110px;height:110px;border-radius:50%;
+  background:radial-gradient(circle at 38% 34%,#A79BFF,#5B46F0 62%,#3A2BB8);
+  box-shadow:0 0 54px rgba(140,120,255,.6);animation:msBreathe 9s ease-in-out infinite}
+@keyframes msBreathe{
+  0%{transform:scale(.72)} 44%{transform:scale(1.12)}
+  56%{transform:scale(1.12)} 100%{transform:scale(.72)}}
+.ms-breath{font-size:21px;font-weight:900;animation:msLabel 9s steps(1) infinite}
+@keyframes msLabel{0%,43%{content:'in'}44%,100%{opacity:1}}
+.ms-sub{font-size:11px;opacity:.72;font-style:italic;max-width:170px;line-height:1.45}
+.ms-hold .ms-btn{position:absolute;left:18px;right:18px;bottom:16px}
+
+/* =================== Bo — the follow-up question ========================= */
+.ms-bo{background:#F7F5EF}
+.ms-ring{position:relative;width:150px;margin:10px auto 4px}
+.ms-ring svg{width:100%;display:block}
+.ms-arc{stroke-dasharray:314;stroke-dashoffset:314;animation:msArc 9s ease-out infinite}
+@keyframes msArc{0%{stroke-dashoffset:314}50%{stroke-dashoffset:155}100%{stroke-dashoffset:155}}
+.ms-ring-n{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ms-ring-n b{font-size:27px;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.ms-ring-n em{font-style:normal;font-size:9.5px;opacity:.55;font-weight:700}
+/* the question is the point of the app, so it lands late and stays */
+.ms-ask{margin:8px 14px 10px;background:#fff;border:1.5px solid #12B76A;border-radius:14px;
+  padding:10px 13px;opacity:0;transform:translateY(8px);animation:msAsk 9s ease-out infinite}
+@keyframes msAsk{0%,22%{opacity:0;transform:translateY(8px)}32%,100%{opacity:1;transform:none}}
+.ms-ask b{display:block;font-size:13.5px;font-weight:900}
+.ms-ask span{font-size:11px;opacity:.6}
+.ms-macros{display:flex;gap:7px;margin:0 14px 10px}
+.ms-macros div{flex:1;background:#fff;border-radius:11px;padding:8px;text-align:center}
+.ms-macros b{display:block;font-size:16px;font-weight:900;font-variant-numeric:tabular-nums}
+.ms-macros span{font-size:7.5px;font-weight:900;letter-spacing:.1em;opacity:.5}
+
+/* =================== The Bali Secret — a day filling in ================== */
+.ms-bali{background:#FFFDF6}
+.ms-budget{display:flex;align-items:baseline;gap:9px;padding:8px 18px 12px}
+.ms-budget b{font-size:28px;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.025em}
+.ms-budget em{font-style:normal;font-size:11px;font-weight:900;opacity:.5;margin-left:3px}
+.ms-idr{font-size:11.5px;font-weight:700;opacity:.6}
+.ms-plan{list-style:none;margin:0 14px;display:grid;gap:7px}
+.ms-plan li{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;
+  column-gap:9px;align-items:center;background:#fff;border-radius:12px;padding:9px 11px;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);
+  opacity:0;transform:translateY(12px);animation:msDrop 9s ease-out infinite;animation-delay:var(--d)}
+@keyframes msDrop{0%{opacity:0;transform:translateY(12px)}10%,96%{opacity:1;transform:none}100%{opacity:0}}
+.ms-plan i{grid-row:1/3;width:9px;height:9px;border-radius:50%;display:block}
+.ms-plan b{font-size:12.5px;font-weight:900}
+.ms-plan span{font-size:10px;opacity:.55}
+
+@media (prefers-reduced-motion:reduce){
+  .ms-orb{animation:none;transform:scale(1)}
+  .ms-arc{animation:none;stroke-dashoffset:155}
+  .ms-ask{animation:none;opacity:1;transform:none}
+  .ms-plan li{animation:none;opacity:1;transform:none}
+  .ms-sky i{animation:none}
+}
+
+/* Bo: the logged meals, so the lower half is not dead space */
+.ms-meals{list-style:none;margin:0 14px;display:grid;gap:6px}
+.ms-meals li{display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:9px;
+  background:#fff;border-radius:11px;padding:8px 10px;
+  opacity:0;animation:msDrop 9s ease-out infinite;animation-delay:var(--d)}
+.ms-meals i{width:26px;height:26px;border-radius:7px;display:block}
+.ms-meals b{font-size:11.5px;font-weight:900}
+.ms-meals span{font-size:9.5px;opacity:.5;display:block}
+.ms-meals em{font-style:normal;font-size:12px;font-weight:900;font-variant-numeric:tabular-nums}

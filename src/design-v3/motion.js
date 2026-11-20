@@ -74,7 +74,7 @@
   var lineEl = sec.querySelector('[data-sc-line]');
   var numEl = sec.querySelector('[data-sc-n]');
   var dots = [].slice.call(sec.querySelectorAll('.showcase-dots i'));
-  var imgs = [].slice.call(sec.querySelectorAll('.showcase-phone img'));
+  var imgs = [].slice.call(sec.querySelectorAll('.showcase-phone .ms-slot'));
   var cur = -1, queued = false;
 
   var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
