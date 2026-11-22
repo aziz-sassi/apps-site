@@ -12,6 +12,27 @@ const GA4 = Boolean(site.analytics?.ga4);
 
 export const pages = [
   {
+    slug: 'lensnote',
+    title: 'Lensnote',
+    description:
+      'Lensnote is a teleprompter for iPhone that sits right under your camera, follows your voice and edits the video for you. Coming soon: join the waitlist.',
+    blocks: [
+      ['p', '<strong>Look at the lens, not your notes.</strong> Lensnote puts your script right under the iPhone camera, follows your voice word by word, and cuts the pauses and retakes when you stop. Captions, B-roll and graphics are one tap away.'],
+      ['p', 'It is in App Review now. Join the waitlist and you will get an email the day it is on the App Store, plus the occasional behind-the-scenes note from building it.'],
+      ['waitlist', { app: 'lensnote', button: 'Join the waitlist' }],
+      ['h2', 'What it does'],
+      ['ul', [
+        '<strong>Script under the lens.</strong> Your words sit by the camera, so your eyes stay on the viewer.',
+        '<strong>Follows your voice.</strong> It scrolls as you speak, waits when you pause, and catches up if you skip a line.',
+        '<strong>Edits for you.</strong> When you stop, it cuts pauses and retakes and adds clean captions.',
+        '<strong>Templates.</strong> Watch a finished example, then make yours in that style.',
+      ]],
+      ['h2', 'Who it is for'],
+      ['p', 'Anyone who freezes on camera: creators, founders, coaches, teachers. If you have ever filmed the same sentence ten times, it is built for you.'],
+    ],
+  },
+
+  {
     slug: 'about',
     title: 'About',
     description:
@@ -61,7 +82,7 @@ export const pages = [
     blocks: [
       ['p', 'This page covers <strong>this website</strong>. The apps have their own privacy policies on their App Store listings, which is where Apple requires them.'],
       ['h2', 'The short version'],
-      ['p', 'This site is a set of static pages. There are no accounts, no logins, no comment forms, and nothing for you to fill in. It does not sell or share personal information, and it carries no advertising.'],
+      ['p', 'This site is a set of static pages. There are no accounts, no logins and no comment forms. The only thing you can fill in is the optional app waitlist, described below. It does not sell or share personal information, and it carries no advertising.'],
       ['h2', 'What is collected'],
       ['ul', [
         '<strong>Server logs.</strong> The site is hosted on Vercel, which records standard request data — IP address, browser, page requested — as any web server does. This is operational and is handled under Vercel’s own privacy policy.',
@@ -74,10 +95,17 @@ export const pages = [
       ] : [
         ['p', 'That is also why this site shows no cookie banner: there is nothing to consent to. If Google Analytics or anything cookie-based is ever added, this page will say so <em>before</em> it is switched on, not after.'],
       ]),
+      ['h2', 'App waitlist'],
+      ['p', '<span id="waitlist"></span>If you join a waitlist (for example on the <a href="/lensnote/">Lensnote page</a>), I store your email address, which app it is for, your browser language, your country as reported by the host, and the date. It is used only to email you when that app launches and to send occasional news about it. Every email has an unsubscribe link.'],
+      ['ul', [
+        'It is stored in a private Vercel Blob store, readable only with my access key, and never sold or shared.',
+        'When I send emails, the list may be copied to an email-sending service for that purpose only.',
+        'To be removed or to get a copy of what is stored, email me from the <a href="/contact/">contact page</a> and I will do it.',
+      ]],
       ['h2', 'What is not collected'],
       ['ul', [
         'No account or profile data — there are no accounts.',
-        'No email addresses, unless you choose to email me, in which case I have your email because you sent it.',
+        'No email addresses, unless you join a waitlist or email me yourself.',
         'No advertising or cross-site tracking networks.',
         GA4
           ? 'No cookies unless you allow analytics. Decline, or simply ignore the banner, and the site sets none at all.'

@@ -858,3 +858,28 @@ body:has(.sheet[data-on]) .dl-bar,body:has(.consent:not([hidden])) .dl-bar{displ
 .xlate-note{max-width:var(--readw,720px);margin:0 auto;padding:10px 18px 0}
 .xlate-note span{display:inline-block;font-size:12.5px;line-height:1.5;opacity:.68;
   border-left:3px solid var(--mint,#3DDC97);padding-left:10px}
+
+/* Waitlist form + homepage "coming soon" card */
+.waitlist{margin:28px 0 8px;padding:22px;border-radius:24px;background:#121019;color:#F6F3FF;border:1px solid rgba(255,255,255,.08)}
+.waitlist a{color:#FFD23F}
+.waitlist .wl-row{display:flex;gap:10px;flex-wrap:wrap}
+.waitlist .wl-email{flex:1 1 240px;min-width:0;font:inherit;font-size:17px;padding:14px 16px;border-radius:14px;border:1.5px solid rgba(0,0,0,.18);background:#fff;color:#111}
+.waitlist .wl-email:focus{outline:3px solid rgba(255,210,63,.6);border-color:#111}
+.waitlist .btn{flex:0 0 auto}
+.waitlist .wl-consent{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:14px;line-height:1.4;color:rgba(246,243,255,.85)}
+.waitlist .wl-consent input{margin-top:3px;width:18px;height:18px;flex:none}
+.waitlist .wl-msg{margin:12px 0 0;font-size:15px;min-height:1.2em}
+.waitlist .wl-msg.ok{color:#7CF0A6;font-weight:700}
+.waitlist .wl-msg.err{color:#FF8A80}
+.waitlist.done .wl-row,.waitlist.done .wl-consent{display:none}
+.waitlist .wl-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.coming-soon{padding-top:8px;padding-bottom:0}
+.cs-card{display:flex;align-items:center;gap:18px;padding:18px 22px;border-radius:24px;background:#121019;color:#F6F3FF;text-decoration:none;box-shadow:0 12px 30px rgba(0,0,0,.15)}
+.cs-card img{border-radius:18px;flex:none}
+.cs-copy{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
+.cs-card .eyebrow{color:#FFD23F;margin:0}
+.cs-title{font-family:var(--display);font-weight:900;font-size:22px;line-height:1.15}
+.cs-sub{font-size:15px;opacity:.8}
+.cs-card .ap-go{flex:none}
+@media (max-width:560px){.cs-card{align-items:flex-start}.cs-title{font-size:19px}}

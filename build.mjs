@@ -297,6 +297,24 @@ function inlineCta(app, feature = app.features[0]) {
   </aside>`;
 }
 
+// Email waitlist (POST /api/waitlist → private Vercel Blob store). Works without JS too (plain form post).
+function waitlistForm({ app = 'lensnote', button = 'Join the waitlist', note = '' }) {
+  const id = `wl-${esc(app)}`;
+  return `<form class="waitlist" id="${id}" action="/api/waitlist" method="post" novalidate>
+  <input type="hidden" name="app" value="${esc(app)}">
+  <label class="wl-hp" aria-hidden="true">Company <input name="company" tabindex="-1" autocomplete="off"></label>
+  <div class="wl-row">
+    <label class="sr-only" for="${id}-email">Email address</label>
+    <input id="${id}-email" class="wl-email" type="email" name="email" required autocomplete="email" inputmode="email" placeholder="you@example.com">
+    <button class="btn" type="submit">${esc(button)}</button>
+  </div>
+  <label class="wl-consent"><input type="checkbox" name="consent" value="true" required> Email me when it launches, plus occasional news. Unsubscribe anytime. <a href="/privacy/#waitlist">Privacy</a></label>
+  <p class="wl-msg" role="status" aria-live="polite"></p>
+  ${note ? `<p class="wl-note">${note}</p>` : ''}
+</form>
+<script>(function(){var f=document.getElementById(${JSON.stringify(id)});if(!f)return;var m=f.querySelector('.wl-msg'),b=f.querySelector('button');f.addEventListener('submit',function(e){e.preventDefault();var d=new FormData(f);var em=String(d.get('email')||'').trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){m.textContent='Please enter a valid email address.';m.className='wl-msg err';return;}if(!d.get('consent')){m.textContent='Tick the box so we can email you.';m.className='wl-msg err';return;}b.disabled=true;m.textContent='Adding you…';m.className='wl-msg';fetch('/api/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,app:d.get('app'),consent:true,company:d.get('company')||'',lang:navigator.language||'',source:location.pathname})}).then(function(r){return r.json().catch(function(){return{ok:false}})}).then(function(j){if(j&&j.ok){f.classList.add('done');m.textContent='You are on the list. We will email you when it launches.';m.className='wl-msg ok';if(window.va)window.va('event',{name:'waitlist_join'});}else{m.textContent='That did not work. Check the address and try again.';m.className='wl-msg err';b.disabled=false;}}).catch(function(){m.textContent='Network problem. Please try again.';m.className='wl-msg err';b.disabled=false;});});})();</script>`;
+}
+
 function renderBlocks(blocks, app, feature) {
   const ids = headings(blocks).map((h) => h.id);
   let h2i = 0;
@@ -308,6 +326,7 @@ function renderBlocks(blocks, app, feature) {
       case 'ol':      return `<ol>${val.map((li) => `<li>${li}</li>`).join('')}</ol>`;
       case 'callout': return `<div class="callout">${val}</div>`;
       case 'note':    return `<div class="note">${val}</div>`;
+      case 'waitlist': return waitlistForm(val || {});
       case 'contact': return `<p class="mailto"><a href="mailto:${esc(site.contactEmail)}">${esc(site.contactEmail)}</a></p>`;
       // Three-plus columns cannot fit a phone, so those tables carry each
       // header as data-label and the CSS restacks every row into a card.
@@ -360,6 +379,16 @@ function homePage() {
 </header>
 
 ${MARQUEE}
+
+<section id="coming-soon" class="coming-soon">
+  <div class="wrap">
+    <a class="cs-card reveal" href="/lensnote/">
+      <img src="${hAsset('icons/lensnote.jpg')}" alt="Lensnote app icon" width="72" height="72" loading="lazy" decoding="async">
+      <span class="cs-copy"><span class="eyebrow">Coming soon to iPhone</span><span class="cs-title">Lensnote: look at the lens, not your notes</span><span class="cs-sub">A teleprompter that sits under your camera and follows your voice. Join the waitlist.</span></span>
+      <span class="ap-go" aria-hidden="true">${ARROW}</span>
+    </a>
+  </div>
+</section>
 
 <section id="apps">
   <div class="wrap">

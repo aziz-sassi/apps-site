@@ -2,17 +2,21 @@
   "name": "apps-site",
   "private": true,
   "type": "module",
-  "description": "Aziz Sassi — iPhone apps site. Generated from src/ by build.mjs.",
+  "description": "Aziz Sassi \u2014 iPhone apps site. Generated from src/ by build.mjs.",
   "scripts": {
     "build": "node build.mjs",
     "check": "node seo-check.mjs",
     "audit": "node audit.mjs",
-    "og": "node tools/make-og.mjs"
+    "og": "node tools/make-og.mjs",
+    "waitlist": "node --env-file=.env.local tools/waitlist-export.mjs"
   },
   "engines": {
     "node": ">=20"
   },
   "devDependencies": {
     "playwright": "^1.59.0"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.9.0"
   }
 }

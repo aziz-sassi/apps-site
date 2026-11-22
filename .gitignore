@@ -6,3 +6,4 @@ artifact/
 .og-tmp/
 .DS_Store
 .claude/
+.env*.local
