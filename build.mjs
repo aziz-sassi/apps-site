@@ -1153,6 +1153,8 @@ await cp(join(ROOT, 'src/assets/escape.js'), join(DIST, 'escape.js'));
 await cp(join(ROOT, 'src/assets/motion.js'), join(DIST, 'motion.js'));
 await cp(join(ROOT, 'src/assets/consent.js'), join(DIST, 'consent.js'));
 await cp(join(ROOT, 'src/assets/llms.txt'), join(DIST, 'llms.txt')).catch(() => {});
+// AdMob authorized sellers (iOS apps list appsbysass.com as their developer site).
+await cp(join(ROOT, 'src/assets/app-ads.txt'), join(DIST, 'app-ads.txt'));
 if (site.analytics?.indexNowKey) {
   await cp(join(ROOT, 'src/assets/indexnow'), DIST, { recursive: true });
 }
